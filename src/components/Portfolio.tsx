@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import AnimatedText from './AnimatedText';
 
 const projects = [
-  { id: 1, slug: 'anthill', title: 'Anthill', desc: 'AI-powered knowledge management for modern teams.', img: 'https://picsum.photos/seed/anthill/1200/1200', logo: 'Anthill', logoIcon: '✦', badge: 'a16z' },
+  { id: 1, slug: 'anthill', title: 'Anthill', desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, and LP reporting.', img: 'https://picsum.photos/seed/anthill/1200/1200', logo: 'Anthill', logoIcon: '✦', badge: 'Anthill Ventures' },
   { id: 2, slug: 'pulp', title: 'Pulp', desc: 'A creative storytelling platform for the next generation of writers.', img: 'https://picsum.photos/seed/pulp/1200/1200', logo: 'Pulp', logoIcon: '✶', badge: 'Y Combinator' },
   { id: 3, slug: 'esthetic-insights', title: 'Esthetic Insights', desc: 'Data-driven design analytics to optimize your visual identity.', img: 'https://picsum.photos/seed/esthetic/1200/1200', logo: 'Esthetic', logoIcon: '✦', badge: 'Antler' },
   { id: 4, slug: 'volery', title: 'Volery', desc: 'Collaborative workspace designed for high-performance distributed teams.', img: 'https://picsum.photos/seed/volery/1200/1200', logo: 'Volery', logoIcon: '✶', badge: 'Seed' },

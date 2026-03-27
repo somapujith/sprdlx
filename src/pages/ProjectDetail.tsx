@@ -3,21 +3,28 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import Footer from '../components/Footer';
 
+const ESTHETIC_LOGO_SRC = '/projects/esthetic-insights/esthetic-insights-logo.svg';
+
 const projectsData = {
   'anthill': {
     title: 'Anthill',
-    desc: 'AI-powered knowledge management for modern teams.',
+    desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, portfolio, and LP reporting.',
     heroImg: 'https://picsum.photos/seed/anthill-hero/1920/800',
     logo: 'Anthill',
     logoIcon: '✦',
     industry: 'AI',
-    subIndustry: 'Knowledge Management',
-    deliverables: ['Web design', 'Product design'],
-    completed: 'March 2026',
-    fundingStage: 'Seed',
-    backedBy: 'a16z',
-    backedByLogo: 'alóz',
-    about: 'Anthill is the AI Operating System built for your company—a reasoning engine that understands, learns, and acts across an entire organization.',
+    subIndustry: 'B2B SaaS',
+    deliverables: [
+      'Pitch deck analysis',
+      'Portfolio management',
+      'VC workflows automation',
+      'LP reports generation',
+    ],
+    status: 'In Dev',
+    backedBy: 'Anthill Ventures',
+    backedByLogo: 'Anthill Ventures',
+    about:
+      'Anthill is the AI Operating System built for Venture Capital. It reads and scores pitch decks, automates due diligence, monitors portfolio performance, surfaces market intelligence, and generates LP reports — so your team spends less time on process and more time on conviction.',
     images: [
       'https://picsum.photos/seed/anthill-1/1200/800',
       'https://picsum.photos/seed/anthill-2/1920/1080',
@@ -49,7 +56,7 @@ const projectsData = {
   'esthetic-insights': {
     title: 'Esthetic Insights',
     desc: 'Data-driven design analytics to optimize your visual identity.',
-    heroImg: 'https://picsum.photos/seed/esthetic-hero/1920/800',
+    heroImg: '/projects/esthetic-insights/hero.png',
     logo: 'Esthetic',
     logoIcon: '✦',
     industry: 'Design',
@@ -59,10 +66,11 @@ const projectsData = {
     fundingStage: 'Series A',
     backedBy: 'Antler',
     backedByLogo: 'ANTLER',
-    about: 'Esthetic Insights provides data-driven design analytics, helping brands optimize their visual identity through advanced perception testing and AI-powered aesthetic scoring.',
+    about:
+      'Esthetic Insights is focused on helping brands create and optimize beauty, skincare, and haircare products using data-driven design analytics. However, they faced challenges in effectively integrating AI into their product ecosystem and digital presence.',
     images: [
-      'https://picsum.photos/seed/esthetic-1/1200/800',
-      'https://picsum.photos/seed/esthetic-2/1920/1080',
+      '/projects/esthetic-insights/gallery-1.png',
+      '/projects/esthetic-insights/gallery-2.png',
     ],
     next: 'volery',
     prev: 'pulp'
@@ -114,6 +122,7 @@ const projectsData = {
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const project = id ? projectsData[id as keyof typeof projectsData] : null;
+  const isEsthetic = id === 'esthetic-insights';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -134,11 +143,21 @@ export default function ProjectDetail() {
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-10 py-5 rounded-full flex items-center gap-4">
-               {project.logoIcon && <span className="text-3xl font-serif italic">{project.logoIcon}</span>}
-               <h1 className="text-3xl md:text-5xl font-serif italic tracking-tight">{project.title}</h1>
-            </div>
+          <div className="absolute inset-0 flex items-center justify-center px-4">
+            {isEsthetic ? (
+              <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-8 py-6 md:px-12 md:py-8 rounded-2xl flex items-center justify-center max-w-[min(96vw,36rem)] text-center">
+                <h1 className="m-0 font-sans font-bold uppercase tracking-[0.14em] text-white text-lg sm:text-xl md:text-2xl lg:text-3xl leading-tight">
+                  ESTHETIC INSIGHTS
+                </h1>
+              </div>
+            ) : (
+              <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-10 py-5 rounded-full flex items-center gap-4">
+                <h1 className="m-0 flex items-center gap-4 text-3xl md:text-5xl font-serif italic tracking-tight">
+                  {project.logoIcon && <span className="text-3xl font-serif italic">{project.logoIcon}</span>}
+                  {project.title}
+                </h1>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -149,10 +168,28 @@ export default function ProjectDetail() {
         <div className="w-full lg:w-1/2 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 rounded-xl bg-zinc-900 flex items-center justify-center border border-white/10">
-                <span className="text-xl font-bold">{project.logoIcon || project.title[0]}</span>
-              </div>
-              <h2 className="text-4xl font-bold tracking-tight">{project.title}</h2>
+              {isEsthetic ? (
+                <>
+                  <img
+                    src={ESTHETIC_LOGO_SRC}
+                    alt=""
+                    width={180}
+                    height={48}
+                    className="h-10 w-auto max-w-[min(42vw,12rem)] shrink-0 object-contain object-left brightness-0 invert md:h-12"
+                    decoding="async"
+                    draggable={false}
+                    aria-hidden
+                  />
+                  <h2 className="text-4xl font-bold tracking-tight">{project.title}</h2>
+                </>
+              ) : (
+                <>
+                  <div className="w-12 h-12 rounded-xl bg-zinc-900 flex items-center justify-center border border-white/10">
+                    <span className="text-xl font-bold">{project.logoIcon || project.title[0]}</span>
+                  </div>
+                  <h2 className="text-4xl font-bold tracking-tight">{project.title}</h2>
+                </>
+              )}
             </div>
             <p className="text-zinc-400 text-lg max-w-md leading-snug font-medium">
               {project.desc}
@@ -189,11 +226,21 @@ export default function ProjectDetail() {
                 ))}
               </div>
             </div>
-            <div className="flex justify-between py-5 border-b border-white/10">
-              <span className="text-zinc-500 font-medium">Completed</span>
-              <span className="font-bold">{project.completed}</span>
-            </div>
-            {project.fundingStage && (
+            {'status' in project && project.status ? (
+              <div className="flex justify-between py-5 border-b border-white/10">
+                <span className="text-zinc-500 font-medium">Status</span>
+                <span className="font-bold">{project.status}</span>
+              </div>
+            ) : (
+              'completed' in project &&
+              project.completed && (
+                <div className="flex justify-between py-5 border-b border-white/10">
+                  <span className="text-zinc-500 font-medium">Completed</span>
+                  <span className="font-bold">{project.completed}</span>
+                </div>
+              )
+            )}
+            {'fundingStage' in project && project.fundingStage ? (
               <div className="flex justify-between py-5 border-b border-white/10">
                 <span className="text-zinc-500 font-medium">Funding Stage</span>
                 <span className="font-bold flex items-center gap-1">
@@ -203,7 +250,7 @@ export default function ProjectDetail() {
                   </svg>
                 </span>
               </div>
-            )}
+            ) : null}
             <div className="flex justify-between py-5 border-b border-white/10">
               <span className="text-zinc-500 font-medium">Backed by</span>
               <span className="font-bold flex items-center gap-2">
@@ -222,9 +269,9 @@ export default function ProjectDetail() {
       </div>
 
       {/* About Section */}
-      <div className="max-w-7xl mx-auto px-8 py-32 flex flex-col lg:flex-row gap-20 items-center">
-        <div className="w-full lg:w-1/2">
-          <p className="text-2xl md:text-3xl font-serif italic leading-relaxed max-w-lg text-zinc-300">
+      <div className="max-w-7xl mx-auto px-8 py-32 flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
+        <div className="w-full lg:w-1/2 flex flex-col justify-center">
+          <p className="text-left text-xl md:text-2xl font-serif italic leading-[1.55] md:leading-[1.6] max-w-2xl text-zinc-100 tracking-[-0.01em]">
             {project.about}
           </p>
         </div>

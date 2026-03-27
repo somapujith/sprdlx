@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import DarkVeil from '../components/DarkVeil';
 
 const projects = [
-  { id: 1, slug: 'anthill', title: 'Anthill', desc: 'AI-powered knowledge management for modern teams.', img: 'https://picsum.photos/seed/anthill/800/800', logo: 'Anthill', logoIcon: '✦', iconBg: '#1a1a1a' },
+  { id: 1, slug: 'anthill', title: 'Anthill', desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, and LP reporting.', img: 'https://picsum.photos/seed/anthill/800/800', logo: 'Anthill', logoIcon: '✦', iconBg: '#1a1a1a' },
   { id: 2, slug: 'pulp', title: 'Pulp', desc: 'A creative storytelling platform for the next generation of writers.', img: 'https://picsum.photos/seed/pulp/800/800', logo: 'Pulp', logoIcon: '✶', iconBg: '#e5d5c5' },
   { id: 3, slug: 'esthetic-insights', title: 'Esthetic Insights', desc: 'Data-driven design analytics to optimize your visual identity.', img: 'https://picsum.photos/seed/esthetic/800/800', logo: 'Esthetic', logoIcon: '✦', iconBg: '#ffffff' },
   { id: 4, slug: 'volery', title: 'Volery', desc: 'Collaborative workspace designed for high-performance distributed teams.', img: 'https://picsum.photos/seed/volery/800/800', logo: 'Volery', logoIcon: '✶', iconBg: '#8b5cf6' },

@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import { Feather, Layers, Mountain, Sparkles, User, type LucideIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Spline = lazy(() => import('@splinetool/react-spline'));
@@ -12,6 +13,24 @@ function scheduleIdle(cb: () => void, timeoutMs = 1500) {
   const id = window.setTimeout(cb, 400);
   return () => clearTimeout(id);
 }
+
+/** Symbol + wordmark per brand; spacing between units set on strip (60–80px) */
+const MARQUEE_ENTRIES: {
+  name: string;
+  Icon: LucideIcon;
+  fontClass: string;
+}[] = [
+  { name: 'Anthill', Icon: Mountain, fontClass: 'font-serif tracking-tight' },
+  { name: 'Esthetic Insights', Icon: Sparkles, fontClass: 'font-serif tracking-tight' },
+  { name: 'Pulp', Icon: Layers, fontClass: 'font-sans font-semibold tracking-tight' },
+  { name: 'Volery', Icon: Feather, fontClass: 'font-sans font-medium tracking-tight' },
+  { name: 'Jay', Icon: User, fontClass: 'font-sans font-bold tracking-tight' },
+];
+
+/** Full cycles per half-strip; wider units → fewer repeats than plain text */
+const MARQUEE_CYCLES_PER_HALF = 8;
+
+const MARQUEE_SEGMENT = Array.from({ length: MARQUEE_CYCLES_PER_HALF }, () => [...MARQUEE_ENTRIES]).flat();
 
 export default function Hero() {
   const { t } = useTranslation();
@@ -142,10 +161,15 @@ export default function Hero() {
 
       <div
         ref={tickerRef}
-        className="absolute bottom-0 left-0 right-0 w-full z-10 opacity-0 border-t border-white/10"
+        className="absolute bottom-0 left-0 right-0 w-full z-10 opacity-0 pt-14 md:pt-20"
+        style={{
+          background:
+            'linear-gradient(to top, rgb(0 0 0 / 0.97) 0%, rgb(0 0 0 / 0.72) 32%, rgb(0 0 0 / 0.28) 58%, rgb(0 0 0 / 0.06) 78%, transparent 100%)',
+        }}
       >
         <div
           className="w-full px-8 overflow-hidden"
+          aria-label="Featured brands: Anthill, Esthetic Insights, Pulp, Volery, Jay"
           style={{
             maskImage:
               'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
@@ -153,97 +177,28 @@ export default function Hero() {
               'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
           }}
         >
-          <div className="flex whitespace-nowrap animate-marquee items-center h-7 py-2 will-change-transform">
-            {[...Array(2)].map((_, i) => (
+          <div
+            className="flex w-max shrink-0 whitespace-nowrap animate-marquee items-center min-h-14 h-auto py-4 md:py-5 will-change-transform motion-reduce:animate-none"
+            style={{ animationDuration: '150s' }}
+            aria-hidden
+          >
+            {[0, 1].map((strip) => (
               <div
-                key={i}
-                className="flex items-center gap-9 md:gap-11 lg:gap-14 min-w-max [&_svg]:shrink-0"
+                key={strip}
+                className="flex shrink-0 items-center gap-[60px] md:gap-[72px] lg:gap-20 pr-[60px] md:pr-[72px] lg:pr-20"
               >
-                <span className="marquee-item text-white/45 font-medium">
-                  <span className="text-[0.65rem] mr-0.5">✦</span> eurostar
-                </span>
-                <span className="marquee-item text-white/45 font-semibold flex items-center gap-1.5">
-                  <svg
-                    className="w-2.5 h-2.5 opacity-90"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <rect x="3" y="3" width="7" height="7" />
-                    <rect x="14" y="3" width="7" height="7" />
-                    <rect x="14" y="14" width="7" height="7" />
-                    <rect x="3" y="14" width="7" height="7" />
-                  </svg>
-                  omnera
-                </span>
-                <span className="marquee-item font-serif text-white/45">
-                  <span className="text-[0.65rem] mr-0.5">✶</span> Eragon
-                </span>
-                <span className="marquee-item text-white/45 font-semibold tracking-tight">
-                  kostcapital
-                </span>
-                <span className="marquee-item font-serif text-white/45">a16z</span>
-                <span className="marquee-item text-white/45 font-medium flex items-center gap-1">
-                  <span className="bg-white text-black px-[3px] py-px text-[8px] font-bold leading-none rounded-[2px]">
-                    Y
-                  </span>
-                  Combinator
-                </span>
-                <span className="marquee-item text-white/45 font-medium flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-linear-to-tr from-white to-white/25" />{' '}
-                  Nucleo
-                </span>
-                <span className="marquee-item text-white/45 font-semibold flex items-center gap-1">
-                  <span className="w-2 h-2 border border-white/45 rotate-45" /> Wedge
-                </span>
-                <span className="marquee-item text-white/45 font-semibold tracking-tight">
-                  K kivira
-                </span>
-                <span className="marquee-item text-white/45 font-medium flex items-center gap-1">
-                  <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z" />
-                  </svg>
-                  Framer
-                </span>
-                <span className="marquee-item text-white/45 font-semibold flex items-center gap-1">
-                  <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2L2 22h20L12 2zm0 4l7 14H5l7-14z" />
-                  </svg>
-                  LiveRamp
-                </span>
-                <span className="marquee-item text-white/45 font-semibold flex items-center gap-0.5">
-                  <span className="font-serif italic text-[0.7rem]">x</span> creativex
-                </span>
-                <span className="marquee-item font-serif text-white/45 tracking-[0.2em] uppercase">
-                  Condé Nast
-                </span>
-                <span className="marquee-item font-serif text-white/45 flex items-center gap-1">
-                  <svg
-                    className="w-2.5 h-2.5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 8v8M8 12h8" />
-                  </svg>
-                  PASTA EVANGELISTS
-                </span>
-                <span className="marquee-item text-white/45 font-medium flex items-center gap-1">
-                  <span className="bg-white text-black px-[3px] py-px text-[8px] font-bold leading-none rounded-[2px]">
-                    T
-                  </span>
-                  Tesora
-                </span>
-                <span className="marquee-item text-white/45 font-semibold flex items-center gap-1">
-                  <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>
-                  GHOST SHIP
-                </span>
+                {MARQUEE_SEGMENT.map((entry, idx) => {
+                  const Icon = entry.Icon;
+                  return (
+                    <span
+                      key={`${strip}-${idx}-${entry.name}`}
+                      className={`marquee-item ${entry.fontClass}`}
+                    >
+                      <Icon className="marquee-item-icon" stroke="currentColor" fill="none" aria-hidden />
+                      <span className="whitespace-nowrap">{entry.name}</span>
+                    </span>
+                  );
+                })}
               </div>
             ))}
           </div>
