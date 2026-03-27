@@ -1,0 +1,5 @@
+{
+  "name": "Remix: SPRDLX Clone",
+  "description": "A clone of the SPRDLX website built with React, Tailwind, GSAP, and Framer Motion.",
+  "requestFramePermissions": []
+}
