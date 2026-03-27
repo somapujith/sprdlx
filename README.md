@@ -1,20 +1,51 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# sprdlx
 
-# Run and deploy your AI Studio app
+**The product and venture studio creating beautiful AI companies.**
 
-This contains everything you need to run your app locally.
+sprdlx is the marketing site for SPRDLX — a React + Vite single-page app with smooth scroll (Lenis), GSAP motion, and a high-contrast black / white art direction.
 
-View your app in AI Studio: https://ai.studio/apps/9cc0b08d-bd64-4949-bcb3-a250d43ab681
+---
 
-## Run Locally
+## Stack
 
-**Prerequisites:**  Node.js
+- **React 19** · **TypeScript** · **Vite 6**
+- **Tailwind CSS** · **shadcn-style UI** · **i18next**
+- **GSAP** + **ScrollTrigger** (section background transitions)
+- **Lenis** (smooth scrolling)
+- **Spline** (hero 3D), optional **ogl** shaders elsewhere
 
+---
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Getting started
+
+**Requirements:** Node.js 20+ (recommended)
+
+```bash
+npm install
+npm run dev
+```
+
+Dev server defaults to port **3000** (see `package.json`).
+
+```bash
+npm run build    # production build → dist/
+npm run preview  # preview production build
+npm run lint     # TypeScript check
+```
+
+---
+
+## Environment (optional)
+
+If you use features that call the Gemini API, copy `.env.example` to `.env` / `.env.local` and set:
+
+- `GEMINI_API_KEY` — your Google AI key  
+- `APP_URL` — public URL when deployed (callbacks / links)
+
+Fonts: place **Feature Deck Regular** as `public/fonts/FeatureDeck-Regular.woff2` (see `src/index.css`) for the intended typography.
+
+---
+
+## Repository
+
+[github.com/somapujith/sprdlx](https://github.com/somapujith/sprdlx)
