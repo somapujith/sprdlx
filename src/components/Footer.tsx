@@ -21,13 +21,15 @@ export default function Footer() {
         </Link>
       </div>
 
-      {/* Footer Logo & Links */}
-      <div className="w-full bg-gradient-to-b from-black via-[#3a0010] to-[#5c0016] text-[#e8203d] pt-20 pb-12 flex flex-col relative overflow-hidden">
-        <div className="w-full max-w-[100rem] mx-auto px-8 relative z-10">
-          <h1 className="text-[26vw] font-black tracking-tighter leading-none italic -mb-[1vw] select-none -ml-[0.15em]">SPRDLX</h1>
+      {/* Wordmark: full-bleed row; text-right so the right edge (and X) pins to the viewport — wide 26vw type overflows left, not off-screen right */}
+      <div className="w-full bg-gradient-to-b from-black via-[#3a0010] to-[#5c0016] text-[#e8203d] pt-20 pb-12 flex flex-col relative overflow-x-visible">
+        <div className="w-full relative z-10 px-0">
+          <h1 className="whitespace-nowrap text-[26vw] font-sans font-black tracking-tighter leading-none italic -mb-[1vw] select-none text-right text-[#e8203d] pr-4 sm:pr-6 lg:pr-8 -translate-x-[50px]">
+            SPRDLX
+          </h1>
         </div>
-        
-        <div className="w-full max-w-[100rem] mx-auto px-8 relative z-10 mt-16">
+
+        <div className="w-full max-w-7xl mx-auto px-8 lg:px-12 relative z-10 mt-12 md:mt-16">
           <div className="border-t border-[#e8203d]/30 pt-8 flex flex-col md:flex-row justify-between gap-8 text-sm text-[#e8203d]/70 mb-16">
             <div className="flex flex-col gap-2">
               <a href="mailto:hello@sprdlx.co" className="hover:text-[#e8203d] transition-colors">hello@sprdlx.co</a>

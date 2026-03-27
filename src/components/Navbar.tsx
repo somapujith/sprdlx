@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
+import SprdlxLogoMark from './SprdlxLogoMark';
 
 export default function Navbar() {
   return (
@@ -9,8 +10,12 @@ export default function Navbar() {
       transition={{ duration: 1, delay: 2.2, ease: [0.16, 1, 0.3, 1] }}
       className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-6 mix-blend-difference"
     >
-      <Link to="/" className="text-2xl font-bold tracking-tighter text-[#ccff00]">
-        SPRDLX
+      <Link
+        to="/"
+        aria-label="SPRDLX — Home"
+        className="block shrink-0 text-[#ccff00] transition-opacity hover:opacity-90"
+      >
+        <SprdlxLogoMark className="h-8 w-auto md:h-9" />
       </Link>
       <div className="flex items-center gap-8 text-sm font-medium">
         <Link to="/portfolio" className="hover:opacity-70 transition-opacity italic text-zinc-300">Portfolio</Link>
