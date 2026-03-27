@@ -9,7 +9,7 @@ const projectsData = {
   'anthill': {
     title: 'Anthill',
     desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, portfolio, and LP reporting.',
-    heroImg: 'https://picsum.photos/seed/anthill-hero/1920/800',
+    heroImg: '/projects/anthill/hero.png',
     logo: 'Anthill',
     logoIcon: '✦',
     industry: 'AI',
@@ -26,8 +26,8 @@ const projectsData = {
     about:
       'Anthill is the AI Operating System built for Venture Capital. It reads and scores pitch decks, automates due diligence, monitors portfolio performance, surfaces market intelligence, and generates LP reports — so your team spends less time on process and more time on conviction.',
     images: [
-      'https://picsum.photos/seed/anthill-1/1200/800',
-      'https://picsum.photos/seed/anthill-2/1920/1080',
+      '/projects/anthill/gallery-1.png',
+      '/projects/anthill/gallery-2.png',
     ],
     next: 'pulp',
     prev: 'jay'
