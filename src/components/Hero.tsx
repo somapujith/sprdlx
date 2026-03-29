@@ -42,7 +42,18 @@ export default function Hero() {
   const [mountSpline, setMountSpline] = useState(false);
 
   useEffect(() => {
-    return scheduleIdle(() => setMountSpline(true));
+    return scheduleIdle(() => {
+      try {
+        const canvas = document.createElement('canvas');
+        const gl =
+          canvas.getContext('webgl') ||
+          canvas.getContext('experimental-webgl') ||
+          canvas.getContext('webgl2');
+        if (gl) setMountSpline(true);
+      } catch {
+        /* WebGL unavailable (sandbox, GPU off, strict browser) — skip Spline */
+      }
+    });
   }, []);
 
   useEffect(() => {

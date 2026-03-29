@@ -2,17 +2,19 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* Add licensed files to public/fonts/: prefer woff2; otf works if you only have desktop exports. */
+/*
+ * Feature Deck: add real font binaries under public/fonts/ (e.g. FeatureDeck-Regular.woff2),
+ * commit them to the repo, then uncomment @font-face below. If URLs 404 or return HTML,
+ * the browser shows "Failed to decode font" / OTS invalid sfntVersion.
+ *
 @font-face {
   font-family: "Feature Deck";
-  src:
-    url("/fonts/FeatureDeck-Regular.woff2") format("woff2"),
-    url("/fonts/FeatureDeck-Regular.woff") format("woff"),
-    url("/fonts/FeatureDeck-Regular.otf") format("opentype");
+  src: url("/fonts/FeatureDeck-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+*/
 
 @custom-variant dark (&:is(.dark *));
 
@@ -29,8 +31,9 @@
 }
 
 @theme {
-  --font-sans: "Feature Deck", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Feature Deck", ui-serif, Georgia, serif;
+  /* When Feature Deck @font-face is enabled above, prepend "Feature Deck", here */
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-serif: ui-serif, Georgia, "Times New Roman", serif;
   --animate-marquee: marquee 75s linear infinite;
 }
 
@@ -132,9 +135,9 @@ body {
 }
 
 @theme inline {
-  --font-heading: "Feature Deck", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Feature Deck", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Feature Deck", ui-serif, Georgia, serif;
+  --font-heading: ui-sans-serif, system-ui, sans-serif;
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-serif: ui-serif, Georgia, "Times New Roman", serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
