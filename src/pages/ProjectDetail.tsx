@@ -64,7 +64,7 @@ const projectsData = {
     deliverables: ['Web design', 'Data visualization'],
     completed: 'February 2026',
     fundingStage: 'Series A',
-    backedBy: 'Antler',
+    backedBy: 'ANTLER',
     backedByLogo: 'ANTLER',
     about:
       'Esthetic Insights is focused on helping brands create and optimize beauty, skincare, and haircare products using data-driven design analytics. However, they faced challenges in effectively integrating AI into their product ecosystem and digital presence.',
@@ -211,55 +211,62 @@ export default function ProjectDetail() {
         {/* Right: Table */}
         <div className="w-full lg:w-1/2">
           <div className="flex flex-col text-sm border-t border-white/10">
-            <div className="flex justify-between py-5 border-b border-white/10">
-              <span className="text-zinc-500 font-medium">Industry</span>
-              <div className="flex gap-4 font-bold">
+            <div className="flex justify-between gap-8 py-5 border-b border-white/10">
+              <span className="text-zinc-500 font-medium shrink-0">Industry</span>
+              <div className="flex flex-wrap justify-end items-center gap-x-3 gap-y-1 font-bold text-right text-base">
                 <span>{project.industry}</span>
-                <span>{project.subIndustry}</span>
+                {project.subIndustry ? (
+                  <>
+                    <span className="text-white/25" aria-hidden>
+                      ·
+                    </span>
+                    <span>{project.subIndustry}</span>
+                  </>
+                ) : null}
               </div>
             </div>
-            <div className="flex justify-between py-5 border-b border-white/10">
-              <span className="text-zinc-500 font-medium">Deliverables</span>
-              <div className="flex flex-wrap justify-end gap-x-4 gap-y-1 font-bold">
+            <div className="flex justify-between gap-8 py-5 border-b border-white/10">
+              <span className="text-zinc-500 font-medium shrink-0">Deliverables</span>
+              <div className="flex flex-wrap justify-end gap-x-3 gap-y-1 font-bold text-right text-base">
                 {project.deliverables.map((d, i) => (
-                  <span key={i}>{d.replace('-', ' ')}</span>
+                  <span key={i}>{d.replaceAll('-', ' ')}</span>
                 ))}
               </div>
             </div>
             {'status' in project && project.status ? (
-              <div className="flex justify-between py-5 border-b border-white/10">
-                <span className="text-zinc-500 font-medium">Status</span>
-                <span className="font-bold">{project.status}</span>
+              <div className="flex justify-between gap-8 py-5 border-b border-white/10">
+                <span className="text-zinc-500 font-medium shrink-0">Status</span>
+                <span className="font-bold text-right text-base">{project.status}</span>
               </div>
             ) : (
               'completed' in project &&
               project.completed && (
-                <div className="flex justify-between py-5 border-b border-white/10">
-                  <span className="text-zinc-500 font-medium">Completed</span>
-                  <span className="font-bold">{project.completed}</span>
+                <div className="flex justify-between gap-8 py-5 border-b border-white/10">
+                  <span className="text-zinc-500 font-medium shrink-0">Completed</span>
+                  <span className="font-bold text-right text-base">{project.completed}</span>
                 </div>
               )
             )}
             {'fundingStage' in project && project.fundingStage ? (
-              <div className="flex justify-between py-5 border-b border-white/10">
-                <span className="text-zinc-500 font-medium">Funding Stage</span>
-                <span className="font-bold flex items-center gap-1">
+              <div className="flex justify-between gap-8 py-5 border-b border-white/10">
+                <span className="text-zinc-500 font-medium shrink-0">Funding Stage</span>
+                <span className="font-bold flex items-center justify-end gap-1.5 text-right text-base">
                   {project.fundingStage}
-                  <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                  </svg>
+                  <span className="text-white" aria-hidden>
+                    ♥
+                  </span>
                 </span>
               </div>
             ) : null}
-            <div className="flex justify-between py-5 border-b border-white/10">
-              <span className="text-zinc-500 font-medium">Backed by</span>
-              <span className="font-bold flex items-center gap-2">
+            <div className="flex justify-between gap-8 py-5 border-b border-white/10">
+              <span className="text-zinc-500 font-medium shrink-0">Backed by</span>
+              <span className="font-bold flex items-center justify-end gap-2 text-right text-base">
                 {project.backedByLogo === 'Y' ? (
                   <span className="bg-white text-black px-1.5 py-0.5 rounded-sm text-[10px] font-black leading-none">Y</span>
                 ) : project.backedByLogo === 'alóz' ? (
                   <span className="text-lg font-serif font-black tracking-tighter">alóz</span>
                 ) : (
-                  <span className="text-sm font-bold tracking-widest">{project.backedByLogo}</span>
+                  <span className="font-bold tracking-widest">{project.backedByLogo}</span>
                 )}
                 {project.backedByLogo === 'Y' ? 'Combinator' : ''}
               </span>

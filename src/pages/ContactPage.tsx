@@ -59,7 +59,7 @@ export default function ContactPage() {
                       <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
                   </span>
-                  Book a call with Luca
+                  Book a call with us
                 </a>
 
                 <div className="flex gap-12 text-sm font-medium text-zinc-400 uppercase tracking-widest mt-4">

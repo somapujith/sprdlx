@@ -35,21 +35,28 @@ export default function AnimatedText({ text, children, className = "", delay = 0
 
   useEffect(() => {
     if (!containerRef.current) return;
-    const elements = containerRef.current.querySelectorAll('.reveal-inner');
-    
-    gsap.to(elements, {
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 90%",
-      },
-      y: 0,
-      rotation: 0,
-      opacity: 1,
-      duration: 1.2,
-      stagger: 0.02,
-      ease: 'power4.out',
-      delay: delay
-    });
+
+    const ctx = gsap.context(() => {
+      const elements = containerRef.current?.querySelectorAll('.reveal-inner');
+      if (!elements?.length) return;
+
+      gsap.to(elements, {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 90%",
+          scroller: document.documentElement,
+        },
+        y: 0,
+        rotation: 0,
+        opacity: 1,
+        duration: 1.2,
+        stagger: 0.02,
+        ease: 'power4.out',
+        delay: delay
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, [delay]);
 
   return (

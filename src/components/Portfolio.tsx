@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import AnimatedText from './AnimatedText';
 
 const projects = [
-  { id: 1, slug: 'anthill', title: 'Anthill', desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, and LP reporting.', img: 'https://picsum.photos/seed/anthill/1200/1200', logo: 'Anthill', logoIcon: '✦', badge: 'Anthill Ventures' },
-  { id: 2, slug: 'pulp', title: 'Pulp', desc: 'A creative storytelling platform for the next generation of writers.', img: 'https://picsum.photos/seed/pulp/1200/1200', logo: 'Pulp', logoIcon: '✶', badge: 'Y Combinator' },
-  { id: 3, slug: 'esthetic-insights', title: 'Esthetic Insights', desc: 'Data-driven design analytics to optimize your visual identity.', img: 'https://picsum.photos/seed/esthetic/1200/1200', logo: 'Esthetic', logoIcon: '✦', badge: 'Antler' },
-  { id: 4, slug: 'volery', title: 'Volery', desc: 'Collaborative workspace designed for high-performance distributed teams.', img: 'https://picsum.photos/seed/volery/1200/1200', logo: 'Volery', logoIcon: '✶', badge: 'Seed' },
-  { id: 5, slug: 'jay', title: 'Jay', desc: 'Your personal AI assistant for seamless productivity and focus.', img: 'https://picsum.photos/seed/jay/1200/1200', logo: 'Jay', logoIcon: '✦', badge: 'Y Combinator' },
+  { id: 1, slug: 'anthill', title: 'Anthill', desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, and LP reporting.', img: 'https://picsum.photos/seed/anthill/1200/1200', logo: 'Anthill', logoIcon: '✦' },
+  { id: 2, slug: 'pulp', title: 'Pulp', desc: 'A creative storytelling platform for the next generation of writers.', img: 'https://picsum.photos/seed/pulp/1200/1200', logo: 'Pulp', logoIcon: '✶' },
+  { id: 3, slug: 'esthetic-insights', title: 'Esthetic Insights', desc: 'Data-driven design analytics to optimize your visual identity.', img: 'https://picsum.photos/seed/esthetic/1200/1200', logo: 'Esthetic', logoIcon: '✦' },
+  { id: 4, slug: 'volery', title: 'Volery', desc: 'Collaborative workspace designed for high-performance distributed teams.', img: 'https://picsum.photos/seed/volery/1200/1200', logo: 'Volery', logoIcon: '✶' },
+  { id: 5, slug: 'jay', title: 'Jay', desc: 'Your personal AI assistant for seamless productivity and focus.', img: 'https://picsum.photos/seed/jay/1200/1200', logo: 'Jay', logoIcon: '✦' },
 ];
 
 export default function Portfolio() {
@@ -32,20 +32,6 @@ export default function Portfolio() {
                   {project.logoIcon && <span className="text-4xl">{project.logoIcon}</span>}
                   {project.logo}
                 </div>
-                {project.badge && (
-                  <div className="absolute bottom-8 left-8 text-white font-bold text-xl drop-shadow-md flex items-center gap-2">
-                    {project.badge === 'Y Combinator' ? (
-                      <div className="bg-white text-black px-3 py-1.5 rounded-sm text-sm flex items-center gap-2">
-                        <span className="bg-black text-white px-1 rounded-sm text-xs font-bold">Y</span> 
-                        Combinator
-                      </div>
-                    ) : (
-                      <span className={project.badge === 'Antler' ? 'tracking-widest uppercase text-2xl' : 'text-2xl'}>
-                        {project.badge}
-                      </span>
-                    )}
-                  </div>
-                )}
               </div>
               <div className="w-full md:w-1/2 p-10 md:p-20 flex flex-col justify-between">
                 <div>
