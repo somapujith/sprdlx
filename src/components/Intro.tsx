@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, lazy, Suspense } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import DitherTorusKnot from './DitherTorusKnot';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const DitherTorusKnot = lazy(() => import('./DitherTorusKnot'));
 
 export default function Intro() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -48,17 +47,17 @@ export default function Intro() {
       className="text-white py-32 px-8 min-h-screen flex items-center relative z-10 overflow-hidden"
     >
       {/* Dither Torus Knot — floating on right side behind text */}
-      <div className="pointer-events-none absolute right-[-8%] top-1/2 -translate-y-1/2 w-[55vw] max-w-[700px] aspect-square opacity-40 md:opacity-50" aria-hidden>
-        <Suspense fallback={null}>
-          <DitherTorusKnot
-            className="w-full h-full"
-            color1="#ffffff"
-            color2="#000000"
-            pixelSize={3}
-            lightDir={[1, 0.8, 0.6]}
-            cameraZ={4}
-          />
-        </Suspense>
+      <div className="pointer-events-none absolute right-[-6%] top-1/2 h-[56vh] w-[52vw] max-h-[720px] max-w-[760px] -translate-y-1/2 opacity-40 md:opacity-50" aria-hidden>
+        <DitherTorusKnot
+          className="w-full h-full"
+          color1="#ffffff"
+          color2="#000000"
+          pixelSize={3}
+          lightDir={[1, 0.8, 0.6]}
+          cameraZ={5.2}
+          knotScale={0.8}
+          variant="torusKnot"
+        />
       </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10">

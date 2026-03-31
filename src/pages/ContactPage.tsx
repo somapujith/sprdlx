@@ -1,8 +1,6 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
 import Footer from '../components/Footer';
-
-const DitherTorusKnot = lazy(() => import('../components/DitherTorusKnot'));
 
 export default function ContactPage() {
   return (
@@ -72,22 +70,17 @@ export default function ContactPage() {
             </form>
           </div>
 
-          {/* Right Side: 3D Dither Torus Knot + Addresses */}
+          {/* Right Side: Placeholder image + Addresses */}
           <div className="relative h-[70vh] lg:h-[85vh] rounded-3xl overflow-hidden bg-black/40 border border-white/5">
-            <Suspense fallback={
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="w-10 h-10 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-              </div>
-            }>
-              <DitherTorusKnot
-                className="w-full h-full"
-                color1="#ffffff"
-                color2="#000000"
-                pixelSize={2.5}
-                lightDir={[0.8, 1, 0.5]}
-                cameraZ={3.8}
-              />
-            </Suspense>
+            <img
+              src="https://picsum.photos/seed/daisies-field/1200/1600"
+              alt="Daisies field"
+              className="h-full w-full object-cover"
+              loading="eager"
+              decoding="async"
+              referrerPolicy="no-referrer"
+              draggable={false}
+            />
             
             <div className="absolute bottom-12 left-12 right-12 flex flex-col md:flex-row justify-between gap-8 text-white z-10">
               <div className="flex flex-col gap-1">

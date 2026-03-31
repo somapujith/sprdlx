@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+const DitherTorusKnot = lazy(() => import('./DitherTorusKnot'));
 
 export default function Services() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -41,6 +42,21 @@ export default function Services() {
 
   return (
     <section ref={containerRef} className="text-black py-32 px-8 relative z-10">
+      <div className="pointer-events-none absolute left-[-8%] top-[12%] h-[34vh] w-[28vw] min-w-[240px] opacity-20" aria-hidden>
+        <Suspense fallback={null}>
+          <DitherTorusKnot className="h-full w-full" pixelSize={3.5} cameraZ={5.4} knotScale={0.72} variant="octahedron" />
+        </Suspense>
+      </div>
+      <div className="pointer-events-none absolute right-[-7%] bottom-[8%] h-[30vh] w-[24vw] min-w-[220px] opacity-15" aria-hidden>
+        <Suspense fallback={null}>
+          <DitherTorusKnot className="h-full w-full" pixelSize={4} cameraZ={5.6} knotScale={0.66} lightDir={[0.5, 1, 0.3]} variant="torus" />
+        </Suspense>
+      </div>
+      <div className="pointer-events-none absolute left-[46%] top-[4%] h-[20vh] w-[14vw] min-w-[140px] opacity-18" aria-hidden>
+        <Suspense fallback={null}>
+          <DitherTorusKnot className="h-full w-full" pixelSize={3.2} cameraZ={5.2} knotScale={0.62} lightDir={[1, 0.7, 0.6]} variant="torusKnot" />
+        </Suspense>
+      </div>
       <div className="max-w-7xl mx-auto w-full">
         <div className="text-center mb-24 blur-reveal">
           <h2 className="text-4xl md:text-5xl font-serif text-zinc-400">

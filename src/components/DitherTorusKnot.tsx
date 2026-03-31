@@ -56,11 +56,38 @@ const fragmentShader = /* glsl */ `
   }
 `;
 
-function DitherKnotMesh({ color1, color2, pixelSize, lightDir }: {
+type DitherVariant = 'torusKnot' | 'sphere' | 'icosahedron' | 'octahedron' | 'torus';
+
+function ShapeGeometry({ variant }: { variant: DitherVariant }) {
+  switch (variant) {
+    case 'sphere':
+      return <sphereGeometry args={[1.12, 48, 48]} />;
+    case 'icosahedron':
+      return <icosahedronGeometry args={[1.25, 2]} />;
+    case 'octahedron':
+      return <octahedronGeometry args={[1.3, 1]} />;
+    case 'torus':
+      return <torusGeometry args={[1.05, 0.3, 32, 96]} />;
+    case 'torusKnot':
+    default:
+      return <torusKnotGeometry args={[1, 0.35, 128, 32]} />;
+  }
+}
+
+function DitherKnotMesh({
+  color1,
+  color2,
+  pixelSize,
+  lightDir,
+  knotScale,
+  variant,
+}: {
   color1: string;
   color2: string;
   pixelSize: number;
   lightDir: [number, number, number];
+  knotScale: number;
+  variant: DitherVariant;
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const wireRef = useRef<THREE.Mesh>(null);
@@ -87,9 +114,9 @@ function DitherKnotMesh({ color1, color2, pixelSize, lightDir }: {
   });
 
   return (
-    <group>
+    <group scale={knotScale}>
       <mesh ref={meshRef}>
-        <torusKnotGeometry args={[1, 0.35, 128, 32]} />
+        <ShapeGeometry variant={variant} />
         <shaderMaterial
           vertexShader={vertexShader}
           fragmentShader={fragmentShader}
@@ -97,7 +124,7 @@ function DitherKnotMesh({ color1, color2, pixelSize, lightDir }: {
         />
       </mesh>
       <mesh ref={wireRef} scale={1.05}>
-        <torusKnotGeometry args={[1, 0.35, 128, 32]} />
+        <ShapeGeometry variant={variant} />
         <meshBasicMaterial
           color={color1}
           wireframe
@@ -116,6 +143,8 @@ interface DitherTorusKnotProps {
   pixelSize?: number;
   lightDir?: [number, number, number];
   cameraZ?: number;
+  knotScale?: number;
+  variant?: DitherVariant;
 }
 
 export default function DitherTorusKnot({
@@ -124,12 +153,14 @@ export default function DitherTorusKnot({
   color2 = '#000000',
   pixelSize = 3,
   lightDir = [1, 1, 1],
-  cameraZ = 4,
+  cameraZ = 5,
+  knotScale = 0.84,
+  variant = 'torusKnot',
 }: DitherTorusKnotProps) {
   return (
     <div className={className}>
       <Canvas
-        camera={{ position: [0, 0, cameraZ], fov: 50 }}
+        camera={{ position: [0, 0, cameraZ], fov: 44 }}
         gl={{ antialias: false, alpha: true }}
         style={{ background: 'transparent' }}
       >
@@ -139,6 +170,8 @@ export default function DitherTorusKnot({
           color2={color2}
           pixelSize={pixelSize}
           lightDir={lightDir}
+          knotScale={knotScale}
+          variant={variant}
         />
       </Canvas>
     </div>

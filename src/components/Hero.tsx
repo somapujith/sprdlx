@@ -1,18 +1,8 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import Spline from '@splinetool/react-spline';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { Feather, Layers, Mountain, Sparkles, User, type LucideIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-
-const Spline = lazy(() => import('@splinetool/react-spline'));
-
-function scheduleIdle(cb: () => void, timeoutMs = 1500) {
-  if (typeof requestIdleCallback !== 'undefined') {
-    const id = requestIdleCallback(cb, { timeout: timeoutMs });
-    return () => cancelIdleCallback(id);
-  }
-  const id = window.setTimeout(cb, 400);
-  return () => clearTimeout(id);
-}
 
 /** Symbol + wordmark per brand; spacing between units set on strip (60–80px) */
 const MARQUEE_ENTRIES: {
@@ -39,23 +29,6 @@ export default function Hero() {
   const bgRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const tickerRef = useRef<HTMLDivElement>(null);
-  const [mountSpline, setMountSpline] = useState(false);
-
-  useEffect(() => {
-    return scheduleIdle(() => {
-      try {
-        const canvas = document.createElement('canvas');
-        const gl =
-          canvas.getContext('webgl') ||
-          canvas.getContext('experimental-webgl') ||
-          canvas.getContext('webgl2');
-        if (gl) setMountSpline(true);
-      } catch {
-        /* WebGL unavailable (sandbox, GPU off, strict browser) — skip Spline */
-      }
-    });
-  }, []);
-
   useEffect(() => {
     if (!textRef.current) return;
 
@@ -137,11 +110,7 @@ export default function Hero() {
         aria-hidden
       >
         <div className="absolute -top-[120px] -bottom-[120px] -left-[120px] -right-[120px]">
-          {mountSpline && (
-            <Suspense fallback={null}>
-              <Spline scene="https://prod.spline.design/3Z9HZVYsWsN84iLT/scene.splinecode" />
-            </Suspense>
-          )}
+          <Spline scene="https://prod.spline.design/3Z9HZVYsWsN84iLT/scene.splinecode" />
         </div>
       </div>
 

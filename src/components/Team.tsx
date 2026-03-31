@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import AnimatedText from './AnimatedText';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+const DitherTorusKnot = lazy(() => import('./DitherTorusKnot'));
 
 const teamMembers = [
   { name: 'Luca', role: 'Product, Look and Feel', img: 'https://picsum.photos/seed/team1/400/500' },
@@ -67,6 +68,18 @@ export default function Team() {
 
   return (
     <section id="team" className="text-white py-40 px-8 overflow-hidden relative z-10" ref={containerRef}>
+      <div className="pointer-events-none absolute right-[-6%] top-[8%] h-[34vh] w-[28vw] min-w-[240px] opacity-25" aria-hidden>
+        <Suspense fallback={null}>
+          <DitherTorusKnot
+            className="h-full w-full"
+            pixelSize={3}
+            cameraZ={5}
+            knotScale={0.75}
+            lightDir={[1, 0.7, 0.5]}
+            variant="icosahedron"
+          />
+        </Suspense>
+      </div>
       <div className="max-w-7xl mx-auto w-full flex flex-col items-center text-center">
         <AnimatedText as="h2" text="From engineers, to designers—our team knows how to ship AI products." className="text-4xl md:text-5xl lg:text-6xl font-serif mb-12 max-w-4xl leading-tight" />
         <Link to="/contact" className="group flex items-center gap-3 text-lg font-serif italic transition-opacity px-6 py-3">
