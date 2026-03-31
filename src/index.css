@@ -30,6 +30,19 @@
   border-width: 0;
 }
 
+/* Project detail: chromatic “View work” CTA (red / cyan fringe) */
+.view-work-chromatic {
+  --view-work-r: rgb(255 55 90 / 0.95);
+  --view-work-c: rgb(0 215 255 / 0.9);
+  text-shadow:
+    0.05em 0 0 var(--view-work-r),
+    -0.05em 0 0 var(--view-work-c);
+}
+.view-work-icon {
+  color: rgb(212 212 216);
+  filter: drop-shadow(0.07em 0 0 var(--view-work-r)) drop-shadow(-0.07em 0 0 var(--view-work-c));
+}
+
 @theme {
   /* When Feature Deck @font-face is enabled above, prepend "Feature Deck", here */
   --font-sans: ui-sans-serif, system-ui, sans-serif;
@@ -68,37 +81,62 @@
   margin-top: 0.06em;
 }
 
-/* Hero ticker: reference-style symbol + wordmark, ~18–22px, generous brand-to-brand gap in Hero.tsx */
+/* Hero ticker: symbol + wordmark / logos; sizes pair with gaps in Hero.tsx */
 .marquee-item {
-  font-size: 1.125rem;
+  font-size: 1.3125rem;
   line-height: 1.2;
   letter-spacing: 0.02em;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.5625rem;
   color: rgb(228 228 231 / 0.92);
 }
 
 @media (min-width: 768px) {
   .marquee-item {
-    font-size: 1.25rem;
-    gap: 0.625rem;
+    font-size: 1.5625rem;
+    gap: 0.6875rem;
   }
 }
 
 @media (min-width: 1024px) {
   .marquee-item {
-    font-size: 1.375rem;
-    gap: 0.75rem;
+    font-size: 1.75rem;
+    gap: 0.8125rem;
   }
 }
 
 .marquee-item-icon {
-  width: 1.05em;
-  height: 1.05em;
+  width: 1.15em;
+  height: 1.15em;
   flex-shrink: 0;
   opacity: 0.92;
   stroke-width: 1.35;
+}
+
+.marquee-item-logo {
+  height: 1.15em;
+  width: auto;
+  max-height: 2.25rem;
+  max-width: min(9.5rem, 32vw);
+  object-fit: contain;
+  object-position: left center;
+  flex-shrink: 0;
+  opacity: 0.92;
+}
+
+@media (min-width: 768px) {
+  .marquee-item-logo {
+    max-height: 2.5rem;
+    max-width: 10.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .marquee-item-logo {
+    max-height: 2.875rem;
+    max-width: 11.5rem;
+  }
 }
 
 @keyframes marquee {
@@ -109,6 +147,11 @@
 /* Shared black main before flash: portfolio heading stays readable, then Tailwind greys apply on data-surface=light */
 main[data-surface="dark"] #work .text-zinc-400 {
   color: rgb(212 212 216);
+}
+
+/* Services sprint card: stays a clean white card while main scrolls (black → white → gray blend → black) */
+#services-sprint-cta {
+  background-color: #fff;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

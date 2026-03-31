@@ -1,20 +1,47 @@
 import Spline from '@splinetool/react-spline';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { Feather, Layers, Mountain, Sparkles, User, type LucideIcon } from 'lucide-react';
+import { Feather, User, type LucideIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-/** Symbol + wordmark per brand; spacing between units set on strip (60–80px) */
-const MARQUEE_ENTRIES: {
-  name: string;
-  Icon: LucideIcon;
-  fontClass: string;
-}[] = [
-  { name: 'Anthill', Icon: Mountain, fontClass: 'font-serif tracking-tight' },
-  { name: 'Esthetic Insights', Icon: Sparkles, fontClass: 'font-serif tracking-tight' },
-  { name: 'Pulp', Icon: Layers, fontClass: 'font-sans font-semibold tracking-tight' },
-  { name: 'Volery', Icon: Feather, fontClass: 'font-sans font-medium tracking-tight' },
-  { name: 'Jay', Icon: User, fontClass: 'font-sans font-bold tracking-tight' },
+type MarqueeEntry =
+  | {
+      name: string;
+      fontClass: string;
+      logoSrc: string;
+      /** Extra classes on the logo img (e.g. invert for dark strip) */
+      logoClass?: string;
+      /** SVG is a full wordmark — don’t repeat the name beside it */
+      wordmarkOnly?: boolean;
+    }
+  | {
+      name: string;
+      fontClass: string;
+      Icon: LucideIcon;
+    };
+
+/** Wordmark per brand; Anthill / Esthetic / Pulp use project logos, Volery & Jay use Lucide until assets exist */
+const MARQUEE_ENTRIES: MarqueeEntry[] = [
+  {
+    name: 'Anthill',
+    fontClass: 'font-serif tracking-tight',
+    logoSrc: '/projects/anthill/Anthill%20Ventures%20Logo.svg',
+    wordmarkOnly: true,
+  },
+  {
+    name: 'Esthetic Insights',
+    fontClass: 'font-serif tracking-tight',
+    logoSrc: '/projects/esthetic-insights/EI%20logo%202.svg',
+    logoClass: 'brightness-0 invert',
+    wordmarkOnly: true,
+  },
+  {
+    name: 'Pulp',
+    fontClass: 'font-sans font-semibold tracking-tight',
+    logoSrc: '/projects/pulp/logo.png',
+  },
+  { name: 'Volery', fontClass: 'font-sans font-medium tracking-tight', Icon: Feather },
+  { name: 'Jay', fontClass: 'font-sans font-bold tracking-tight', Icon: User },
 ];
 
 /** Full cycles per half-strip; wider units → fewer repeats than plain text */
@@ -158,27 +185,43 @@ export default function Hero() {
           }}
         >
           <div
-            className="flex w-max shrink-0 whitespace-nowrap animate-marquee items-center min-h-14 h-auto py-4 md:py-5 will-change-transform motion-reduce:animate-none"
+            className="flex w-max shrink-0 whitespace-nowrap animate-marquee items-center min-h-16 md:min-h-20 h-auto py-5 md:py-7 will-change-transform motion-reduce:animate-none"
             style={{ animationDuration: '150s' }}
             aria-hidden
           >
             {[0, 1].map((strip) => (
               <div
                 key={strip}
-                className="flex shrink-0 items-center gap-[60px] md:gap-[72px] lg:gap-20 pr-[60px] md:pr-[72px] lg:pr-20"
+                className="flex shrink-0 items-center gap-[72px] md:gap-[88px] lg:gap-28 pr-[72px] md:pr-[88px] lg:pr-28"
               >
-                {MARQUEE_SEGMENT.map((entry, idx) => {
-                  const Icon = entry.Icon;
-                  return (
-                    <span
-                      key={`${strip}-${idx}-${entry.name}`}
-                      className={`marquee-item ${entry.fontClass}`}
-                    >
-                      <Icon className="marquee-item-icon" stroke="currentColor" fill="none" aria-hidden />
+                {MARQUEE_SEGMENT.map((entry, idx) => (
+                  <span
+                    key={`${strip}-${idx}-${entry.name}`}
+                    className={`marquee-item ${entry.fontClass}`}
+                  >
+                    {'logoSrc' in entry ? (
+                      <img
+                        src={entry.logoSrc}
+                        alt={entry.wordmarkOnly ? entry.name : ''}
+                        className={`marquee-item-logo ${entry.logoClass ?? ''}`}
+                        loading="lazy"
+                        decoding="async"
+                        draggable={false}
+                        aria-hidden={entry.wordmarkOnly ? undefined : true}
+                      />
+                    ) : (
+                      <entry.Icon
+                        className="marquee-item-icon"
+                        stroke="currentColor"
+                        fill="none"
+                        aria-hidden
+                      />
+                    )}
+                    {(!('logoSrc' in entry) || !entry.wordmarkOnly) && (
                       <span className="whitespace-nowrap">{entry.name}</span>
-                    </span>
-                  );
-                })}
+                    )}
+                  </span>
+                ))}
               </div>
             ))}
           </div>

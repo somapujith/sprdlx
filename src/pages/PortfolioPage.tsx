@@ -1,14 +1,22 @@
-import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import Footer from '../components/Footer';
 import DarkVeil from '../components/DarkVeil';
-const DitherTorusKnot = lazy(() => import('../components/DitherTorusKnot'));
 
 const projects = [
-  { id: 1, slug: 'anthill', title: 'Anthill', desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, and LP reporting.', img: 'https://picsum.photos/seed/anthill/800/800', logo: 'Anthill', logoIcon: '✦', iconBg: '#1a1a1a' },
-  { id: 2, slug: 'pulp', title: 'Pulp', desc: 'A creative storytelling platform for the next generation of writers.', img: 'https://picsum.photos/seed/pulp/800/800', logo: 'Pulp', logoIcon: '✶', iconBg: '#ccff00' },
-  { id: 3, slug: 'esthetic-insights', title: 'Esthetic Insights', desc: 'Data-driven design analytics to optimize your visual identity.', img: 'https://picsum.photos/seed/esthetic/800/800', logo: 'Esthetic', logoIcon: '✦', iconBg: '#ffffff' },
+  { id: 1, slug: 'anthill', title: 'Anthill', desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, and LP reporting.', img: '/projects/anthill/hero.png', logo: 'Anthill', logoIcon: '✦', iconBg: '#1a1a1a' },
+  { id: 2, slug: 'pulp', title: 'Pulp', desc: 'A creative storytelling platform for the next generation of writers.', img: '/projects/pulp/hero.png', logo: 'Pulp', logoIcon: '✶', iconBg: '#ccff00' },
+  {
+    id: 3,
+    slug: 'esthetic-insights',
+    title: 'Esthetic Insights',
+    desc: 'Data-driven design analytics to optimize your visual identity.',
+    img: '/projects/esthetic-insights/esthetic-product-hero.png',
+    logo: 'Esthetic Insights',
+    logoIcon: undefined,
+    iconBg: '#ffffff',
+  },
   { id: 4, slug: 'volery', title: 'Volery', desc: 'Collaborative workspace designed for high-performance distributed teams.', img: 'https://picsum.photos/seed/volery/800/800', logo: 'Volery', logoIcon: '✶', iconBg: '#ffffff' },
   { id: 5, slug: 'jay', title: 'Jay', desc: 'Your personal AI assistant for seamless productivity and focus.', img: 'https://picsum.photos/seed/jay/800/800', logo: 'Jay', logoIcon: '✦', iconBg: '#ffffff' },
 ];
@@ -31,11 +39,6 @@ export default function PortfolioPage() {
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
-        </div>
-        <div className="pointer-events-none absolute right-[-4%] top-1/2 z-[1] h-[56vh] w-[34vw] min-w-[280px] -translate-y-1/2 opacity-30" aria-hidden>
-          <Suspense fallback={null}>
-            <DitherTorusKnot className="h-full w-full" pixelSize={2.8} cameraZ={4.9} knotScale={0.9} variant="sphere" />
-          </Suspense>
         </div>
         
         <div className="relative z-10 w-full mt-24">
@@ -63,23 +66,87 @@ export default function PortfolioPage() {
                 <img 
                   src={project.img} 
                   alt={project.title} 
-                  className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-all duration-700 scale-105 group-hover:scale-100"
+                  className={`w-full h-full object-cover transition-all duration-700 scale-105 group-hover:scale-100 ${
+                    project.slug === 'esthetic-insights' || project.slug === 'anthill' || project.slug === 'pulp'
+                      ? 'opacity-90 group-hover:opacity-100'
+                      : 'opacity-70 group-hover:opacity-100'
+                  }`}
                   referrerPolicy="no-referrer"
                 />
+                {project.slug === 'esthetic-insights' || project.slug === 'anthill' || project.slug === 'pulp' ? (
+                  <div className="pointer-events-none absolute inset-0 bg-black/20" aria-hidden />
+                ) : null}
                 <div className="absolute inset-0 flex items-center justify-center p-12">
                   <div className="text-white text-center transform transition-transform duration-700 group-hover:scale-110">
-                    {project.logoIcon && <span className="block text-4xl mb-3 drop-shadow-lg">{project.logoIcon}</span>}
-                    <span className="text-3xl md:text-4xl font-serif italic tracking-tighter drop-shadow-lg">{project.logo}</span>
+                    {project.slug === 'esthetic-insights' ? (
+                      <img
+                        src="/projects/esthetic-insights/EI%20logo%202.svg"
+                        alt="Esthetic Insights"
+                        className="h-20 w-auto max-w-[min(92%,280px)] brightness-0 invert md:h-28 md:max-w-[min(92%,340px)] drop-shadow-[0_4px_24px_rgba(0,0,0,0.45)]"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : project.slug === 'anthill' ? (
+                      <img
+                        src="/projects/anthill/Anthill%20Ventures%20Logo.svg"
+                        alt="Anthill"
+                        className="h-16 w-auto max-w-[min(92%,300px)] md:h-20 md:max-w-[min(92%,360px)] drop-shadow-[0_4px_24px_rgba(0,0,0,0.45)]"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : project.slug === 'pulp' ? (
+                      <img
+                        src="/projects/pulp/logo.png"
+                        alt="Pulp"
+                        className="h-20 w-20 md:h-28 md:w-28 object-contain drop-shadow-[0_4px_24px_rgba(0,0,0,0.45)]"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <>
+                        {project.logoIcon && <span className="block text-4xl mb-3 drop-shadow-lg">{project.logoIcon}</span>}
+                        <span className="text-3xl md:text-4xl font-serif italic tracking-tighter drop-shadow-lg">
+                          {project.logo}
+                        </span>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
               
               <div className="mt-8 flex items-start gap-5">
                 <div 
-                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-xl border border-white/5"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-xl border border-white/5 overflow-hidden p-1"
                   style={{ backgroundColor: project.iconBg }}
                 >
-                  {project.logoIcon ? (
+                  {project.slug === 'esthetic-insights' ? (
+                    <img
+                      src="/projects/esthetic-insights/EI%20small%20logo.svg"
+                      alt=""
+                      className="h-full w-full object-contain"
+                      loading="lazy"
+                      decoding="async"
+                      aria-hidden
+                    />
+                  ) : project.slug === 'anthill' ? (
+                    <img
+                      src="/projects/anthill/Anthill%20Ventures%20Logo.svg"
+                      alt=""
+                      className="h-full w-full min-w-0 object-contain object-center scale-[0.85]"
+                      loading="lazy"
+                      decoding="async"
+                      aria-hidden
+                    />
+                  ) : project.slug === 'pulp' ? (
+                    <img
+                      src="/projects/pulp/logo.png"
+                      alt=""
+                      className="h-full w-full min-w-0 object-contain object-center scale-[0.92]"
+                      loading="lazy"
+                      decoding="async"
+                      aria-hidden
+                    />
+                  ) : project.logoIcon ? (
                     <span className="text-black font-black text-xl">{project.logoIcon}</span>
                   ) : (
                     <span className="text-black font-black text-xl">{project.title[0]}</span>

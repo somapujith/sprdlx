@@ -4,11 +4,12 @@
  */
 
 import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import SmoothScroll from './components/SmoothScroll';
 import GsapLenisSync from './components/GsapLenisSync';
 import ScrollToTop from './components/ScrollToTop';
 import Navbar from './components/Navbar';
+import GradualBlur from './components/GradualBlur';
 import './i18n';
 
 const Home = lazy(() => import('./pages/Home'));
@@ -22,13 +23,33 @@ const Loading = () => (
   </div>
 );
 
+/** zIndex -60 → fixed layer 40 (below Navbar z-50) */
+const PAGE_BOTTOM_BLUR = {
+  target: 'page' as const,
+  position: 'bottom' as const,
+  height: '7rem',
+  strength: 1.5,
+  divCount: 10,
+  curve: 'bezier' as const,
+  exponential: true,
+  opacity: 0.7,
+  zIndex: -60,
+};
+
+/** Bottom gradual blur on every route except the homepage */
+function GradualBlurExceptHome() {
+  const { pathname } = useLocation();
+  if (pathname === '/') return null;
+  return <GradualBlur {...PAGE_BOTTOM_BLUR} />;
+}
+
 export default function App() {
   return (
     <SmoothScroll>
       <Router>
         <GsapLenisSync />
         <ScrollToTop />
-        <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
+        <div className="relative min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
           <Navbar />
           <Suspense fallback={<Loading />}>
             <Routes>
@@ -38,6 +59,7 @@ export default function App() {
               <Route path="/project/:id" element={<ProjectDetail />} />
             </Routes>
           </Suspense>
+          <GradualBlurExceptHome />
         </div>
       </Router>
     </SmoothScroll>

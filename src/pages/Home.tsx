@@ -1,6 +1,5 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { useLenis } from 'lenis/react';
 import Hero from '../components/Hero';
 import Intro from '../components/Intro';
 import Portfolio from '../components/Portfolio';
@@ -8,53 +7,94 @@ import Services from '../components/Services';
 import Team from '../components/Team';
 import Footer from '../components/Footer';
 
-gsap.registerPlugin(ScrollTrigger);
-
+/**
+ * Main background follows scroll position. Rules (simple, in order):
+ * 1) Before portfolio threshold → black
+ * 2) Portfolio + Services, team not yet in view → white
+ * 3) Team entering → grayscale ramp to black
+ *
+ * Do not call ScrollTrigger.refresh() here — it relayouts sticky sections and makes this feel broken.
+ * Lenis + window scroll both schedule updates so color stays in sync with smooth or native scroll.
+ */
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
+  const rafRef = useRef(0);
+
+  const updateMainBg = useCallback(() => {
+    const mainEl = mainRef.current;
+    const portfolio = document.getElementById('portfolio-trigger');
+    const team = document.getElementById('team');
+    if (!mainEl || !portfolio || !team) return;
+
+    const vp = window.innerHeight;
+    const ptTop = portfolio.getBoundingClientRect().top;
+    const teamTop = team.getBoundingClientRect().top;
+
+    const portfolioLine = vp * 0.44;
+    const teamBlendEnd = vp * 0.38;
+
+    let bg: string;
+    let surface: 'light' | 'dark';
+
+    if (ptTop > portfolioLine) {
+      bg = '#000000';
+      surface = 'dark';
+    } else if (teamTop > vp) {
+      bg = '#ffffff';
+      surface = 'light';
+    } else if (teamTop <= teamBlendEnd) {
+      bg = '#000000';
+      surface = 'dark';
+    } else {
+      const span = vp - teamBlendEnd;
+      const t = span > 0 ? Math.max(0, Math.min(1, (teamTop - teamBlendEnd) / span)) : 0;
+      const v = Math.round(255 * t);
+      bg = `rgb(${v},${v},${v})`;
+      surface = v > 165 ? 'light' : 'dark';
+    }
+
+    mainEl.style.backgroundColor = bg;
+    mainEl.setAttribute('data-surface', surface);
+  }, []);
+
+  const schedule = useCallback(() => {
+    if (rafRef.current) return;
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = 0;
+      updateMainBg();
+    });
+  }, [updateMainBg]);
+
+  useLenis(
+    useCallback(() => {
+      schedule();
+    }, [schedule])
+  );
+
+  useLayoutEffect(() => {
+    updateMainBg();
+  }, [updateMainBg]);
 
   useEffect(() => {
-    const main = () => mainRef.current;
-    const toBg = (color: string) => {
-      const el = main();
-      if (!el) return;
-      const isLight = color.toLowerCase() === '#ffffff';
-      el.setAttribute('data-surface', isLight ? 'light' : 'dark');
-      gsap.killTweensOf(el);
-      gsap.to(el, { backgroundColor: color, duration: 0.8, overwrite: 'auto' });
-    };
+    const onResize = () => schedule();
 
-    const ctx = gsap.context(() => {
-      const stCommon = { scroller: document.documentElement };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', onResize);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', onResize);
+    }
 
-      // One continuous black field (no opaque section bg); flash white only after scrolling into the portfolio block
-      ScrollTrigger.create({
-        ...stCommon,
-        trigger: '#portfolio-trigger',
-        start: 'top 44%',
-        onEnter: () => toBg('#ffffff'),
-        onLeaveBack: () => toBg('#000000'),
-      });
-
-      ScrollTrigger.create({
-        ...stCommon,
-        trigger: '#team',
-        start: 'top 42%',
-        onEnter: () => toBg('#000000'),
-        onEnterBack: () => toBg('#000000'),
-        onLeaveBack: () => toBg('#ffffff'),
-      });
-    }, mainRef);
-
-    const refresh = () => ScrollTrigger.refresh();
-    requestAnimationFrame(refresh);
-    const t = window.setTimeout(refresh, 300);
+    schedule();
 
     return () => {
-      window.clearTimeout(t);
-      ctx.revert();
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', onResize);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', onResize);
+      }
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [schedule]);
 
   return (
     <main ref={mainRef} className="flex flex-col w-full bg-black" data-surface="dark">

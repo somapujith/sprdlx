@@ -22,13 +22,14 @@ export default function Intro() {
       gsap.to(words, {
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 75%",
-          end: "center center",
-          scrub: 1,
+          start: 'top 75%',
+          end: 'center center',
+          scrub: 1.25,
+          invalidateOnRefresh: true,
         },
         opacity: 1,
-        stagger: 0.1,
-        ease: "none",
+        stagger: 0.04,
+        ease: 'none',
       });
     }, containerRef);
 

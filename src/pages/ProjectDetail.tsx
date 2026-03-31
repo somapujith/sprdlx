@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import Footer from '../components/Footer';
 
 const ESTHETIC_LOGO_SRC = '/projects/esthetic-insights/esthetic-insights-logo.svg';
+const PULP_LOGO_SRC = '/projects/pulp/logo.png';
 
 const projectsData = {
   'anthill': {
@@ -35,7 +36,11 @@ const projectsData = {
   'pulp': {
     title: 'Pulp',
     desc: 'A creative storytelling platform for the next generation of writers.',
-    heroImg: 'https://picsum.photos/seed/pulp-hero/1920/800',
+    heroImg: '/projects/pulp/hero.png',
+    heroOverlay: {
+      title: 'pulp',
+      tagline: 'Skincare for everyone.',
+    },
     logo: 'Pulp',
     logoIcon: '✶',
     industry: 'Creative',
@@ -46,10 +51,7 @@ const projectsData = {
     backedBy: 'Y Combinator',
     backedByLogo: 'Y',
     about: 'Pulp is a creative storytelling platform designed to empower the next generation of writers with collaborative tools and AI-enhanced narrative structures.',
-    images: [
-      'https://picsum.photos/seed/pulp-1/1200/800',
-      'https://picsum.photos/seed/pulp-2/1920/1080',
-    ],
+    images: ['/projects/pulp/hero.png', '/projects/pulp/cosmic-dew.png'],
     next: 'esthetic-insights',
     prev: 'anthill'
   },
@@ -123,6 +125,7 @@ export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const project = id ? projectsData[id as keyof typeof projectsData] : null;
   const isEsthetic = id === 'esthetic-insights';
+  const isPulp = id === 'pulp';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -149,6 +152,30 @@ export default function ProjectDetail() {
                 <h1 className="m-0 font-sans font-bold uppercase tracking-[0.14em] text-white text-lg sm:text-xl md:text-2xl lg:text-3xl leading-tight">
                   ESTHETIC INSIGHTS
                 </h1>
+              </div>
+            ) : isPulp ? (
+              <div className="flex max-w-[min(96vw,56rem)] flex-col items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-8 py-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-xl md:px-14 md:py-9">
+                <div className="relative flex w-full flex-col items-center gap-5 text-center">
+                  <div
+                    className="pointer-events-none absolute left-1/2 top-0 h-36 w-36 -translate-x-1/2 -translate-y-1 rounded-full bg-fuchsia-500/45 blur-3xl md:h-44 md:w-44"
+                    aria-hidden
+                  />
+                  <img
+                    src={PULP_LOGO_SRC}
+                    alt=""
+                    className="relative z-10 h-16 w-16 object-contain md:h-[min(20vh,150px)] md:w-[min(20vh,150px)]"
+                    decoding="async"
+                    draggable={false}
+                  />
+                  <div className="relative z-10 flex flex-col items-center gap-2">
+                    <h1 className="m-0 font-sans text-3xl font-bold lowercase tracking-tight text-white md:text-4xl">
+                      {projectsData.pulp.heroOverlay.title}
+                    </h1>
+                    <p className="m-0 max-w-[18rem] text-[0.65rem] font-semibold uppercase leading-snug tracking-[0.22em] text-white/95 md:text-xs md:tracking-[0.24em]">
+                      {projectsData.pulp.heroOverlay.tagline}
+                    </p>
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-10 py-5 rounded-full flex items-center gap-4">
@@ -182,6 +209,20 @@ export default function ProjectDetail() {
                   />
                   <h2 className="text-4xl font-bold tracking-tight">{project.title}</h2>
                 </>
+              ) : isPulp ? (
+                <>
+                  <img
+                    src={PULP_LOGO_SRC}
+                    alt=""
+                    width={128}
+                    height={128}
+                    className="h-14 w-14 shrink-0 object-contain md:h-16 md:w-16"
+                    decoding="async"
+                    draggable={false}
+                    aria-hidden
+                  />
+                  <h2 className="text-4xl font-bold tracking-tight">{project.title}</h2>
+                </>
               ) : (
                 <>
                   <div className="w-12 h-12 rounded-xl bg-zinc-900 flex items-center justify-center border border-white/10">
@@ -197,13 +238,36 @@ export default function ProjectDetail() {
           </div>
           
           <div className="mt-16">
-            <button className="inline-flex items-center gap-4 px-6 py-3 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all duration-300 group">
-              <div className="w-8 h-8 rounded-full border border-current flex items-center justify-center overflow-hidden relative">
-                 <svg className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                   <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
-                 </svg>
-              </div>
-              <span className="text-sm font-medium">View work</span>
+            <button
+              type="button"
+              className="group inline-flex cursor-pointer items-center gap-4 border-0 bg-transparent px-0 py-2 text-left transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/35"
+            >
+              <span className="view-work-icon inline-flex h-8 w-8 shrink-0 items-center justify-center" aria-hidden>
+                <svg
+                  className="h-8 w-8"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeWidth="1.35"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 9V3h6M15 3h6v6M3 15v6h6M21 15v6h-6"
+                  />
+                  <path
+                    stroke="currentColor"
+                    strokeWidth="1.35"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 12h5M14 12l-2-2M14 12l-2 2"
+                  />
+                </svg>
+              </span>
+              <span className="view-work-chromatic font-serif text-base font-normal italic tracking-tight text-zinc-100">
+                View work
+              </span>
             </button>
           </div>
         </div>
@@ -285,7 +349,7 @@ export default function ProjectDetail() {
         <div className="w-full lg:w-1/2">
           <img 
             src={project.images[0]} 
-            alt={`${project.title} detail`} 
+            alt={project.title === 'Pulp' ? 'Pulp skincare product lineup on blue hexagonal pedestals' : `${project.title} detail`}
             className="w-full rounded-3xl shadow-2xl" 
             referrerPolicy="no-referrer"
           />
@@ -298,7 +362,7 @@ export default function ProjectDetail() {
           <div className="max-w-[1400px] mx-auto">
             <img 
               src={project.images[1]} 
-              alt={`${project.title} showcase`} 
+              alt={project.title === 'Pulp' ? 'Pulp Cosmic Dew AHA BHA PHA clarifying exfoliating toner' : `${project.title} showcase`}
               className="w-full rounded-[2rem] shadow-2xl" 
               referrerPolicy="no-referrer"
             />

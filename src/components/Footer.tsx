@@ -1,33 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ImageTrail from '@/components/ImageTrail';
-
-/** Images cycled by ImageTrail (variant 2); needs several URLs for the effect. */
-const BUILD_WITH_US_TRAIL_IMAGES = [
-  'https://picsum.photos/seed/sprdlx-trail-1/400/400',
-  'https://picsum.photos/seed/sprdlx-trail-2/400/400',
-  'https://picsum.photos/seed/sprdlx-trail-3/400/400',
-  'https://picsum.photos/seed/sprdlx-trail-4/400/400',
-  'https://picsum.photos/seed/sprdlx-trail-5/400/400',
-  'https://picsum.photos/seed/sprdlx-trail-6/400/400',
-  'https://picsum.photos/seed/sprdlx-trail-7/400/400',
-  'https://picsum.photos/seed/sprdlx-trail-8/400/400',
-];
+import TextCursor from './TextCursor';
 
 export default function Footer() {
   return (
     <footer className="w-full flex flex-col relative z-10">
       {/* Build with us */}
       <div className="w-full py-24 md:py-32 lg:py-40 flex flex-col items-center justify-center relative overflow-hidden bg-black text-white">
-        <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center p-4">
-          <div
-            className="pointer-events-auto relative aspect-square w-full max-w-[1080px] max-h-[min(1080px,85vh)]"
-            style={{ position: 'relative' }}
-          >
-            <ImageTrail variant={2} items={BUILD_WITH_US_TRAIL_IMAGES} />
-          </div>
+        <div
+          className="absolute inset-0 z-0 opacity-30 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/20 via-black to-black blur-3xl pointer-events-none"
+          aria-hidden
+        />
+        <div className="absolute inset-0 z-[1] pointer-events-none" aria-hidden>
+          <TextCursor
+            text="Lets Work!"
+            spacing={80}
+            followMouseDirection
+            randomFloat
+            exitDuration={0.3}
+            removalInterval={20}
+            maxPoints={10}
+          />
         </div>
-        <div className="absolute inset-0 z-[1] opacity-30 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/20 via-black to-black blur-3xl pointer-events-none" />
         <h2 className="text-5xl md:text-7xl font-serif mb-12 relative z-10">Build with us.</h2>
         <Link to="/contact" className="group flex items-center gap-3 text-lg font-serif italic transition-opacity relative z-10 pointer-events-auto">
           <span className="relative flex items-center justify-center w-10 h-10 border border-white/30 rounded-sm overflow-hidden">

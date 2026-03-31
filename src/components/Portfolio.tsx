@@ -3,9 +3,17 @@ import { Link } from 'react-router-dom';
 import AnimatedText from './AnimatedText';
 
 const projects = [
-  { id: 1, slug: 'anthill', title: 'Anthill', desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, and LP reporting.', img: 'https://picsum.photos/seed/anthill/1200/1200', logo: 'Anthill', logoIcon: '✦' },
-  { id: 2, slug: 'pulp', title: 'Pulp', desc: 'A creative storytelling platform for the next generation of writers.', img: 'https://picsum.photos/seed/pulp/1200/1200', logo: 'Pulp', logoIcon: '✶' },
-  { id: 3, slug: 'esthetic-insights', title: 'Esthetic Insights', desc: 'Data-driven design analytics to optimize your visual identity.', img: 'https://picsum.photos/seed/esthetic/1200/1200', logo: 'Esthetic', logoIcon: '✦' },
+  { id: 1, slug: 'anthill', title: 'Anthill', desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, and LP reporting.', img: '/projects/anthill/hero.png', logo: 'Anthill', logoIcon: '✦' },
+  { id: 2, slug: 'pulp', title: 'Pulp', desc: 'A creative storytelling platform for the next generation of writers.', img: '/projects/pulp/hero.png', logo: 'Pulp', logoIcon: '✶' },
+  {
+    id: 3,
+    slug: 'esthetic-insights',
+    title: 'Esthetic Insights',
+    desc: 'Data-driven design analytics to optimize your visual identity.',
+    img: '/projects/esthetic-insights/esthetic-product-hero.png',
+    logo: 'Esthetic Insights',
+    logoIcon: undefined,
+  },
   { id: 4, slug: 'volery', title: 'Volery', desc: 'Collaborative workspace designed for high-performance distributed teams.', img: 'https://picsum.photos/seed/volery/1200/1200', logo: 'Volery', logoIcon: '✶' },
   { id: 5, slug: 'jay', title: 'Jay', desc: 'Your personal AI assistant for seamless productivity and focus.', img: 'https://picsum.photos/seed/jay/1200/1200', logo: 'Jay', logoIcon: '✦' },
 ];
@@ -26,12 +34,54 @@ export default function Portfolio() {
               className="sticky flex flex-col md:flex-row bg-[#f4f4f4] rounded-[2rem] overflow-hidden shadow-2xl border border-black/5"
               style={{ top: `${120 + index * 20}px` }}
             >
-              <div className="w-full md:w-1/2 aspect-square md:aspect-auto md:h-[600px] relative overflow-hidden bg-zinc-200">
-                <img src={project.img} alt={project.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" loading="lazy" />
-                <div className="absolute top-8 left-8 text-white font-bold text-3xl drop-shadow-md flex items-center gap-2">
-                  {project.logoIcon && <span className="text-4xl">{project.logoIcon}</span>}
-                  {project.logo}
-                </div>
+              <div className="w-full md:w-1/2 aspect-square md:aspect-auto md:h-[600px] relative overflow-hidden bg-zinc-900">
+                <img
+                  src={project.img}
+                  alt={project.title}
+                  className={
+                    project.slug === 'esthetic-insights' || project.slug === 'anthill' || project.slug === 'pulp'
+                      ? 'w-full h-full object-cover bg-black'
+                      : 'w-full h-full object-contain bg-black'
+                  }
+                  referrerPolicy="no-referrer"
+                  loading="lazy"
+                />
+                {project.slug === 'esthetic-insights' ? (
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/25 p-6 md:p-10">
+                    <img
+                      src="/projects/esthetic-insights/EI%20logo%202.svg"
+                      alt="Esthetic Insights"
+                      className="h-auto w-[min(88%,min(420px,90vw))] max-h-[42%] object-contain brightness-0 invert drop-shadow-[0_4px_32px_rgba(0,0,0,0.5)]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                ) : project.slug === 'anthill' ? (
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/25 p-6 md:p-10">
+                    <img
+                      src="/projects/anthill/Anthill%20Ventures%20Logo.svg"
+                      alt="Anthill"
+                      className="h-auto w-[min(92%,min(520px,92vw))] max-h-[36%] object-contain drop-shadow-[0_4px_32px_rgba(0,0,0,0.5)]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                ) : project.slug === 'pulp' ? (
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/25 p-6 md:p-10">
+                    <img
+                      src="/projects/pulp/logo.png"
+                      alt="Pulp"
+                      className="h-auto w-[min(42%,min(280px,50vw))] aspect-square max-h-[40%] object-contain drop-shadow-[0_4px_32px_rgba(0,0,0,0.5)]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                ) : (
+                  <div className="absolute top-8 left-8 text-white font-bold text-3xl drop-shadow-md flex items-center gap-2">
+                    {project.logoIcon && <span className="text-4xl">{project.logoIcon}</span>}
+                    {project.logo}
+                  </div>
+                )}
               </div>
               <div className="w-full md:w-1/2 p-10 md:p-20 flex flex-col justify-between">
                 <div>
