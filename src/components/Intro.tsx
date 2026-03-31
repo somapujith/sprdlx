@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, lazy, Suspense } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const DitherTorusKnot = lazy(() => import('./DitherTorusKnot'));
 
 export default function Intro() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -16,16 +18,14 @@ export default function Intro() {
       
       if (!words) return;
 
-      // Set initial state
       gsap.set(words, { opacity: 0.15 });
 
-      // Create the scrubbed scroll animation
       gsap.to(words, {
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 75%", // Start when top of section hits 75% down the viewport
-          end: "center center", // End when center of section hits center of viewport
-          scrub: 1, // Smooth scrubbing
+          start: "top 75%",
+          end: "center center",
+          scrub: 1,
         },
         opacity: 1,
         stagger: 0.1,
@@ -45,9 +45,23 @@ export default function Intro() {
   return (
     <section
       ref={containerRef}
-      className="text-white py-32 px-8 min-h-screen flex items-center relative z-10"
+      className="text-white py-32 px-8 min-h-screen flex items-center relative z-10 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto w-full">
+      {/* Dither Torus Knot — floating on right side behind text */}
+      <div className="pointer-events-none absolute right-[-8%] top-1/2 -translate-y-1/2 w-[55vw] max-w-[700px] aspect-square opacity-40 md:opacity-50" aria-hidden>
+        <Suspense fallback={null}>
+          <DitherTorusKnot
+            className="w-full h-full"
+            color1="#ffffff"
+            color2="#000000"
+            pixelSize={3}
+            lightDir={[1, 0.8, 0.6]}
+            cameraZ={4}
+          />
+        </Suspense>
+      </div>
+
+      <div className="max-w-7xl mx-auto w-full relative z-10">
         <h2 ref={textRef} className="text-4xl md:text-5xl lg:text-7xl font-serif leading-[1.2] tracking-tight max-w-5xl">
           {wrapWords("We build")}
           <span className="word-reveal inline-block mx-2 align-middle">

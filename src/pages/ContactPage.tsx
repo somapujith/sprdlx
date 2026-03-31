@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { motion } from 'motion/react';
 import Footer from '../components/Footer';
+
+const DitherTorusKnot = lazy(() => import('../components/DitherTorusKnot'));
 
 export default function ContactPage() {
   return (
@@ -42,7 +44,7 @@ export default function ContactPage() {
                   placeholder="Tell us about your project..." 
                   className="w-full bg-transparent border-b border-white/20 py-4 outline-none focus:border-white transition-colors text-xl font-serif italic pr-10"
                 />
-                <span className="absolute right-0 bottom-5 text-zinc-500">
+                <span className="absolute right-0 bottom-5 text-white/40">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                   </svg>
@@ -62,7 +64,7 @@ export default function ContactPage() {
                   Book a call with us
                 </a>
 
-                <div className="flex gap-12 text-sm font-medium text-zinc-400 uppercase tracking-widest mt-4">
+                <div className="flex gap-12 text-sm font-medium text-white/40 uppercase tracking-widest mt-4">
                   <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
                   <a href="#" className="hover:text-white transition-colors">X</a>
                 </div>
@@ -70,17 +72,24 @@ export default function ContactPage() {
             </form>
           </div>
 
-          {/* Right Side: Image & Addresses */}
-          <div className="relative h-[70vh] lg:h-[85vh] rounded-3xl overflow-hidden group">
-            <img 
-              src="https://picsum.photos/seed/daisies-field/1200/1600" 
-              alt="Daisies field" 
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-              referrerPolicy="no-referrer"
-            />
-            <div className="absolute inset-0 bg-black/10"></div>
+          {/* Right Side: 3D Dither Torus Knot + Addresses */}
+          <div className="relative h-[70vh] lg:h-[85vh] rounded-3xl overflow-hidden bg-black/40 border border-white/5">
+            <Suspense fallback={
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="w-10 h-10 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+              </div>
+            }>
+              <DitherTorusKnot
+                className="w-full h-full"
+                color1="#ffffff"
+                color2="#000000"
+                pixelSize={2.5}
+                lightDir={[0.8, 1, 0.5]}
+                cameraZ={3.8}
+              />
+            </Suspense>
             
-            <div className="absolute bottom-12 left-12 right-12 flex flex-col md:flex-row justify-between gap-8 text-white">
+            <div className="absolute bottom-12 left-12 right-12 flex flex-col md:flex-row justify-between gap-8 text-white z-10">
               <div className="flex flex-col gap-1">
                 <span className="text-sm font-bold tracking-tight">Strandgade 26</span>
                 <span className="text-sm font-bold tracking-tight">København K 1401</span>
