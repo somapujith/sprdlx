@@ -8,17 +8,14 @@ import Team from '../components/Team';
 import Footer from '../components/Footer';
 
 /**
- * Main background follows scroll position. Rules (simple, in order):
- * 1) Before portfolio threshold → black
- * 2) Portfolio + Services, team not yet in view → white
- * 3) Team entering → grayscale ramp to black
- *
- * Do not call ScrollTrigger.refresh() here — it relayouts sticky sections and makes this feel broken.
- * Lenis + window scroll both schedule updates so color stays in sync with smooth or native scroll.
+ * Scroll-driven main background. Lenis often does not emit native `window` `scroll` events,
+ * so we subscribe to `lenis.on('scroll')` directly. Tailwind `bg-*` on `<main>` can also override
+ * inline colors — use JS-only background on `main`.
  */
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
   const rafRef = useRef(0);
+  const lenis = useLenis();
 
   const updateMainBg = useCallback(() => {
     const mainEl = mainRef.current;
@@ -65,27 +62,30 @@ export default function Home() {
     });
   }, [updateMainBg]);
 
-  useLenis(
-    useCallback(() => {
-      schedule();
-    }, [schedule])
-  );
-
   useLayoutEffect(() => {
     updateMainBg();
   }, [updateMainBg]);
 
+  /** Primary: Lenis fires every tick while smooth-scrolling (window scroll often does not). */
+  useEffect(() => {
+    if (!lenis) return;
+    const onScroll = () => schedule();
+    lenis.on('scroll', onScroll);
+    schedule();
+    return () => {
+      lenis.off('scroll', onScroll);
+    };
+  }, [lenis, schedule]);
+
+  /** Fallback for environments where native scroll still fires. */
   useEffect(() => {
     const onResize = () => schedule();
-
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', onResize);
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', onResize);
     }
-
     schedule();
-
     return () => {
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', onResize);
@@ -97,7 +97,12 @@ export default function Home() {
   }, [schedule]);
 
   return (
-    <main ref={mainRef} className="flex flex-col w-full bg-black" data-surface="dark">
+    <main
+      ref={mainRef}
+      className="flex flex-col w-full"
+      style={{ backgroundColor: '#000000' }}
+      data-surface="dark"
+    >
       <Hero />
       <Intro />
       <div id="portfolio-trigger">
