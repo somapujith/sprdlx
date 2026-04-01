@@ -192,11 +192,7 @@ export default function Hero() {
     <div id="section-hero" ref={outerRef} className="relative min-h-[200vh] w-full">
       <section className="sticky top-0 z-10 flex min-h-screen w-full flex-col justify-end overflow-hidden isolate px-8 pt-28 pb-24 md:pt-32 md:pb-32">
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-4 h-[min(62vh,32rem)]"
-          style={{
-            background:
-              'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 15%, rgba(0,0,0,0.45) 38%, rgba(0,0,0,0.82) 68%, #000 100%)',
-          }}
+          className="hero-floor-shadow pointer-events-none absolute inset-x-0 bottom-0 z-4 h-[min(62vh,32rem)]"
           aria-hidden
         />
 
@@ -208,36 +204,33 @@ export default function Hero() {
           className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center"
           aria-hidden
         >
-          <div ref={fullWordmarkRef} className="hero-wordmark-stage text-white">
+          <div ref={fullWordmarkRef} className="hero-wordmark-stage text-[color:var(--theme-ink)]">
             <SprdlxLogoMark className="h-auto w-full" />
           </div>
         </div>
 
         <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-start text-left pointer-events-none">
           <div ref={logoRef} className="mb-5 md:mb-6 opacity-0 pointer-events-auto">
-            <SprdlxLogoMark className="h-7 w-auto md:h-8 text-[#ccff00]" />
+            <SprdlxLogoMark className="h-7 w-auto md:h-8 text-[color:var(--theme-accent)]" />
           </div>
 
           <p
             ref={eyebrowRef}
-            className="mb-4 md:mb-5 opacity-0 text-[0.6rem] sm:text-[0.65rem] font-mono font-medium uppercase tracking-[0.26em] text-[#ccff00]/70 pointer-events-auto"
+            className="mb-4 md:mb-5 opacity-0 text-[0.6rem] sm:text-[0.65rem] font-mono font-medium uppercase tracking-[0.26em] text-[color:var(--theme-accent)] pointer-events-auto"
+            style={{ opacity: 0.8 }}
           >
             {heroEyebrow}
           </p>
           <h1
             ref={textRef}
             aria-label={heroText.replace(/\r?\n/g, ' ')}
-            className="hero-headline font-serif text-left text-white tracking-[-0.035em] pointer-events-auto"
+            className="hero-headline font-serif text-left text-[color:var(--theme-ink)] tracking-[-0.035em] pointer-events-auto"
           />
         </div>
 
         <div
           ref={tickerRef}
-          className="absolute bottom-0 left-0 right-0 z-10 w-full opacity-0 pt-14 md:pt-20 pointer-events-none"
-          style={{
-            background:
-              'linear-gradient(to top, rgb(0 0 0 / 0.97) 0%, rgb(0 0 0 / 0.72) 32%, rgb(0 0 0 / 0.28) 58%, rgb(0 0 0 / 0.06) 78%, transparent 100%)',
-          }}
+          className="hero-ticker-fade absolute bottom-0 left-0 right-0 z-10 w-full opacity-0 pt-14 md:pt-20 pointer-events-none"
         >
           <div
             className="w-full px-8 overflow-hidden"

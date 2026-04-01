@@ -49,13 +49,13 @@ export default function SectionChapters() {
       aria-label="Page sections"
       className="pointer-events-none fixed right-5 top-1/2 z-[39] hidden -translate-y-1/2 md:block xl:right-8"
     >
-      <ol className="flex flex-col gap-3 border-l border-white/10 pl-4 font-mono text-[0.62rem] uppercase tracking-[0.28em] text-white/30">
+      <ol className="flex flex-col gap-3 border-l border-[color:var(--theme-border-soft)] pl-4 font-mono text-[0.62rem] uppercase tracking-[0.28em] text-[color:var(--theme-muted)]">
         {CHAPTERS.map((ch, i) => (
           <li
             key={ch.label}
             className={
               active === i
-                ? 'text-[#ccff00] [text-shadow:0_0_24px_rgba(204,255,0,0.25)]'
+                ? 'text-[color:var(--theme-accent)] [text-shadow:0_0_24px_var(--theme-accent-glow)]'
                 : 'transition-colors duration-300'
             }
           >

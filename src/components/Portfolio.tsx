@@ -21,25 +21,25 @@ const projects = [
 
 export default function Portfolio() {
   return (
-    <section id="work" className="text-black py-32 px-8 relative z-10 min-h-[1px]">
+    <section id="work" className="portfolio-section py-32 px-8 relative z-10 min-h-[1px]">
       <div className="pointer-events-none absolute inset-0 z-0">
         <HalftoneDotField opacity={0.045} grid={34} dotMax={1.5} />
       </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="flex justify-between items-end mb-20">
-          <AnimatedText as="h2" text="We've done a lot. Here are some highlights" className="text-3xl md:text-5xl font-serif text-zinc-400 max-w-md" />
-          <span className="text-xs font-medium uppercase tracking-widest text-zinc-400 hidden md:block">Portfolio</span>
+          <AnimatedText as="h2" text="We've done a lot. Here are some highlights" className="portfolio-title text-3xl md:text-5xl font-serif max-w-md" />
+          <span className="portfolio-kicker text-xs font-medium uppercase tracking-widest hidden md:block">Portfolio</span>
         </div>
 
         <div className="relative flex flex-col gap-12 pb-32">
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className="sticky flex flex-col md:flex-row bg-[#f4f4f4] rounded-[2rem] overflow-hidden shadow-2xl border border-black/5"
+              className="portfolio-card sticky flex flex-col md:flex-row rounded-[2rem] overflow-hidden border"
               style={{ top: `${120 + index * 20}px` }}
             >
-              <div className="w-full md:w-1/2 aspect-square md:aspect-auto md:h-[600px] relative overflow-hidden bg-zinc-900">
+              <div className="w-full md:w-1/2 aspect-square md:aspect-auto md:h-[600px] relative overflow-hidden bg-[color:var(--theme-canvas-strong)]">
                 {'placeholder' in project && project.placeholder ? (
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-[linear-gradient(145deg,#080808_0%,#2a2a2e_48%,#0c0c0c_100%)]">
                     <div
@@ -55,7 +55,7 @@ export default function Portfolio() {
                         {project.logoIcon}
                       </span>
                       <span className="text-white font-bold text-2xl tracking-tight">{project.logo}</span>
-                      <p className="mt-3 text-xs uppercase tracking-[0.2em] text-zinc-500">Visual coming soon</p>
+                      <p className="mt-3 text-xs uppercase tracking-[0.2em] text-[color:var(--theme-muted)]">Visual coming soon</p>
                     </div>
                   </div>
                 ) : (
@@ -111,14 +111,14 @@ export default function Portfolio() {
               <div className="w-full md:w-1/2 p-10 md:p-20 flex flex-col justify-between">
                 <div>
                   <AnimatedText as="h3" text={project.title} className="text-3xl font-serif mb-6" />
-                  <AnimatedText as="p" text={project.desc} className="text-zinc-500 text-lg leading-relaxed max-w-sm" />
+                  <AnimatedText as="p" text={project.desc} className="portfolio-description text-lg leading-relaxed max-w-sm" />
                 </div>
                 <VTLink
                   to={`/project/${project.slug}`}
                   data-cursor="view"
                   className="group flex items-center gap-3 text-sm font-medium transition-opacity mt-12 w-fit"
                 >
-                  <span className="relative flex items-center justify-center w-10 h-10 border border-black/20 rounded-sm overflow-hidden">
+                  <span className="relative flex items-center justify-center w-10 h-10 border border-[color:var(--theme-border)] rounded-sm overflow-hidden">
                     <svg className="transition-transform duration-300 ease-in-out group-hover:translate-x-8" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>

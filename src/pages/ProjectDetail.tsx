@@ -143,7 +143,7 @@ export default function ProjectDetail() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
+    <main className="theme-shell min-h-screen text-[color:var(--theme-ink)]">
       {/* Hero */}
       <section className="w-full px-4 md:px-8 pt-24 pb-8" aria-labelledby="project-hero-title">
         <div className="w-full h-[40vh] md:h-[50vh] relative overflow-hidden rounded-[2rem]">

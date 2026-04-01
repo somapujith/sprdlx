@@ -75,7 +75,7 @@ export default function Services() {
   return (
     <section
       ref={containerRef}
-      className="relative z-10 min-h-[1px] bg-transparent text-black px-6 sm:px-8 py-24 md:py-32 overflow-hidden"
+      className="services-section relative z-10 min-h-[1px] bg-transparent px-6 sm:px-8 py-24 md:py-32 overflow-hidden"
     >
       <div className="pointer-events-none absolute inset-0 z-0">
         <HalftoneDotField opacity={0.07} grid={30} dotMax={1.8} />
@@ -83,12 +83,12 @@ export default function Services() {
 
       <div className="relative z-10 max-w-6xl mx-auto w-full">
         <header className="text-center blur-reveal mb-16 md:mb-20 lg:mb-24">
-          <p className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.28em] text-zinc-400 mb-5 md:mb-6">
+          <p className="services-meta text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.28em] mb-5 md:mb-6">
             Who we work with
           </p>
-          <h2 className="font-serif text-[1.75rem] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem] leading-[1.18] tracking-[-0.02em] text-zinc-400 max-w-[22ch] sm:max-w-2xl lg:max-w-3xl mx-auto">
+          <h2 className="services-copy font-serif text-[1.75rem] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem] leading-[1.18] tracking-[-0.02em] max-w-[22ch] sm:max-w-2xl lg:max-w-3xl mx-auto">
             We work with anyone using AI.{' '}
-            <span className="text-zinc-900">Especially these guys.</span>
+            <span className="services-copy-strong">Especially these guys.</span>
           </h2>
         </header>
 
@@ -96,18 +96,18 @@ export default function Services() {
           {COLUMNS.map((col) => (
             <article
               key={col.id}
-              className="blur-reveal group flex flex-col rounded-2xl border border-zinc-200/80 bg-zinc-50/40 p-6 sm:p-7 md:p-6 lg:p-7 shadow-[0_1px_0_0_rgb(0_0_0_/0.04)] transition-shadow duration-300 hover:shadow-[0_12px_40px_-12px_rgb(0_0_0_/0.12)] hover:border-zinc-300/90"
+              className="service-card blur-reveal group flex flex-col rounded-2xl border p-6 sm:p-7 md:p-6 lg:p-7 transition-shadow duration-300"
             >
               <div className="mb-6 md:mb-7">
-                <h3 className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-zinc-400 mb-3">
+                <h3 className="services-meta text-[0.65rem] font-semibold uppercase tracking-[0.22em] mb-3">
                   {col.label}
                 </h3>
-                <p className="font-serif text-[1.0625rem] sm:text-lg lg:text-[1.125rem] leading-[1.55] text-zinc-600">
+                <p className="services-copy font-serif text-[1.0625rem] sm:text-lg lg:text-[1.125rem] leading-[1.55]">
                   {col.body}
                 </p>
               </div>
 
-              <figure className="relative mb-6 md:mb-7 overflow-hidden rounded-xl bg-zinc-200/80 aspect-16/10 ring-1 ring-black/6">
+              <figure className="relative mb-6 md:mb-7 overflow-hidden rounded-xl bg-[color:var(--theme-card-quiet)] aspect-16/10 ring-1 ring-[color:var(--theme-border)]">
                 <img
                   src={col.img}
                   alt=""
@@ -121,15 +121,15 @@ export default function Services() {
                 />
               </figure>
 
-              <div className="mt-auto border-t border-zinc-200/90 pt-5 md:pt-6">
-                <p className="text-[0.6rem] sm:text-[0.65rem] font-medium uppercase tracking-[0.2em] text-zinc-400 mb-3.5">
+              <div className="mt-auto border-t border-[color:var(--theme-border)] pt-5 md:pt-6">
+                <p className="services-meta text-[0.6rem] sm:text-[0.65rem] font-medium uppercase tracking-[0.2em] mb-3.5">
                   Teams like
                 </p>
-                <ul className="flex flex-wrap items-center gap-x-1 gap-y-2 text-[0.8125rem] sm:text-sm font-medium text-zinc-500">
+                <ul className="services-copy flex flex-wrap items-center gap-x-1 gap-y-2 text-[0.8125rem] sm:text-sm font-medium">
                   {col.partners.map((name, i) => (
                     <li key={name} className="flex items-center gap-x-1">
                       {i > 0 && (
-                        <span className="mx-2 text-zinc-300 select-none" aria-hidden>
+                        <span className="services-meta mx-2 select-none" aria-hidden>
                           ·
                         </span>
                       )}

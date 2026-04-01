@@ -23,7 +23,7 @@ const projects = [
 
 export default function PortfolioPage() {
   return (
-    <main className="bg-black text-white min-h-screen">
+    <main className="theme-shell min-h-screen text-[color:var(--theme-ink)]">
       {/* DarkVeil Hero */}
       <div className="relative h-screen w-full overflow-hidden flex flex-col justify-center px-8 md:px-20">
         <div className="absolute inset-0 z-0">
@@ -38,7 +38,7 @@ export default function PortfolioPage() {
               resolutionScale={1.75}
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--theme-canvas-strong)] via-transparent to-[color:var(--theme-canvas-strong)]" />
         </div>
         
         <div className="relative z-10 w-full mt-24">
@@ -47,7 +47,7 @@ export default function PortfolioPage() {
           </h1>
           <div className="mt-12 max-w-xl">
             <h2 className="text-3xl md:text-5xl font-serif italic mb-4 tracking-tight">Some of our favourite projects.</h2>
-            <p className="text-zinc-500 text-sm font-medium uppercase tracking-widest">Build with our team</p>
+              <p className="text-[color:var(--theme-muted)] text-sm font-medium uppercase tracking-widest">Build with our team</p>
           </div>
         </div>
       </div>
@@ -117,7 +117,7 @@ export default function PortfolioPage() {
               
               <div className="mt-8 flex items-start gap-5">
                 <div 
-                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-xl border border-white/5 overflow-hidden p-1"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-xl border border-[color:var(--theme-border-soft)] overflow-hidden p-1"
                   style={{ backgroundColor: project.iconBg }}
                 >
                   {project.slug === 'esthetic-insights' ? (
@@ -155,7 +155,7 @@ export default function PortfolioPage() {
                 </div>
                 <div className="flex-1">
                   <h4 className="font-bold text-lg mb-1 tracking-tight">{project.title}</h4>
-                  <p className="text-zinc-500 text-sm leading-relaxed line-clamp-2 font-medium">{project.desc}</p>
+                  <p className="text-[color:var(--theme-muted)] text-sm leading-relaxed line-clamp-2 font-medium">{project.desc}</p>
                 </div>
               </div>
             </VTLink>

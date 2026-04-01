@@ -65,13 +65,13 @@ export default function Team() {
   }, []);
 
   return (
-    <section id="team" className="text-white py-32 md:py-40 px-8 overflow-hidden relative z-10" ref={containerRef}>
+    <section id="team" className="team-section py-32 md:py-40 px-8 overflow-hidden relative z-10" ref={containerRef}>
       {/* Subtle grid texture */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.035]"
+        className="pointer-events-none absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
+            'linear-gradient(var(--theme-grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--theme-grid-line) 1px, transparent 1px)',
           backgroundSize: '48px 48px',
         }}
         aria-hidden
@@ -79,7 +79,7 @@ export default function Team() {
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         {/* Eyebrow */}
-        <p className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.28em] text-zinc-500 text-center mb-6">
+        <p className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.28em] text-[color:var(--theme-muted)] text-center mb-6">
           The team
         </p>
 
@@ -96,9 +96,9 @@ export default function Team() {
           <VTLink
             to="/contact"
             data-cursor="accent"
-            className="group inline-flex items-center gap-3 text-base font-serif italic text-zinc-300 hover:text-white transition-colors px-5 py-2.5 rounded-full border border-white/10 hover:border-white/25"
+            className="group inline-flex items-center gap-3 text-base font-serif italic text-[color:var(--theme-ink-soft)] hover:text-[color:var(--theme-ink)] transition-colors px-5 py-2.5 rounded-full border border-[color:var(--theme-border-soft)] hover:border-[color:var(--theme-border)]"
           >
-            <span className="relative flex items-center justify-center w-8 h-8 border border-white/20 rounded-full overflow-hidden">
+            <span className="relative flex items-center justify-center w-8 h-8 border border-[color:var(--theme-border)] rounded-full overflow-hidden">
               <svg className="transition-transform duration-300 ease-in-out group-hover:translate-x-6" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
@@ -125,7 +125,7 @@ export default function Team() {
                 ref={(el) => { wrappersRef.current[i] = el; }}
               >
                 <div
-                  className="w-[200px] md:w-[230px] rounded-2xl overflow-hidden relative z-10 transition-transform duration-500 group-hover:scale-[1.03]"
+                  className="team-card w-[200px] md:w-[230px] rounded-2xl overflow-hidden relative z-10 transition-transform duration-500 group-hover:scale-[1.03]"
                   style={{ willChange: 'transform' }}
                   ref={(el) => { innersRef.current[i] = el; }}
                 >
@@ -160,8 +160,8 @@ export default function Team() {
                     </div>
 
                     {/* Hover overlay with name */}
-                    <div className="absolute inset-0 flex flex-col justify-end p-5 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 z-10">
-                      <h3 className="text-lg font-serif text-white leading-tight">{member.name}</h3>
+                    <div className="absolute inset-0 flex flex-col justify-end p-5 team-card-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-400 z-10">
+                      <h3 className="text-lg font-serif text-[color:var(--theme-ink)] leading-tight">{member.name}</h3>
                       <p className="text-[11px] uppercase tracking-[0.18em] mt-1.5" style={{ color: member.accent }}>
                         {member.role}
                       </p>
@@ -169,8 +169,8 @@ export default function Team() {
                   </div>
 
                   {/* Bottom bar */}
-                  <div className="bg-zinc-900/90 border-t border-white/[0.06] px-4 py-3 flex items-center justify-between">
-                    <span className="text-sm font-medium text-zinc-300 tracking-tight">{member.name}</span>
+                  <div className="team-card-meta border-t border-[color:var(--theme-border-soft)] px-4 py-3 flex items-center justify-between">
+                    <span className="text-sm font-medium text-[color:var(--theme-ink-soft)] tracking-tight">{member.name}</span>
                     <span
                       className="w-2 h-2 rounded-full"
                       style={{ backgroundColor: member.accent }}

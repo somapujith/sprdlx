@@ -67,15 +67,15 @@ export default function Intro() {
     ));
   };
 
-  const sublineColor = 'hsl(0 0% calc(62% - var(--bg-l, 0) * 22%))';
-  const highlightColor = 'hsl(72 100% calc(46% - var(--bg-l, 0) * 18%))';
-  const eyebrowMuted = 'hsl(72 85% calc(58% - var(--bg-l, 0) * 32%))';
+  const sublineColor = 'color-mix(in srgb, var(--theme-ink) 58%, var(--theme-canvas) 42%)';
+  const highlightColor = 'var(--theme-accent)';
+  const eyebrowMuted = 'color-mix(in srgb, var(--theme-accent) 54%, var(--theme-canvas) 46%)';
 
   return (
     <section
       id="section-manifesto"
       ref={containerRef}
-      className="relative z-10 overflow-hidden py-28 md:py-36 lg:py-44 transition-[color] duration-150 ease-out"
+      className="intro-section relative z-10 overflow-hidden py-28 md:py-36 lg:py-44 transition-[color] duration-150 ease-out"
       style={{
         color: 'hsl(0 0% calc((1 - var(--bg-l, 0)) * 100%))',
       }}
@@ -115,7 +115,7 @@ export default function Intro() {
             >
               <span className="block">
                 {wrapWords(t('introBeforeAi'))}
-                <span className="word-reveal mx-1.5 inline-block align-baseline font-mono text-[0.52em] font-medium tracking-[0.18em] text-[#ccff00] sm:mx-2 md:text-[0.5em]">
+                <span className="word-reveal mx-1.5 inline-block align-baseline font-mono text-[0.52em] font-medium tracking-[0.18em] text-[color:var(--theme-accent)] sm:mx-2 md:text-[0.5em]">
                   [AI]
                 </span>
               </span>
@@ -144,7 +144,7 @@ export default function Intro() {
 
           {/* Right column — typographic balance (5/12), no images */}
           <aside className="hidden lg:col-span-5 lg:flex lg:flex-col lg:justify-end lg:pb-1">
-            <ul className="space-y-5 border-l border-[#ccff00]/35 pl-6 font-serif text-2xl tracking-[-0.02em] text-current/88 xl:text-[1.65rem]">
+            <ul className="space-y-5 border-l border-[color:var(--theme-accent)]/35 pl-6 font-serif text-2xl tracking-[-0.02em] text-current/88 xl:text-[1.65rem]">
               <li>{t('introPillar1')}</li>
               <li>{t('introPillar2')}</li>
               <li>{t('introPillar3')}</li>

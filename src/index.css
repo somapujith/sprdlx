@@ -74,6 +74,305 @@
   --animate-marquee: marquee 75s linear infinite;
 }
 
+:root,
+:root[data-design-theme="editorial"] {
+  --font-sans: "Avenir Next", "Segoe UI", "Gill Sans", sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", serif;
+  --theme-canvas: #120f0d;
+  --theme-canvas-soft: #1e1814;
+  --theme-canvas-strong: #0d0907;
+  --theme-ink: #f5ede4;
+  --theme-ink-soft: #d8cab9;
+  --theme-ink-strong: #fff9f2;
+  --theme-muted: #a89682;
+  --theme-accent: #ff5b3d;
+  --theme-accent-glow: rgb(255 91 61 / 0.35);
+  --theme-border: rgb(255 205 170 / 0.3);
+  --theme-border-soft: rgb(255 205 170 / 0.14);
+  --theme-card-bg: rgb(255 246 232 / 0.08);
+  --theme-card-quiet: rgb(255 243 224 / 0.05);
+  --theme-card-shadow: 0 14px 46px -22px rgb(0 0 0 / 0.6);
+  --theme-grid-line: rgb(255 214 185 / 0.45);
+  --theme-chip-bg: rgb(28 20 15 / 0.82);
+  --theme-chip-text: rgb(244 223 200 / 0.86);
+  --theme-chip-active-bg: rgb(255 91 61 / 0.22);
+  --theme-chip-active-text: rgb(255 223 205 / 0.98);
+  --theme-nav-light: #241a13;
+  --theme-nav-dark: #f9efe3;
+  --theme-nav-light-border: rgb(32 21 12 / 0.32);
+  --theme-nav-dark-border: rgb(255 220 190 / 0.38);
+  --theme-hero-shadow-1: rgb(18 12 9 / 0.14);
+  --theme-hero-shadow-2: rgb(12 9 7 / 0.48);
+  --theme-hero-shadow-3: rgb(8 6 4 / 0.84);
+  --theme-hero-shadow-4: rgb(6 4 3 / 0.98);
+  --theme-selection-bg: #ff5b3d;
+  --theme-selection-ink: #1a1009;
+  --theme-footer-strip-bg: #120c08;
+}
+
+:root[data-design-theme="atelier"] {
+  --font-sans: "Aptos", "Inter Tight", "Segoe UI", sans-serif;
+  --font-serif: "Fraunces", "Times New Roman", serif;
+  --theme-canvas: #0f1921;
+  --theme-canvas-soft: #162530;
+  --theme-canvas-strong: #0b1319;
+  --theme-ink: #eaf5fd;
+  --theme-ink-soft: #c2dbe8;
+  --theme-ink-strong: #f6fcff;
+  --theme-muted: #8aa9ba;
+  --theme-accent: #4ac5ff;
+  --theme-accent-glow: rgb(74 197 255 / 0.34);
+  --theme-border: rgb(163 215 240 / 0.32);
+  --theme-border-soft: rgb(163 215 240 / 0.16);
+  --theme-card-bg: rgb(190 228 248 / 0.08);
+  --theme-card-quiet: rgb(190 228 248 / 0.05);
+  --theme-card-shadow: 0 14px 40px -26px rgb(0 0 0 / 0.62);
+  --theme-grid-line: rgb(162 205 230 / 0.45);
+  --theme-chip-bg: rgb(16 31 43 / 0.86);
+  --theme-chip-text: rgb(199 232 248 / 0.88);
+  --theme-chip-active-bg: rgb(74 197 255 / 0.24);
+  --theme-chip-active-text: rgb(229 246 255 / 0.98);
+  --theme-nav-light: #132430;
+  --theme-nav-dark: #ebf8ff;
+  --theme-nav-light-border: rgb(14 35 48 / 0.35);
+  --theme-nav-dark-border: rgb(187 228 248 / 0.42);
+  --theme-hero-shadow-1: rgb(12 23 31 / 0.12);
+  --theme-hero-shadow-2: rgb(8 16 23 / 0.45);
+  --theme-hero-shadow-3: rgb(7 12 17 / 0.8);
+  --theme-hero-shadow-4: rgb(6 9 14 / 0.96);
+  --theme-selection-bg: #4ac5ff;
+  --theme-selection-ink: #052133;
+  --theme-footer-strip-bg: #0c161d;
+}
+
+:root[data-design-theme="analog"] {
+  --font-sans: "Trebuchet MS", "Avenir Next", sans-serif;
+  --font-serif: "Book Antiqua", "Garamond", serif;
+  --theme-canvas: #14101b;
+  --theme-canvas-soft: #1f1830;
+  --theme-canvas-strong: #0d0915;
+  --theme-ink: #f8ecd4;
+  --theme-ink-soft: #d7c9a8;
+  --theme-ink-strong: #fff4dc;
+  --theme-muted: #bcae8b;
+  --theme-accent: #c7ff44;
+  --theme-accent-glow: rgb(199 255 68 / 0.36);
+  --theme-border: rgb(210 188 138 / 0.32);
+  --theme-border-soft: rgb(210 188 138 / 0.17);
+  --theme-card-bg: rgb(255 241 204 / 0.07);
+  --theme-card-quiet: rgb(255 241 204 / 0.05);
+  --theme-card-shadow: 0 14px 45px -24px rgb(8 3 18 / 0.66);
+  --theme-grid-line: rgb(230 214 167 / 0.4);
+  --theme-chip-bg: rgb(21 14 31 / 0.82);
+  --theme-chip-text: rgb(239 226 183 / 0.9);
+  --theme-chip-active-bg: rgb(199 255 68 / 0.25);
+  --theme-chip-active-text: rgb(248 255 216 / 0.99);
+  --theme-nav-light: #27200f;
+  --theme-nav-dark: #fff4d8;
+  --theme-nav-light-border: rgb(43 32 12 / 0.32);
+  --theme-nav-dark-border: rgb(240 226 178 / 0.44);
+  --theme-hero-shadow-1: rgb(18 12 28 / 0.14);
+  --theme-hero-shadow-2: rgb(12 8 22 / 0.48);
+  --theme-hero-shadow-3: rgb(8 5 15 / 0.82);
+  --theme-hero-shadow-4: rgb(6 4 11 / 0.96);
+  --theme-selection-bg: #c7ff44;
+  --theme-selection-ink: #172500;
+  --theme-footer-strip-bg: #0f0b16;
+}
+
+.theme-shell {
+  color: var(--theme-ink);
+  background-color: var(--theme-canvas);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgb(255 255 255 / 0.05), transparent 34%),
+    radial-gradient(circle at 88% 18%, rgb(255 255 255 / 0.03), transparent 38%);
+}
+
+:root[data-design-theme="editorial"] .theme-shell {
+  background-image:
+    radial-gradient(circle at 8% 11%, rgb(255 188 145 / 0.08), transparent 35%),
+    linear-gradient(130deg, rgb(255 130 95 / 0.04) 0%, transparent 58%),
+    repeating-linear-gradient(0deg, rgb(255 210 190 / 0.018), rgb(255 210 190 / 0.018) 1px, transparent 1px, transparent 4px);
+}
+
+:root[data-design-theme="atelier"] .theme-shell {
+  background-image:
+    radial-gradient(circle at 14% 6%, rgb(80 184 230 / 0.1), transparent 35%),
+    linear-gradient(160deg, rgb(74 197 255 / 0.06), transparent 62%),
+    radial-gradient(circle at 80% 28%, rgb(215 243 255 / 0.04), transparent 40%);
+}
+
+:root[data-design-theme="analog"] .theme-shell {
+  background-image:
+    radial-gradient(circle at 10% 10%, rgb(199 255 68 / 0.1), transparent 35%),
+    radial-gradient(circle at 84% 12%, rgb(255 210 120 / 0.09), transparent 34%),
+    repeating-linear-gradient(45deg, rgb(245 230 170 / 0.015), rgb(245 230 170 / 0.015) 2px, transparent 2px, transparent 8px);
+}
+
+.theme-nav {
+  background: linear-gradient(to bottom, rgb(0 0 0 / 0.14), transparent 76%);
+  backdrop-filter: blur(3px);
+}
+
+.theme-chip {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.34rem 0.7rem;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--theme-chip-text);
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.theme-chip:hover {
+  transform: translateY(-1px);
+}
+
+.theme-chip--active {
+  background-color: var(--theme-chip-active-bg);
+  color: var(--theme-chip-active-text);
+}
+
+.theme-select {
+  border: 1px solid var(--theme-border-soft);
+  border-radius: 999px;
+  background: var(--theme-chip-bg);
+  color: var(--theme-chip-text);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-floor-shadow {
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--theme-hero-shadow-1) 15%,
+      var(--theme-hero-shadow-2) 38%,
+      var(--theme-hero-shadow-3) 68%,
+      var(--theme-hero-shadow-4) 100%
+    );
+}
+
+.hero-ticker-fade {
+  background:
+    linear-gradient(
+      to top,
+      color-mix(in srgb, var(--theme-canvas-strong) 97%, black 3%) 0%,
+      color-mix(in srgb, var(--theme-canvas-strong) 74%, transparent 26%) 32%,
+      color-mix(in srgb, var(--theme-canvas-strong) 31%, transparent 69%) 58%,
+      color-mix(in srgb, var(--theme-canvas-strong) 8%, transparent 92%) 78%,
+      transparent 100%
+    );
+}
+
+.portfolio-section,
+.services-section {
+  --section-ink: var(--theme-ink-strong);
+  --section-muted: var(--theme-muted);
+  --section-soft: var(--theme-ink-soft);
+}
+
+.portfolio-section {
+  color: var(--section-ink);
+}
+
+.portfolio-title,
+.portfolio-kicker {
+  color: var(--section-muted);
+}
+
+.portfolio-description {
+  color: var(--section-soft);
+}
+
+.portfolio-card {
+  background: var(--theme-card-bg);
+  border-color: var(--theme-border);
+  box-shadow: var(--theme-card-shadow);
+}
+
+.services-section {
+  color: var(--section-ink);
+}
+
+.services-meta {
+  color: var(--section-muted);
+}
+
+.services-copy {
+  color: var(--section-soft);
+}
+
+.services-copy-strong {
+  color: var(--section-ink);
+}
+
+.service-card {
+  background: var(--theme-card-bg);
+  border-color: var(--theme-border);
+  box-shadow: 0 2px 0 0 rgb(0 0 0 / 0.06);
+}
+
+.service-card:hover {
+  box-shadow: var(--theme-card-shadow);
+}
+
+.team-section {
+  color: var(--theme-ink);
+}
+
+.team-card {
+  border: 1px solid var(--theme-border-soft);
+  background: linear-gradient(165deg, var(--theme-canvas-soft) 0%, var(--theme-canvas) 46%, var(--theme-canvas-strong) 100%);
+}
+
+.team-card-overlay {
+  background: linear-gradient(to top, rgb(0 0 0 / 0.72) 0%, rgb(0 0 0 / 0.2) 42%, transparent 100%);
+}
+
+.team-card-meta {
+  background: color-mix(in srgb, var(--theme-canvas-strong) 92%, white 8%);
+}
+
+.footer-primary {
+  background: var(--theme-canvas-strong);
+  color: var(--theme-ink);
+}
+
+.footer-strip {
+  background: var(--theme-footer-strip-bg);
+  color: var(--theme-accent);
+}
+
+.footer-wordmark {
+  color: var(--theme-accent);
+}
+
+main[data-surface="dark"] .portfolio-section,
+main[data-surface="dark"] .services-section {
+  --section-ink: color-mix(in srgb, var(--theme-ink) 93%, white 7%);
+  --section-muted: color-mix(in srgb, var(--theme-ink-soft) 84%, white 16%);
+  --section-soft: color-mix(in srgb, var(--theme-ink-soft) 90%, white 10%);
+}
+
+main[data-surface="light"] .portfolio-section,
+main[data-surface="light"] .services-section {
+  --section-ink: color-mix(in srgb, var(--theme-canvas-strong) 90%, black 10%);
+  --section-muted: color-mix(in srgb, var(--theme-canvas-strong) 76%, white 24%);
+  --section-soft: color-mix(in srgb, var(--theme-canvas-strong) 72%, white 28%);
+}
+
+main[data-surface="light"] .portfolio-card,
+main[data-surface="light"] .service-card {
+  background: var(--dynamic-bg);
+}
+
 /* Hero: two lines, lower-left column; width matches reference proportion */
 .hero-headline {
   width: 100%;
@@ -108,7 +407,7 @@
 /* Second headline line — slightly smaller and muted for visual hierarchy */
 .hero-line--secondary {
   font-size: 0.82em;
-  color: rgb(255 255 255 / 0.62);
+  color: color-mix(in srgb, var(--theme-ink) 66%, transparent 34%);
 }
 
 .ai-blob-conic {
@@ -142,7 +441,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5625rem;
-  color: rgb(228 228 231 / 0.92);
+  color: color-mix(in srgb, var(--theme-ink-soft) 92%, transparent 8%);
 }
 
 @media (min-width: 768px) {
@@ -197,11 +496,6 @@
   100% { transform: translateX(-50%); }
 }
 
-/* Shared black main before flash: portfolio heading stays readable, then Tailwind greys apply on data-surface=light */
-main[data-surface="dark"] #work .text-zinc-400 {
-  color: rgb(212 212 216);
-}
-
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -214,15 +508,15 @@ main[data-surface="dark"] #work .text-zinc-400 {
 }
 
 body {
-  background-color: #000;
-  color: #fff;
+  background-color: var(--theme-canvas);
+  color: var(--theme-ink);
   font-family: var(--font-sans);
   font-weight: 400;
 }
 
 ::selection {
-  background-color: #ccff00;
-  color: #000;
+  background-color: var(--theme-selection-bg);
+  color: var(--theme-selection-ink);
 }
 
 @theme inline {
@@ -343,7 +637,8 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--theme-canvas);
+    color: var(--theme-ink);
   }
   html {
     @apply font-sans font-normal antialiased;

@@ -14,6 +14,7 @@ import GlobalDitherCursor from './components/GlobalDitherCursor';
 import FilmGrain from './components/effects/FilmGrain';
 import DeferredChrome from './components/DeferredChrome';
 import Home from './pages/Home';
+import { DesignThemeProvider } from './design/theme-context';
 import './i18n';
 
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
@@ -21,8 +22,8 @@ const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 
 const Loading = () => (
-  <div className="fixed inset-0 bg-black flex items-center justify-center z-[100]">
-    <div className="w-12 h-12 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+  <div className="theme-shell fixed inset-0 z-[100] flex items-center justify-center">
+    <div className="h-12 w-12 rounded-full border-2 border-[color:var(--theme-border)] border-t-[color:var(--theme-accent)] animate-spin" />
   </div>
 );
 
@@ -48,27 +49,29 @@ function GradualBlurExceptHome() {
 
 export default function App() {
   return (
-    <SmoothScroll>
-      <Router>
-        <GsapLenisSync />
-        <ScrollToTop />
-        <div className="relative min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
-          <DeferredChrome>
-            <GlobalDitherCursor />
-            <FilmGrain />
-          </DeferredChrome>
-          <Navbar />
-          <Suspense fallback={<Loading />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/portfolio" element={<PortfolioPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/project/:id" element={<ProjectDetail />} />
-            </Routes>
-          </Suspense>
-          <GradualBlurExceptHome />
-        </div>
-      </Router>
-    </SmoothScroll>
+    <DesignThemeProvider>
+      <SmoothScroll>
+        <Router>
+          <GsapLenisSync />
+          <ScrollToTop />
+          <div className="theme-shell relative min-h-screen font-sans">
+            <DeferredChrome>
+              <GlobalDitherCursor />
+              <FilmGrain />
+            </DeferredChrome>
+            <Navbar />
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/portfolio" element={<PortfolioPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/project/:id" element={<ProjectDetail />} />
+              </Routes>
+            </Suspense>
+            <GradualBlurExceptHome />
+          </div>
+        </Router>
+      </SmoothScroll>
+    </DesignThemeProvider>
   );
 }

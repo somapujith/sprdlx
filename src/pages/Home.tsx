@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useLenis } from 'lenis/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useDesignTheme } from '../design/theme-context';
+import type { RgbTuple } from '../design/themes';
 import { setNavSurface } from '../navSurface';
 import Hero from '../components/Hero';
 import Intro from '../components/Intro';
@@ -20,6 +22,19 @@ function quantizeChannel(v: number, step = 7) {
   return Math.min(255, Math.max(0, Math.round(v / step) * step));
 }
 
+function blendRgb(from: RgbTuple, to: RgbTuple, amount: number): RgbTuple {
+  const t = Math.max(0, Math.min(1, amount));
+  return [
+    quantizeChannel(from[0] + (to[0] - from[0]) * t, 6),
+    quantizeChannel(from[1] + (to[1] - from[1]) * t, 6),
+    quantizeChannel(from[2] + (to[2] - from[2]) * t, 6),
+  ];
+}
+
+function toRgbCss([r, g, b]: RgbTuple) {
+  return `rgb(${r},${g},${b})`;
+}
+
 function getCurrentScrollY() {
   return document.documentElement.scrollTop || window.scrollY;
 }
@@ -35,6 +50,7 @@ type SectionOffsets = {
  * getBoundingClientRect() values are always in sync with Lenis's interpolated position.
  */
 export default function Home() {
+  const { theme } = useDesignTheme();
   const mainRef = useRef<HTMLElement>(null);
   const lastAppliedRef = useRef('');
   const lastBgLRef = useRef<number | null>(null);
@@ -74,6 +90,7 @@ export default function Home() {
     if (!offsets) return;
 
     const { portfolioTop: ptOffset, teamTop: teamOffset, gateTop } = offsets;
+    const { dark, light, navLightThreshold } = theme.surfaceRamp;
 
 
     const vp = window.innerHeight;
@@ -93,41 +110,30 @@ export default function Home() {
       manifestoMidPassed = viewportCenterY >= gateTop;
     }
 
-    let bg: string;
-    let surface: 'light' | 'dark';
-    let luminance: number;
+    let transitionLevel = 0;
 
     if (!manifestoMidPassed) {
-      bg = '#000000';
-      surface = 'dark';
-      luminance = 0;
+      transitionLevel = 0;
     } else if (ptTop > portfolioLine + introBlend) {
-      // Still in Intro / Hero — full black
-      bg = '#000000';
-      surface = 'dark';
-      luminance = 0;
+      // Still in Intro / Hero — stay at theme dark surface.
+      transitionLevel = 0;
     } else if (ptTop > portfolioLine) {
-      // Smoothly ramp black → white as portfolio approaches
+      // Smoothly ramp dark → light as portfolio approaches.
       const u = (portfolioLine + introBlend - ptTop) / introBlend;
-      const v = quantizeChannel(255 * smoothstep01(u));
-      bg = `rgb(${v},${v},${v})`;
-      luminance = v / 255;
-      surface = v > 165 ? 'light' : 'dark';
+      transitionLevel = smoothstep01(u);
     } else if (teamTop > vp) {
-      // Portfolio / Services — full white
-      bg = '#ffffff';
-      surface = 'light';
-      luminance = 1;
+      // Portfolio / Services — full light surface.
+      transitionLevel = 1;
     } else {
-      // Team entering — smoothly ramp white → black
+      // Team entering — smoothly ramp light → dark.
       const span = vp - teamBlendEnd;
       const raw = span > 0 ? (teamTop - teamBlendEnd) / span : 0;
-      const t = Math.max(0, Math.min(1, raw));
-      const v = quantizeChannel(255 * smoothstep01(t));
-      bg = `rgb(${v},${v},${v})`;
-      luminance = v / 255;
-      surface = v > 165 ? 'light' : 'dark';
+      transitionLevel = smoothstep01(raw);
     }
+
+    const bg = toRgbCss(blendRgb(dark, light, transitionLevel));
+    const surface: 'light' | 'dark' = transitionLevel > navLightThreshold ? 'light' : 'dark';
+    const luminance = transitionLevel;
 
     // `--bg-l` only when meaningfully changed — avoids style thrash every Lenis sub-tick
     const lumQ = Math.round(luminance * 2000) / 2000;
@@ -140,9 +146,10 @@ export default function Home() {
     if (token === lastAppliedRef.current) return;
     lastAppliedRef.current = token;
     mainEl.style.backgroundColor = bg;
+    mainEl.style.setProperty('--dynamic-bg', bg);
     mainEl.setAttribute('data-surface', surface);
     setNavSurface(surface);
-  }, [refreshSectionOffsets]);
+  }, [refreshSectionOffsets, theme]);
 
   // At most one background update per animation frame (Lenis can emit multiple times per frame).
   useLenis(({ scroll }) => {
@@ -198,6 +205,13 @@ export default function Home() {
   }, [refreshSectionOffsets, updateMainBg]);
 
   useEffect(() => {
+    lastAppliedRef.current = '';
+    lastBgLRef.current = null;
+    refreshSectionOffsets();
+    updateMainBg(getCurrentScrollY());
+  }, [theme.id, refreshSectionOffsets, updateMainBg]);
+
+  useEffect(() => {
     return () => {
       if (scrollRafRef.current != null) {
         cancelAnimationFrame(scrollRafRef.current);
@@ -214,7 +228,7 @@ export default function Home() {
     <main
       ref={mainRef}
       className="flex flex-col w-full"
-      style={{ backgroundColor: '#000000', ['--bg-l' as string]: 0 }}
+      style={{ backgroundColor: toRgbCss(theme.surfaceRamp.dark), ['--bg-l' as string]: 0 }}
       data-surface="dark"
     >
       <SectionChapters />
