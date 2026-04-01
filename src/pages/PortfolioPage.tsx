@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import VTLink from '../components/VTLink';
 import gsap from 'gsap';
 import Footer from '../components/Footer';
 import DarkVeil from '../components/DarkVeil';
@@ -57,9 +57,10 @@ export default function PortfolioPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20">
           {projects.map((project) => (
-            <Link 
-              key={project.id} 
+            <VTLink
+              key={project.id}
               to={`/project/${project.slug}`}
+              data-cursor="view"
               className="group block"
             >
               <div className="aspect-square relative overflow-hidden rounded-2xl bg-zinc-900 transition-all duration-700 group-hover:scale-[0.97] group-hover:rounded-3xl">
@@ -157,7 +158,7 @@ export default function PortfolioPage() {
                   <p className="text-zinc-500 text-sm leading-relaxed line-clamp-2 font-medium">{project.desc}</p>
                 </div>
               </div>
-            </Link>
+            </VTLink>
           ))}
         </div>
       </div>

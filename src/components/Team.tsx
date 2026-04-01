@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import VTLink from './VTLink';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import GlitchHeadline from './effects/GlitchHeadline';
@@ -93,8 +93,9 @@ export default function Team() {
 
         {/* CTA */}
         <div className="flex justify-center mb-28 md:mb-36">
-          <Link
+          <VTLink
             to="/contact"
+            data-cursor="accent"
             className="group inline-flex items-center gap-3 text-base font-serif italic text-zinc-300 hover:text-white transition-colors px-5 py-2.5 rounded-full border border-white/10 hover:border-white/25"
           >
             <span className="relative flex items-center justify-center w-8 h-8 border border-white/20 rounded-full overflow-hidden">
@@ -106,7 +107,7 @@ export default function Team() {
               </svg>
             </span>
             Book a call with our team
-          </Link>
+          </VTLink>
         </div>
 
         {/* Team cards */}

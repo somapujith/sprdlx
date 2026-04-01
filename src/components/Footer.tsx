@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import VTLink from './VTLink';
 import TextCursor from './TextCursor';
 import AsciiWavesBg from './effects/AsciiWavesBg';
 
@@ -27,8 +27,9 @@ export default function Footer() {
         <h2 className="text-6xl md:text-7xl lg:text-8xl font-serif mb-12 relative z-10 px-4 text-center leading-[1.05]">
           Build with us.
         </h2>
-        <Link
+        <VTLink
           to="/contact"
+          data-cursor="accent"
           className="group flex items-center gap-3 text-lg font-serif italic transition-opacity relative z-10 pointer-events-auto"
         >
           <span className="relative flex items-center justify-center w-10 h-10 border border-white/30 rounded-sm overflow-hidden">
@@ -60,7 +61,7 @@ export default function Footer() {
             </svg>
           </span>
           Let&apos;s have a chat
-        </Link>
+        </VTLink>
       </div>
 
       <div className="w-full bg-black text-[#ccff00] pt-12 pb-8 md:pt-14 md:pb-10 flex flex-col relative overflow-x-visible">

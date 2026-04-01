@@ -6,7 +6,16 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     <ReactLenis
       root
       autoRaf={false}
-      options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}
+      options={{
+        /** Lower lerp = smoother glide (less snappy catch-up). `duration` is ignored when lerp is set. */
+        lerp: 0.075,
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 1,
+        /** Smoother trackpad / touch inertia on supported devices */
+        syncTouch: true,
+        syncTouchLerp: 0.08,
+      }}
     >
       {children}
     </ReactLenis>

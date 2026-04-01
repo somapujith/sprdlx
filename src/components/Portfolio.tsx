@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import VTLink from './VTLink';
 import AnimatedText from './AnimatedText';
 import HalftoneDotField from './effects/HalftoneDotField';
 
@@ -113,7 +113,11 @@ export default function Portfolio() {
                   <AnimatedText as="h3" text={project.title} className="text-3xl font-serif mb-6" />
                   <AnimatedText as="p" text={project.desc} className="text-zinc-500 text-lg leading-relaxed max-w-sm" />
                 </div>
-                <Link to={`/project/${project.slug}`} className="group flex items-center gap-3 text-sm font-medium transition-opacity mt-12 w-fit">
+                <VTLink
+                  to={`/project/${project.slug}`}
+                  data-cursor="view"
+                  className="group flex items-center gap-3 text-sm font-medium transition-opacity mt-12 w-fit"
+                >
                   <span className="relative flex items-center justify-center w-10 h-10 border border-black/20 rounded-sm overflow-hidden">
                     <svg className="transition-transform duration-300 ease-in-out group-hover:translate-x-8" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -123,7 +127,7 @@ export default function Portfolio() {
                     </svg>
                   </span>
                   View project
-                </Link>
+                </VTLink>
               </div>
             </div>
           ))}

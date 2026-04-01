@@ -11,6 +11,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Navbar from './components/Navbar';
 import GradualBlur from './components/GradualBlur';
 import GlobalDitherCursor from './components/GlobalDitherCursor';
+import FilmGrain from './components/effects/FilmGrain';
 import './i18n';
 
 const Home = lazy(() => import('./pages/Home'));
@@ -52,6 +53,7 @@ export default function App() {
         <ScrollToTop />
         <div className="relative min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
           <GlobalDitherCursor />
+          <FilmGrain />
           <Navbar />
           <Suspense fallback={<Loading />}>
             <Routes>

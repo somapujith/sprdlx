@@ -7,6 +7,7 @@ import Portfolio from '../components/Portfolio';
 import Services from '../components/Services';
 import Team from '../components/Team';
 import Footer from '../components/Footer';
+import SectionChapters from '../components/SectionChapters';
 
 function smoothstep01(t: number) {
   const x = Math.max(0, Math.min(1, t));
@@ -23,6 +24,8 @@ export default function Home() {
   const lastBgLRef = useRef<number | null>(null);
   const scrollRafRef = useRef<number | null>(null);
   const pendingScrollRef = useRef(0);
+  /** Cached document Y of manifesto gate — avoid getBoundingClientRect every scroll frame (layout thrash). */
+  const gateDocYRef = useRef<number | null>(null);
 
   const updateMainBg = useCallback((scrollY: number) => {
     const mainEl = mainRef.current;
@@ -48,9 +51,11 @@ export default function Home() {
     const gate = document.getElementById('manifesto-blend-gate');
     let manifestoMidPassed = true;
     if (gate) {
-      const gateDocY = gate.getBoundingClientRect().top + scrollY;
+      if (gateDocYRef.current == null) {
+        gateDocYRef.current = gate.getBoundingClientRect().top + scrollY;
+      }
       const viewportCenterY = scrollY + vp * 0.5;
-      manifestoMidPassed = viewportCenterY >= gateDocY;
+      manifestoMidPassed = viewportCenterY >= gateDocYRef.current;
     }
 
     let bg: string;
@@ -123,6 +128,7 @@ export default function Home() {
         resizeRaf = 0;
         lastAppliedRef.current = '';
         lastBgLRef.current = null;
+        gateDocYRef.current = null;
         // Read scrollY from documentElement since Lenis scrolls it
         updateMainBg(document.documentElement.scrollTop || window.scrollY);
       });
@@ -150,6 +156,7 @@ export default function Home() {
       style={{ backgroundColor: '#000000', ['--bg-l' as string]: 0 }}
       data-surface="dark"
     >
+      <SectionChapters />
       <Hero />
       <Intro />
       <div id="portfolio-trigger">

@@ -73,6 +73,7 @@ export default function Intro() {
 
   return (
     <section
+      id="section-manifesto"
       ref={containerRef}
       className="relative z-10 overflow-hidden py-28 md:py-36 lg:py-44 transition-[color] duration-150 ease-out"
       style={{

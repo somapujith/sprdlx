@@ -189,7 +189,7 @@ export default function Hero() {
   }, [heroText]);
 
   return (
-    <div ref={outerRef} className="relative min-h-[200vh] w-full">
+    <div id="section-hero" ref={outerRef} className="relative min-h-[200vh] w-full">
       <section className="sticky top-0 z-10 flex min-h-screen w-full flex-col justify-end overflow-hidden isolate px-8 pt-28 pb-24 md:pt-32 md:pb-32">
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 z-4 h-[min(62vh,32rem)]"

@@ -1,6 +1,7 @@
 import { useSyncExternalStore, useLayoutEffect } from 'react';
 import { motion } from 'motion/react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import VTLink from './VTLink';
 import SprdlxLogoMark from './SprdlxLogoMark';
 import { getNavSurface, setNavSurface, subscribeNavSurface } from '../navSurface';
 
@@ -26,22 +27,25 @@ export default function Navbar() {
       transition={{ duration: 1, delay: 2.2, ease: [0.16, 1, 0.3, 1] }}
       className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 bg-transparent transition-colors duration-300"
     >
-      <Link
+      <VTLink
         to="/"
+        data-cursor="view"
         aria-label="SPRDLX — Home"
         className="block shrink-0 text-[#ccff00] transition-opacity hover:opacity-90"
       >
         <SprdlxLogoMark className="h-8 w-auto md:h-9" />
-      </Link>
+      </VTLink>
       <div className="flex items-center gap-8 text-sm font-medium">
-        <Link
+        <VTLink
           to="/portfolio"
+          data-cursor="view"
           className={`italic transition-colors duration-300 ${linkClass}`}
         >
           Portfolio
-        </Link>
-        <Link
+        </VTLink>
+        <VTLink
           to="/contact"
+          data-cursor="accent"
           className={`group flex items-center gap-2 transition-colors duration-300 ${contactClass}`}
         >
           <span
@@ -75,7 +79,7 @@ export default function Navbar() {
             </svg>
           </span>
           <span className="italic font-serif text-lg">Contact</span>
-        </Link>
+        </VTLink>
       </div>
     </motion.nav>
   );
