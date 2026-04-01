@@ -1,6 +1,6 @@
 import { useSyncExternalStore, useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { BookOpen, Layers, Aperture } from 'lucide-react';
+import { Sunrise, Sun, Moon } from 'lucide-react';
 import VTLink from './VTLink';
 import SprdlxLogoMark from './SprdlxLogoMark';
 import { getNavSurface, setNavSurface, subscribeNavSurface } from '../navSurface';
@@ -8,15 +8,17 @@ import { useDesignTheme } from '../design/theme-context';
 import { DesignThemeId } from '../design/themes';
 
 const THEME_ICONS: Record<DesignThemeId, React.FC<{ className?: string }>> = {
-  editorial: BookOpen,
-  atelier: Layers,
-  analog: Aperture,
+  editorial: Sunrise,
+  atelier: Sun,
+  analog: Moon,
 };
 
 export default function Navbar() {
   const { pathname } = useLocation();
   const surface = useSyncExternalStore(subscribeNavSurface, getNavSurface, getNavSurface);
   const { themeId, setThemeId, themes } = useDesignTheme();
+  const activeThemeIndex = themes.findIndex((theme) => theme.id === themeId);
+  const ActiveThemeIcon = THEME_ICONS[themeId];
   const isLight = surface === 'light';
 
   useLayoutEffect(() => {
@@ -33,6 +35,12 @@ export default function Navbar() {
     ? 'border-[color:var(--theme-nav-light-border)]'
     : 'border-[color:var(--theme-nav-dark-border)]';
 
+  const cycleTheme = () => {
+    if (themes.length <= 1 || activeThemeIndex === -1) return;
+    const nextTheme = themes[(activeThemeIndex + 1) % themes.length];
+    setThemeId(nextTheme.id);
+  };
+
   return (
     <nav
       className="theme-nav nav-entrance fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-8 py-5 transition-colors duration-300"
@@ -48,25 +56,17 @@ export default function Navbar() {
 
             <div className="flex items-center gap-4 md:gap-8 text-sm font-medium">    
         {pathname !== '/portfolio' && (
-          <div className="flex items-center gap-1 rounded-full border border-[color:var(--theme-border-soft)] bg-[color:var(--theme-chip-bg)] p-1">
-            {themes.map((theme) => {
-              const active = theme.id === themeId;
-              const Icon = THEME_ICONS[theme.id];
-              return (
-                <button
-                  key={theme.id}
-                  type="button"
-                  className={active ? 'theme-chip theme-chip--active' : 'theme-chip'}
-                  style={{ paddingLeft: '0.6rem', paddingRight: '0.6rem' }}       
-                  onClick={() => setThemeId(theme.id)}
-                  aria-pressed={active}
-                  title={theme.description}
-                  aria-label={theme.label}
-                >
-                  <Icon className="w-4 h-4" strokeWidth={2.5} />
-                </button>
-              );
-            })}
+          <div className="flex items-center rounded-full border border-[color:var(--theme-border-soft)] bg-[color:var(--theme-chip-bg)] p-1">
+            <button
+              type="button"
+              className="theme-chip theme-chip--active"
+              style={{ paddingLeft: '0.6rem', paddingRight: '0.6rem' }}
+              onClick={cycleTheme}
+              aria-label="Switch theme"
+              title="Switch theme"
+            >
+              <ActiveThemeIcon className="w-4 h-4" strokeWidth={2.5} />
+            </button>
           </div>
         )}
 

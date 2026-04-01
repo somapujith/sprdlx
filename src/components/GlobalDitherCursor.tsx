@@ -76,7 +76,6 @@ export default function GlobalDitherCursor() {
     };
     const onMove = (e: MouseEvent) => {
       const mode = resolveCursorMode(e.clientX, e.clientY);
-      modeRef.current = mode;
       trail.push({ x: e.clientX, y: e.clientY, t: performance.now(), mode });
       schedule();
     };
