@@ -81,6 +81,12 @@
   margin-top: 0.06em;
 }
 
+/* Second headline line — slightly smaller and muted for visual hierarchy */
+.hero-line--secondary {
+  font-size: 0.82em;
+  color: rgb(255 255 255 / 0.62);
+}
+
 /* Hero ticker: symbol + wordmark / logos; sizes pair with gaps in Hero.tsx */
 .marquee-item {
   font-size: 1.3125rem;

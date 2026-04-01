@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { Feather, User, type LucideIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import HeroVisual from './effects/HeroVisual';
+import SprdlxLogoMark from './SprdlxLogoMark';
 
 type MarqueeEntry =
   | {
@@ -47,7 +48,9 @@ const MARQUEE_SEGMENT = Array.from({ length: MARQUEE_CYCLES_PER_HALF }, () => [.
 export default function Hero() {
   const { t } = useTranslation();
   const heroText = t('hero');
+  const heroEyebrow = t('heroEyebrow');
   const textRef = useRef<HTMLHeadingElement>(null);
+  const eyebrowRef = useRef<HTMLParagraphElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const tickerRef = useRef<HTMLDivElement>(null);
@@ -58,9 +61,9 @@ export default function Hero() {
     const lines = heroText.split(/\r?\n/).filter(Boolean);
     textRef.current.innerHTML = '';
 
-    lines.forEach((line) => {
+    lines.forEach((line, lineIdx) => {
       const lineDiv = document.createElement('div');
-      lineDiv.className = 'hero-line';
+      lineDiv.className = lineIdx === 1 ? 'hero-line hero-line--secondary' : 'hero-line';
 
       const words = line.trim().split(/\s+/).filter(Boolean);
       words.forEach((word) => {
@@ -80,6 +83,15 @@ export default function Hero() {
 
     const ctx = gsap.context(() => {
       const innerSpans = textRef.current?.querySelectorAll('span > span');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reducedMotion) {
+        // Skip all animation — set everything to final state immediately
+        gsap.set(innerSpans ?? [], { y: '0%', rotation: 0, opacity: 1 });
+        gsap.set([bgRef.current, logoRef.current, tickerRef.current], { opacity: 1 });
+        if (eyebrowRef.current) gsap.set(eyebrowRef.current, { opacity: 1, y: 0 });
+        return;
+      }
 
       const tl = gsap.timeline({ delay: 0.2 });
 
@@ -111,6 +123,15 @@ export default function Hero() {
         },
         '-=1.5'
       );
+
+      if (eyebrowRef.current) {
+        gsap.set(eyebrowRef.current, { opacity: 0, y: 6 });
+        tl.to(
+          eyebrowRef.current,
+          { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' },
+          '-=1.2'
+        );
+      }
     });
 
     return () => ctx.revert();
@@ -132,22 +153,15 @@ export default function Hero() {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-start text-left pointer-events-none">
         <div ref={logoRef} className="mb-5 md:mb-6 opacity-0 pointer-events-auto">
-          <svg
-            width="56"
-            height="28"
-            viewBox="0 0 100 50"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden
-          >
-            <ellipse cx="50" cy="25" rx="46" ry="21" stroke="white" strokeWidth="4" />
-            <path
-              d="M50 4 Q50 25 96 25 Q50 25 50 46 Q50 25 4 25 Q50 25 50 4 Z"
-              fill="white"
-            />
-          </svg>
+          <SprdlxLogoMark className="h-7 w-auto md:h-8 text-[#ccff00]" />
         </div>
 
+        <p
+          ref={eyebrowRef}
+          className="mb-4 md:mb-5 text-[0.6rem] sm:text-[0.65rem] font-mono font-medium uppercase tracking-[0.26em] text-[#ccff00]/70 pointer-events-auto"
+        >
+          {heroEyebrow}
+        </p>
         <h1
           ref={textRef}
           aria-label={heroText.replace(/\r?\n/g, ' ')}

@@ -5,6 +5,7 @@ const resources = {
   en: {
     translation: {
       "hero": "We build AI products.\nWe invest in what's next.",
+      "heroEyebrow": "AI Studio · Hyderabad",
       "projects": "Selected Work",
       "letsBuild": "Let's build.",
       "copenhagen": "Copenhagen.",
