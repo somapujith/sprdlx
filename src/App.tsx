@@ -10,6 +10,7 @@ import GsapLenisSync from './components/GsapLenisSync';
 import ScrollToTop from './components/ScrollToTop';
 import Navbar from './components/Navbar';
 import GradualBlur from './components/GradualBlur';
+import GlobalDitherCursor from './components/GlobalDitherCursor';
 import './i18n';
 
 const Home = lazy(() => import('./pages/Home'));
@@ -50,6 +51,7 @@ export default function App() {
         <GsapLenisSync />
         <ScrollToTop />
         <div className="relative min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
+          <GlobalDitherCursor />
           <Navbar />
           <Suspense fallback={<Loading />}>
             <Routes>

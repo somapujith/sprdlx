@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   en: {
     translation: {
-      "hero": "The product and venture studio\ncreating beautiful AI companies.",
+      "hero": "We build AI products.\nWe invest in what's next.",
       "projects": "Selected Work",
       "letsBuild": "Let's build.",
       "copenhagen": "Copenhagen.",

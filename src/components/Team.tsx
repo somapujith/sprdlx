@@ -1,18 +1,17 @@
-import React, { useEffect, useRef, lazy, Suspense } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import AnimatedText from './AnimatedText';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import GlitchHeadline from './effects/GlitchHeadline';
 
 gsap.registerPlugin(ScrollTrigger);
-const DitherTorusKnot = lazy(() => import('./DitherTorusKnot'));
 
 const teamMembers = [
-  { name: 'Luca', role: 'Product, Look and Feel', img: 'https://picsum.photos/seed/team1/400/500' },
-  { name: 'Ana', role: 'Product design genius', img: 'https://picsum.photos/seed/team2/400/500' },
-  { name: 'Emily', role: 'End-to-end design strategist', img: 'https://picsum.photos/seed/team3/400/500' },
-  { name: 'John', role: 'Frontend Engineer', img: 'https://picsum.photos/seed/team4/400/500' },
-  { name: 'Sarah', role: 'Backend Engineer', img: 'https://picsum.photos/seed/team5/400/500' },
+  { name: 'Luca', role: 'Product, Look and Feel', accent: '#a78bfa' },
+  { name: 'Ana', role: 'Product design genius', accent: '#67e8f9' },
+  { name: 'Emily', role: 'End-to-end design strategist', accent: '#fbbf24' },
+  { name: 'John', role: 'Frontend Engineer', accent: '#34d399' },
+  { name: 'Sarah', role: 'Backend Engineer', accent: '#f472b6' },
 ];
 
 export default function Team() {
@@ -25,38 +24,37 @@ export default function Team() {
       wrappersRef.current.forEach((wrapper, i) => {
         if (!wrapper) return;
         const inner = innersRef.current[i];
-        const offset = i - 2; // -2, -1, 0, 1, 2
-        
-        gsap.fromTo(wrapper,
-          { 
-            y: 400, 
-            x: -offset * 40 
-          },
+        const offset = i - 2;
+
+        gsap.fromTo(
+          wrapper,
+          { y: 400, x: -offset * 40 },
           {
             y: Math.abs(offset) * 20,
             x: 0,
-            ease: "power2.out",
+            ease: 'power2.out',
             scrollTrigger: {
               trigger: containerRef.current,
-              start: "top 80%",
-              end: "top 30%",
+              start: 'top 80%',
+              end: 'top 30%',
               scrub: 1,
-            }
+            },
           }
         );
 
         if (inner) {
-          gsap.fromTo(inner,
+          gsap.fromTo(
+            inner,
             { rotation: 0 },
             {
               rotation: offset * 6,
-              ease: "power2.out",
+              ease: 'power2.out',
               scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top 80%",
-                end: "top 30%",
+                start: 'top 80%',
+                end: 'top 30%',
                 scrub: 1,
-              }
+              },
             }
           );
         }
@@ -67,63 +65,122 @@ export default function Team() {
   }, []);
 
   return (
-    <section id="team" className="text-white py-40 px-8 overflow-hidden relative z-10" ref={containerRef}>
-      <div className="pointer-events-none absolute right-[-6%] top-[8%] h-[34vh] w-[28vw] min-w-[240px] opacity-25" aria-hidden>
-        <Suspense fallback={null}>
-          <DitherTorusKnot
-            className="h-full w-full"
-            pixelSize={3}
-            cameraZ={5}
-            knotScale={0.75}
-            lightDir={[1, 0.7, 0.5]}
-            variant="icosahedron"
-          />
-        </Suspense>
-      </div>
-      <div className="max-w-7xl mx-auto w-full flex flex-col items-center text-center">
-        <AnimatedText as="h2" text="From engineers, to designers—our team knows how to ship AI products." className="text-4xl md:text-5xl lg:text-6xl font-serif mb-12 max-w-4xl leading-tight" />
-        <Link to="/contact" className="group flex items-center gap-3 text-lg font-serif italic transition-opacity px-6 py-3">
-          <span className="relative flex items-center justify-center w-10 h-10 border border-white/30 rounded-sm overflow-hidden">
-            <svg className="transition-transform duration-300 ease-in-out group-hover:translate-x-8" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-            <svg className="absolute -translate-x-8 transition-transform duration-300 ease-in-out group-hover:translate-x-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </span>
-          Book a call with our team
-        </Link>
-      </div>
+    <section id="team" className="text-white py-32 md:py-40 px-8 overflow-hidden relative z-10" ref={containerRef}>
+      {/* Subtle grid texture */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.035]"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
+          backgroundSize: '48px 48px',
+        }}
+        aria-hidden
+      />
 
-      <div className="mt-40 flex justify-center gap-6 px-8 no-scrollbar">
-        {teamMembers.map((member, i) => (
-          <div 
-            key={i} 
-            className="relative group flex-shrink-0"
-            style={{ willChange: 'transform' }}
-            ref={el => { wrappersRef.current[i] = el; }}
+      <div className="max-w-7xl mx-auto w-full relative z-10">
+        {/* Eyebrow */}
+        <p className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.28em] text-zinc-500 text-center mb-6">
+          The team
+        </p>
+
+        {/* Headline */}
+        <div className="max-w-4xl mx-auto text-center mb-8">
+          <GlitchHeadline
+            text="From engineers, to designers — our team knows how to ship AI products."
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.4rem]"
+          />
+        </div>
+
+        {/* CTA */}
+        <div className="flex justify-center mb-28 md:mb-36">
+          <Link
+            to="/contact"
+            className="group inline-flex items-center gap-3 text-base font-serif italic text-zinc-300 hover:text-white transition-colors px-5 py-2.5 rounded-full border border-white/10 hover:border-white/25"
           >
-            {/* Hover Text */}
-            <div className="absolute bottom-full left-0 mb-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none flex flex-col items-start z-20">
-              <h3 className="text-2xl font-serif text-white">{member.name}</h3>
-              <p className="text-sm text-gray-400 font-sans mt-1">{member.role}</p>
-            </div>
-            
-            {/* Image Container */}
-            <div 
-              className="w-[240px] h-[320px] rounded-xl overflow-hidden bg-zinc-900 relative z-10"
-              style={{ willChange: 'transform' }}
-              ref={el => { innersRef.current[i] = el; }}
-            >
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
-              <img 
-                src={member.img} 
-                alt={member.name} 
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" 
-              />
-            </div>
-          </div>
-        ))}
+            <span className="relative flex items-center justify-center w-8 h-8 border border-white/20 rounded-full overflow-hidden">
+              <svg className="transition-transform duration-300 ease-in-out group-hover:translate-x-6" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+              <svg className="absolute -translate-x-6 transition-transform duration-300 ease-in-out group-hover:translate-x-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </span>
+            Book a call with our team
+          </Link>
+        </div>
+
+        {/* Team cards */}
+        <div className="flex justify-center gap-5 md:gap-6 no-scrollbar">
+          {teamMembers.map((member, i) => {
+            const initials = member.name
+              .split(/\s+/)
+              .map((p) => p[0])
+              .join('');
+            return (
+              <div
+                key={member.name}
+                className="relative group shrink-0"
+                style={{ willChange: 'transform' }}
+                ref={(el) => { wrappersRef.current[i] = el; }}
+              >
+                <div
+                  className="w-[200px] md:w-[230px] rounded-2xl overflow-hidden relative z-10 transition-transform duration-500 group-hover:scale-[1.03]"
+                  style={{ willChange: 'transform' }}
+                  ref={(el) => { innersRef.current[i] = el; }}
+                >
+                  {/* Card face */}
+                  <div className="relative aspect-[3/4]">
+                    {/* Dither-pattern background */}
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: `
+                          repeating-linear-gradient(
+                            135deg,
+                            rgba(255,255,255,0.04) 0,
+                            rgba(255,255,255,0.04) 1px,
+                            transparent 1px,
+                            transparent 5px
+                          ),
+                          radial-gradient(ellipse at 30% 20%, ${member.accent}18 0%, transparent 60%),
+                          linear-gradient(165deg, #1a1a1e 0%, #27272a 45%, #0a0a0b 100%)
+                        `,
+                      }}
+                    />
+
+                    {/* Large initial */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span
+                        className="font-serif text-[5.5rem] md:text-[6.5rem] leading-none select-none transition-opacity duration-500 group-hover:opacity-40"
+                        style={{ color: `${member.accent}30` }}
+                      >
+                        {initials}
+                      </span>
+                    </div>
+
+                    {/* Hover overlay with name */}
+                    <div className="absolute inset-0 flex flex-col justify-end p-5 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 z-10">
+                      <h3 className="text-lg font-serif text-white leading-tight">{member.name}</h3>
+                      <p className="text-[11px] uppercase tracking-[0.18em] mt-1.5" style={{ color: member.accent }}>
+                        {member.role}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Bottom bar */}
+                  <div className="bg-zinc-900/90 border-t border-white/[0.06] px-4 py-3 flex items-center justify-between">
+                    <span className="text-sm font-medium text-zinc-300 tracking-tight">{member.name}</span>
+                    <span
+                      className="w-2 h-2 rounded-full"
+                      style={{ backgroundColor: member.accent }}
+                      aria-hidden
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

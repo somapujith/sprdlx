@@ -1,17 +1,15 @@
-import Spline from '@splinetool/react-spline';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { Feather, User, type LucideIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import HeroVisual from './effects/HeroVisual';
 
 type MarqueeEntry =
   | {
       name: string;
       fontClass: string;
       logoSrc: string;
-      /** Extra classes on the logo img (e.g. invert for dark strip) */
       logoClass?: string;
-      /** SVG is a full wordmark — don’t repeat the name beside it */
       wordmarkOnly?: boolean;
     }
   | {
@@ -20,7 +18,6 @@ type MarqueeEntry =
       Icon: LucideIcon;
     };
 
-/** Wordmark per brand; Anthill / Esthetic / Pulp use project logos, Volery & Jay use Lucide until assets exist */
 const MARQUEE_ENTRIES: MarqueeEntry[] = [
   {
     name: 'Anthill',
@@ -44,9 +41,7 @@ const MARQUEE_ENTRIES: MarqueeEntry[] = [
   { name: 'Jay', fontClass: 'font-sans font-bold tracking-tight', Icon: User },
 ];
 
-/** Full cycles per half-strip; wider units → fewer repeats than plain text */
 const MARQUEE_CYCLES_PER_HALF = 8;
-
 const MARQUEE_SEGMENT = Array.from({ length: MARQUEE_CYCLES_PER_HALF }, () => [...MARQUEE_ENTRIES]).flat();
 
 export default function Hero() {
@@ -56,6 +51,7 @@ export default function Hero() {
   const bgRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const tickerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!textRef.current) return;
 
@@ -122,7 +118,6 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex flex-col justify-end pt-28 md:pt-32 pb-24 md:pb-32 px-8 w-full overflow-hidden isolate">
-      {/* Feather Spline / hero color into #000 so the next section reads as one black field */}
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 z-4 h-[min(62vh,32rem)]"
         style={{
@@ -131,18 +126,12 @@ export default function Hero() {
         }}
         aria-hidden
       />
-      <div
-        ref={bgRef}
-        className="absolute inset-0 z-0 overflow-hidden opacity-0 pointer-events-none"
-        aria-hidden
-      >
-        <div className="absolute -top-[120px] -bottom-[120px] -left-[120px] -right-[120px]">
-          <Spline scene="https://prod.spline.design/3Z9HZVYsWsN84iLT/scene.splinecode" />
-        </div>
+      <div ref={bgRef} className="absolute inset-0 z-0 overflow-hidden opacity-0" aria-hidden>
+        <HeroVisual />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-start text-left">
-        <div ref={logoRef} className="mb-5 md:mb-6 opacity-0">
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-start text-left pointer-events-none">
+        <div ref={logoRef} className="mb-5 md:mb-6 opacity-0 pointer-events-auto">
           <svg
             width="56"
             height="28"
@@ -162,13 +151,13 @@ export default function Hero() {
         <h1
           ref={textRef}
           aria-label={heroText.replace(/\r?\n/g, ' ')}
-          className="hero-headline font-serif text-left text-white tracking-[-0.035em]"
+          className="hero-headline font-serif text-left text-white tracking-[-0.035em] pointer-events-auto"
         />
       </div>
 
       <div
         ref={tickerRef}
-        className="absolute bottom-0 left-0 right-0 w-full z-10 opacity-0 pt-14 md:pt-20"
+        className="absolute bottom-0 left-0 right-0 w-full z-10 opacity-0 pt-14 md:pt-20 pointer-events-none"
         style={{
           background:
             'linear-gradient(to top, rgb(0 0 0 / 0.97) 0%, rgb(0 0 0 / 0.72) 32%, rgb(0 0 0 / 0.28) 58%, rgb(0 0 0 / 0.06) 78%, transparent 100%)',

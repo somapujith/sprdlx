@@ -30,8 +30,8 @@ interface AnimatedTextProps {
   as?: React.ElementType;
 }
 
-export default function AnimatedText({ text, children, className = "", delay = 0, as: Component = "div" }: AnimatedTextProps) {
-  const containerRef = useRef<HTMLElement>(null);
+export default function AnimatedText({ text, children, className = "", delay = 0, as: Tag = "div" }: AnimatedTextProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -60,8 +60,8 @@ export default function AnimatedText({ text, children, className = "", delay = 0
   }, [delay]);
 
   return (
-    <Component ref={containerRef} className={className}>
+    <div ref={containerRef} className={className} role={Tag !== 'div' ? 'heading' : undefined} aria-level={Tag === 'h2' ? 2 : Tag === 'h3' ? 3 : undefined}>
       {text ? <AnimatedWords text={text} /> : children}
-    </Component>
+    </div>
   );
 }

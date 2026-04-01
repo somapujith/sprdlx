@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AnimatedText from './AnimatedText';
+import HalftoneDotField from './effects/HalftoneDotField';
 
 const projects = [
   { id: 1, slug: 'anthill', title: 'Anthill', desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, and LP reporting.', img: '/projects/anthill/hero.png', logo: 'Anthill', logoIcon: '✦' },
@@ -14,14 +15,18 @@ const projects = [
     logo: 'Esthetic Insights',
     logoIcon: undefined,
   },
-  { id: 4, slug: 'volery', title: 'Volery', desc: 'Collaborative workspace designed for high-performance distributed teams.', img: 'https://picsum.photos/seed/volery/1200/1200', logo: 'Volery', logoIcon: '✶' },
-  { id: 5, slug: 'jay', title: 'Jay', desc: 'Your personal AI assistant for seamless productivity and focus.', img: 'https://picsum.photos/seed/jay/1200/1200', logo: 'Jay', logoIcon: '✦' },
+  { id: 4, slug: 'volery', title: 'Volery', desc: 'Collaborative workspace designed for high-performance distributed teams.', img: '', logo: 'Volery', logoIcon: '✶', placeholder: true as const },
+  { id: 5, slug: 'jay', title: 'Jay', desc: 'Your personal AI assistant for seamless productivity and focus.', img: '', logo: 'Jay', logoIcon: '✦', placeholder: true as const },
 ];
 
 export default function Portfolio() {
   return (
-    <section id="work" className="text-black py-32 px-8 relative z-10">
-      <div className="max-w-7xl mx-auto w-full">
+    <section id="work" className="text-black py-32 px-8 relative z-10 min-h-[1px]">
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <HalftoneDotField opacity={0.045} grid={34} dotMax={1.5} />
+      </div>
+
+      <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="flex justify-between items-end mb-20">
           <AnimatedText as="h2" text="We've done a lot. Here are some highlights" className="text-3xl md:text-5xl font-serif text-zinc-400 max-w-md" />
           <span className="text-xs font-medium uppercase tracking-widest text-zinc-400 hidden md:block">Portfolio</span>
@@ -29,23 +34,43 @@ export default function Portfolio() {
 
         <div className="relative flex flex-col gap-12 pb-32">
           {projects.map((project, index) => (
-            <div 
-              key={project.id} 
+            <div
+              key={project.id}
               className="sticky flex flex-col md:flex-row bg-[#f4f4f4] rounded-[2rem] overflow-hidden shadow-2xl border border-black/5"
               style={{ top: `${120 + index * 20}px` }}
             >
               <div className="w-full md:w-1/2 aspect-square md:aspect-auto md:h-[600px] relative overflow-hidden bg-zinc-900">
-                <img
-                  src={project.img}
-                  alt={project.title}
-                  className={
-                    project.slug === 'esthetic-insights' || project.slug === 'anthill' || project.slug === 'pulp'
-                      ? 'w-full h-full object-cover bg-black'
-                      : 'w-full h-full object-contain bg-black'
-                  }
-                  referrerPolicy="no-referrer"
-                  loading="lazy"
-                />
+                {'placeholder' in project && project.placeholder ? (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-[linear-gradient(145deg,#080808_0%,#2a2a2e_48%,#0c0c0c_100%)]">
+                    <div
+                      className="absolute inset-0 opacity-50"
+                      style={{
+                        backgroundImage:
+                          'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.035) 3px, rgba(255,255,255,0.035) 4px), repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(255,255,255,0.02) 3px, rgba(255,255,255,0.02) 4px)',
+                      }}
+                      aria-hidden
+                    />
+                    <div className="relative z-10 text-center px-6">
+                      <span className="text-5xl mb-2 block" aria-hidden>
+                        {project.logoIcon}
+                      </span>
+                      <span className="text-white font-bold text-2xl tracking-tight">{project.logo}</span>
+                      <p className="mt-3 text-xs uppercase tracking-[0.2em] text-zinc-500">Visual coming soon</p>
+                    </div>
+                  </div>
+                ) : (
+                  <img
+                    src={project.img}
+                    alt={project.title}
+                    className={
+                      project.slug === 'esthetic-insights' || project.slug === 'anthill' || project.slug === 'pulp'
+                        ? 'w-full h-full object-cover bg-black'
+                        : 'w-full h-full object-contain bg-black'
+                    }
+                    referrerPolicy="no-referrer"
+                    loading="lazy"
+                  />
+                )}
                 {project.slug === 'esthetic-insights' ? (
                   <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/25 p-6 md:p-10">
                     <img
@@ -76,7 +101,7 @@ export default function Portfolio() {
                       decoding="async"
                     />
                   </div>
-                ) : (
+                ) : project.slug === 'volery' || project.slug === 'jay' ? null : (
                   <div className="absolute top-8 left-8 text-white font-bold text-3xl drop-shadow-md flex items-center gap-2">
                     {project.logoIcon && <span className="text-4xl">{project.logoIcon}</span>}
                     {project.logo}

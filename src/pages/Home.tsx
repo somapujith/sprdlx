@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useLenis } from 'lenis/react';
+import { setNavSurface } from '../navSurface';
 import Hero from '../components/Hero';
 import Intro from '../components/Intro';
 import Portfolio from '../components/Portfolio';
@@ -42,21 +43,25 @@ export default function Home() {
 
     let bg: string;
     let surface: 'light' | 'dark';
+    let luminance: number;
 
     if (ptTop > portfolioLine + introBlend) {
       // Still in Intro / Hero — full black
       bg = '#000000';
       surface = 'dark';
+      luminance = 0;
     } else if (ptTop > portfolioLine) {
       // Smoothly ramp black → white as portfolio approaches
       const u = (portfolioLine + introBlend - ptTop) / introBlend;
       const v = Math.round(255 * smoothstep01(u));
       bg = `rgb(${v},${v},${v})`;
+      luminance = v / 255;
       surface = v > 165 ? 'light' : 'dark';
     } else if (teamTop > vp) {
       // Portfolio / Services — full white
       bg = '#ffffff';
       surface = 'light';
+      luminance = 1;
     } else {
       // Team entering — smoothly ramp white → black
       const span = vp - teamBlendEnd;
@@ -64,14 +69,19 @@ export default function Home() {
       const t = Math.max(0, Math.min(1, raw));
       const v = Math.round(255 * smoothstep01(t));
       bg = `rgb(${v},${v},${v})`;
+      luminance = v / 255;
       surface = v > 165 ? 'light' : 'dark';
     }
+
+    // Drives foreground contrast (Intro, etc.) on every scroll tick — independent of React
+    mainEl.style.setProperty('--bg-l', luminance.toFixed(4));
 
     const token = `${bg}|${surface}`;
     if (token === lastAppliedRef.current) return;
     lastAppliedRef.current = token;
     mainEl.style.backgroundColor = bg;
     mainEl.setAttribute('data-surface', surface);
+    setNavSurface(surface);
   }, []);
 
   // Drive updates on every Lenis scroll tick — receives the interpolated scrollY directly.
@@ -102,11 +112,15 @@ export default function Home() {
     };
   }, [updateMainBg]);
 
+  useEffect(() => {
+    return () => setNavSurface('dark');
+  }, []);
+
   return (
     <main
       ref={mainRef}
       className="flex flex-col w-full"
-      style={{ backgroundColor: '#000000' }}
+      style={{ backgroundColor: '#000000', ['--bg-l' as string]: 0 }}
       data-surface="dark"
     >
       <Hero />

@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, lazy, Suspense } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import HalftoneDotField from './effects/HalftoneDotField';
 
 gsap.registerPlugin(ScrollTrigger);
-const DitherTorusKnot = lazy(() => import('./DitherTorusKnot'));
 
 const COLUMNS = [
   {
@@ -13,7 +11,7 @@ const COLUMNS = [
     label: 'Startups',
     body: (
       <>
-        We handle the design work you don&apos;t have time for—branding, web, marketing, and product.
+        Product design, brand, and web for teams shipping AI-native products — from zero to launch.
       </>
     ),
     img: 'https://picsum.photos/seed/startups-ai-design/960/600',
@@ -23,7 +21,9 @@ const COLUMNS = [
     id: 'enterprises',
     label: 'Enterprises',
     body: (
-      <>We build bespoke, well-designed AI tools so your teams can automate the work nobody wants to do.</>
+      <>
+        Bespoke AI tools and interfaces so your org can deploy models safely and your teams actually adopt them.
+      </>
     ),
     img: 'https://picsum.photos/seed/enterprises-ai-tools/960/600',
     partners: ['eurostar', 'RYMAN', 'SOHO HOUSE'],
@@ -33,7 +33,7 @@ const COLUMNS = [
     label: 'VCs',
     body: (
       <>
-        Branding and digital systems that help you attract AI founders and move PortCos faster.
+        Brand and digital systems that help you win AI founders and give PortCos a credible story fast.
       </>
     ),
     img: 'https://picsum.photos/seed/vcs-ai-branding/960/600',
@@ -75,25 +75,13 @@ export default function Services() {
   return (
     <section
       ref={containerRef}
-      className="relative z-10 bg-transparent text-black px-6 sm:px-8 py-24 md:py-32 overflow-hidden"
+      className="relative z-10 min-h-[1px] bg-transparent text-black px-6 sm:px-8 py-24 md:py-32 overflow-hidden"
     >
-      <div className="pointer-events-none absolute left-[-8%] top-[10%] h-[32vh] w-[26vw] min-w-[200px] opacity-[0.12]" aria-hidden>
-        <Suspense fallback={null}>
-          <DitherTorusKnot className="h-full w-full" pixelSize={3.5} cameraZ={5.4} knotScale={0.72} variant="octahedron" />
-        </Suspense>
-      </div>
-      <div className="pointer-events-none absolute right-[-6%] bottom-[6%] h-[28vh] w-[22vw] min-w-[200px] opacity-[0.1]" aria-hidden>
-        <Suspense fallback={null}>
-          <DitherTorusKnot className="h-full w-full" pixelSize={4} cameraZ={5.6} knotScale={0.66} lightDir={[0.5, 1, 0.3]} variant="torus" />
-        </Suspense>
-      </div>
-      <div className="pointer-events-none absolute left-[48%] top-[2%] h-[18vh] w-[12vw] min-w-[120px] opacity-[0.11]" aria-hidden>
-        <Suspense fallback={null}>
-          <DitherTorusKnot className="h-full w-full" pixelSize={3.2} cameraZ={5.2} knotScale={0.62} lightDir={[1, 0.7, 0.6]} variant="torusKnot" />
-        </Suspense>
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <HalftoneDotField opacity={0.07} grid={30} dotMax={1.8} />
       </div>
 
-      <div className="relative max-w-6xl mx-auto w-full">
+      <div className="relative z-10 max-w-6xl mx-auto w-full">
         <header className="text-center blur-reveal mb-16 md:mb-20 lg:mb-24">
           <p className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.28em] text-zinc-400 mb-5 md:mb-6">
             Who we work with
@@ -152,26 +140,6 @@ export default function Services() {
               </div>
             </article>
           ))}
-        </div>
-
-        <div className="mt-20 md:mt-24 lg:mt-28 flex justify-center sm:justify-end blur-reveal">
-          <div
-            id="services-sprint-cta"
-            className="services-sprint-cta w-full max-w-md sm:max-w-lg sm:ml-auto rounded-2xl border border-zinc-200/90 bg-white p-6 shadow-[0_1px_0_0_rgb(0_0_0_/0.04)] sm:p-7 text-center sm:text-left"
-          >
-            <p className="text-sm leading-relaxed text-zinc-600">
-              £10k for a 2 week sprint.
-              <br />
-              Constant progress updates.
-            </p>
-            <Link
-              to="/contact"
-              className="group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-zinc-900 px-5 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-zinc-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 sm:w-auto sm:justify-start sm:px-6"
-            >
-              Get started
-              <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5" strokeWidth={2} aria-hidden />
-            </Link>
-          </div>
         </div>
       </div>
     </section>

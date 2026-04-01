@@ -172,12 +172,11 @@ export default function DitherTorusKnot({
   }, []);
 
   return (
-    <div ref={wrapperRef} className={className}>
+    <div ref={wrapperRef} className={`bg-transparent ${className}`}>
       {visible && (
         <Canvas
           camera={{ position: [0, 0, cameraZ], fov: 44 }}
           gl={{ antialias: false, alpha: true, powerPreference: 'low-power' }}
-          style={{ background: 'transparent' }}
           frameloop="always"
         >
           <ambientLight intensity={0.15} />

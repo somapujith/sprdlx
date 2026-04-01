@@ -15,9 +15,13 @@ export default defineConfig(({mode}) => {
         '@': path.resolve(__dirname, '.'),
       },
     },
+    /** Pin R3F stack so Vite does not serve stale optimized chunks after dep updates (504 Outdated Optimize Dep). */
+    optimizeDeps: {
+      include: ['@react-three/fiber', '@react-three/drei', 'three'],
+    },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
+      // Do not modify — file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
     },
   };
