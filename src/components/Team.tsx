@@ -6,12 +6,38 @@ import GlitchHeadline from './effects/GlitchHeadline';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const teamMembers = [
-  { name: 'Luca', role: 'Product, Look and Feel', accent: '#a78bfa' },
-  { name: 'Ana', role: 'Product design genius', accent: '#67e8f9' },
-  { name: 'Emily', role: 'End-to-end design strategist', accent: '#fbbf24' },
-  { name: 'John', role: 'Frontend Engineer', accent: '#34d399' },
-  { name: 'Sarah', role: 'Backend Engineer', accent: '#f472b6' },
+type TeamMember = {
+  name: string;
+  role: string;
+  accent: string;
+  image: string;
+};
+
+const teamMembers: TeamMember[] = [
+  {
+    name: 'Pujith Soma',
+    role: 'Creative Frontend Developer',
+    accent: '#a78bfa',
+    image: '/team/pujith-soma.png',
+  },
+  {
+    name: 'Ajith Prudhvi',
+    role: 'Frontend Designer',
+    accent: '#67e8f9',
+    image: '/team/ajith-prudhvi.jpeg',
+  },
+  {
+    name: 'Nithin Singarapu',
+    role: 'AI Engineer',
+    accent: '#34d399',
+    image: '/team/nithin-singarapu.png',
+  },
+  {
+    name: 'Rakesh Thakkuri',
+    role: 'AI Research Engineer',
+    accent: '#fbbf24',
+    image: '/team/rakesh-thakkuri.jpg',
+  },
 ];
 
 export default function Team() {
@@ -131,7 +157,21 @@ export default function Team() {
                 >
                   {/* Card face */}
                   <div className="relative aspect-[3/4]">
-                    {/* Dither-pattern background */}
+                    {/* Member photo */}
+                    <div
+                      className="absolute inset-0 overflow-hidden"
+                    >
+                      <img
+                        src={member.image}
+                        alt={`${member.name} portrait`}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+
+                    {/* Dither + tint overlays */}
                     <div
                       className="absolute inset-0"
                       style={{
@@ -143,17 +183,17 @@ export default function Team() {
                             transparent 1px,
                             transparent 5px
                           ),
-                          radial-gradient(ellipse at 30% 20%, ${member.accent}18 0%, transparent 60%),
-                          linear-gradient(165deg, #1a1a1e 0%, #27272a 45%, #0a0a0b 100%)
+                          linear-gradient(to top, rgba(8,8,10,0.72) 0%, rgba(8,8,10,0.2) 48%, rgba(8,8,10,0.58) 100%),
+                          radial-gradient(ellipse at 30% 20%, ${member.accent}1f 0%, transparent 65%)
                         `,
                       }}
                     />
 
-                    {/* Large initial */}
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    {/* Subtle initial watermark */}
+                    <div className="absolute inset-0 flex items-end justify-start p-4">
                       <span
-                        className="font-serif text-[5.5rem] md:text-[6.5rem] leading-none select-none transition-opacity duration-500 group-hover:opacity-40"
-                        style={{ color: `${member.accent}30` }}
+                        className="font-serif text-5xl md:text-6xl leading-none select-none"
+                        style={{ color: `${member.accent}2b` }}
                       >
                         {initials}
                       </span>
