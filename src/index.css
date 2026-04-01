@@ -252,10 +252,10 @@
     linear-gradient(
       to bottom,
       transparent 0%,
-      var(--theme-hero-shadow-1) 15%,
-      var(--theme-hero-shadow-2) 38%,
-      var(--theme-hero-shadow-3) 68%,
-      var(--theme-hero-shadow-4) 100%
+      color-mix(in srgb, var(--dynamic-bg, var(--theme-canvas-strong)) 15%, transparent) 15%,
+      color-mix(in srgb, var(--dynamic-bg, var(--theme-canvas-strong)) 48%, transparent) 38%,
+      color-mix(in srgb, var(--dynamic-bg, var(--theme-canvas-strong)) 82%, transparent) 68%,
+      var(--dynamic-bg, var(--theme-canvas-strong)) 100%
     );
 }
 
@@ -263,10 +263,10 @@
   background:
     linear-gradient(
       to top,
-      color-mix(in srgb, var(--theme-canvas-strong) 97%, black 3%) 0%,
-      color-mix(in srgb, var(--theme-canvas-strong) 74%, transparent 26%) 32%,
-      color-mix(in srgb, var(--theme-canvas-strong) 31%, transparent 69%) 58%,
-      color-mix(in srgb, var(--theme-canvas-strong) 8%, transparent 92%) 78%,
+      var(--dynamic-bg, var(--theme-canvas-strong)) 0%,
+      color-mix(in srgb, var(--dynamic-bg, var(--theme-canvas-strong)) 80%, transparent) 32%,
+      color-mix(in srgb, var(--dynamic-bg, var(--theme-canvas-strong)) 40%, transparent) 58%,
+      color-mix(in srgb, var(--dynamic-bg, var(--theme-canvas-strong)) 10%, transparent) 78%,
       transparent 100%
     );
 }
@@ -726,4 +726,33 @@ html.vt-active {
       opacity: 1;
     }
   }
+}
+:root[data-design-theme="portfolio-black"] {
+  --font-sans: "Avenir Next", "Segoe UI", "Gill Sans", sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", serif;
+  --theme-canvas: #000000;
+  --theme-canvas-soft: #0a0a0a;
+  --theme-canvas-strong: #000000;
+  --theme-ink: #ffffff;
+  --theme-ink-soft: #cccccc;
+  --theme-ink-strong: #ffffff;
+  --theme-muted: #888888;
+  --theme-accent: #ffffff;
+  --theme-accent-glow: rgb(255 255 255 / 0.15);
+  --theme-border: rgb(255 255 255 / 0.15);
+  --theme-border-soft: rgb(255 255 255 / 0.08);
+  --theme-card-bg: rgb(255 255 255 / 0.04);
+  --theme-card-quiet: rgb(255 255 255 / 0.02);
+  --theme-card-shadow: 0 14px 46px -22px rgb(0 0 0 / 0.8);
+  --theme-grid-line: rgb(255 255 255 / 0.05);
+  --theme-chip-bg: rgb(255 255 255 / 0.1);
+  --theme-chip-text: rgb(255 255 255 / 0.9);
+  --theme-chip-active-bg: rgb(255 255 255 / 0.2);
+  --theme-selection-bg: #ffffff;
+  --theme-selection-ink: #000000;
+  --theme-footer-strip-bg: #000000;
+}
+
+:root[data-design-theme="portfolio-black"] .theme-shell {
+  background-image: none;
 }

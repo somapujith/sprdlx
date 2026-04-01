@@ -117,8 +117,7 @@ export default function HeroVisual({ intensityRef }: Props) {
       const cursorGain = inten < 0.35 ? inten / 0.35 : 1;
       const floorInten = inten * 0.04;
 
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, w, h);
+      ctx.clearRect(0, 0, w, h);
 
       for (let row = 0; row < rows; row++) {
         const py = (row + 0.5) * ch;

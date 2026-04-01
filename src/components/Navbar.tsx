@@ -46,27 +46,29 @@ export default function Navbar() {
         <SprdlxLogoMark className="h-8 w-auto md:h-9" />
       </VTLink>
 
-      <div className="flex items-center gap-4 md:gap-8 text-sm font-medium">
-        <div className="flex items-center gap-1 rounded-full border border-[color:var(--theme-border-soft)] bg-[color:var(--theme-chip-bg)] p-1">
-          {themes.map((theme) => {
-            const active = theme.id === themeId;
-            const Icon = THEME_ICONS[theme.id];
-            return (
-              <button
-                key={theme.id}
-                type="button"
-                className={active ? 'theme-chip theme-chip--active' : 'theme-chip'}
-                style={{ paddingLeft: '0.6rem', paddingRight: '0.6rem' }}
-                onClick={() => setThemeId(theme.id)}
-                aria-pressed={active}
-                title={theme.description}
-                aria-label={theme.label}
-              >
-                <Icon className="w-4 h-4" strokeWidth={2.5} />
-              </button>
-            );
-          })}
-        </div>
+            <div className="flex items-center gap-4 md:gap-8 text-sm font-medium">    
+        {pathname !== '/portfolio' && (
+          <div className="flex items-center gap-1 rounded-full border border-[color:var(--theme-border-soft)] bg-[color:var(--theme-chip-bg)] p-1">
+            {themes.map((theme) => {
+              const active = theme.id === themeId;
+              const Icon = THEME_ICONS[theme.id];
+              return (
+                <button
+                  key={theme.id}
+                  type="button"
+                  className={active ? 'theme-chip theme-chip--active' : 'theme-chip'}
+                  style={{ paddingLeft: '0.6rem', paddingRight: '0.6rem' }}       
+                  onClick={() => setThemeId(theme.id)}
+                  aria-pressed={active}
+                  title={theme.description}
+                  aria-label={theme.label}
+                >
+                  <Icon className="w-4 h-4" strokeWidth={2.5} />
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         <VTLink
           to="/portfolio"
@@ -116,3 +118,8 @@ export default function Navbar() {
     </nav>
   );
 }
+
+
+
+
+

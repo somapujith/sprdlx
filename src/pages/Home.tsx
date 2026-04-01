@@ -228,7 +228,7 @@ export default function Home() {
     <main
       ref={mainRef}
       className="flex flex-col w-full"
-      style={{ backgroundColor: toRgbCss(theme.surfaceRamp.dark), ['--bg-l' as string]: 0 }}
+      style={{ backgroundColor: toRgbCss(theme.surfaceRamp.dark), ['--dynamic-bg' as string]: toRgbCss(theme.surfaceRamp.dark), ['--bg-l' as string]: 0 }}
       data-surface="dark"
     >
       <SectionChapters />

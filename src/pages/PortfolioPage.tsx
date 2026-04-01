@@ -3,6 +3,7 @@ import VTLink from '../components/VTLink';
 import gsap from 'gsap';
 import Footer from '../components/Footer';
 import DarkVeil from '../components/DarkVeil';
+import { useDesignTheme } from '../design/theme-context';
 
 const projects = [
   { id: 1, slug: 'anthill', title: 'Anthill', desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, and LP reporting.', img: '/projects/anthill/hero.png', logo: 'Anthill', logoIcon: '✦', iconBg: '#1a1a1a' },
@@ -22,10 +23,19 @@ const projects = [
 ];
 
 export default function PortfolioPage() {
+  const { themeId } = useDesignTheme();
+
+  React.useLayoutEffect(() => {
+    document.documentElement.dataset.designTheme = 'portfolio-black';
+    return () => {
+      document.documentElement.dataset.designTheme = themeId;
+    };
+  }, [themeId]);
+
   return (
-    <main className="theme-shell min-h-screen text-[color:var(--theme-ink)]">
+    <main className="theme-shell min-h-screen text-[color:var(--theme-ink)]" style={{ '--dynamic-bg': 'var(--theme-canvas)' } as React.CSSProperties}>
       {/* DarkVeil Hero */}
-      <div className="relative h-screen w-full overflow-hidden flex flex-col justify-center px-8 md:px-20">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-screen w-full overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="w-full h-full opacity-40">
             <DarkVeil
@@ -38,10 +48,13 @@ export default function PortfolioPage() {
               resolutionScale={1.75}
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--theme-canvas-strong)] via-transparent to-[color:var(--theme-canvas-strong)]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--theme-canvas-strong)] via-transparent to-[color:var(--theme-canvas)]" />
         </div>
-        
-        <div className="relative z-10 w-full mt-24">
+        <div className="hero-floor-shadow pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[min(62vh,32rem)]" aria-hidden />
+      </div>
+
+      <div className="relative z-10 flex min-h-screen w-full flex-col justify-center px-8 md:px-20 pb-12">
+        <div className="w-full mt-24">
           <h1 className="text-[20vw] md:text-[16vw] font-serif italic leading-none tracking-tighter opacity-90">
             Portfolio
           </h1>
@@ -166,3 +179,8 @@ export default function PortfolioPage() {
     </main>
   );
 }
+
+
+
+
+
