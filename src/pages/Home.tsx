@@ -20,6 +20,9 @@ function smoothstep01(t: number) {
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
   const lastAppliedRef = useRef('');
+  const lastBgLRef = useRef<number | null>(null);
+  const scrollRafRef = useRef<number | null>(null);
+  const pendingScrollRef = useRef(0);
 
   const updateMainBg = useCallback((scrollY: number) => {
     const mainEl = mainRef.current;
@@ -73,8 +76,12 @@ export default function Home() {
       surface = v > 165 ? 'light' : 'dark';
     }
 
-    // Drives foreground contrast (Intro, etc.) on every scroll tick — independent of React
-    mainEl.style.setProperty('--bg-l', luminance.toFixed(4));
+    // `--bg-l` only when meaningfully changed — avoids style thrash every Lenis sub-tick
+    const lumQ = Math.round(luminance * 2000) / 2000;
+    if (lastBgLRef.current === null || Math.abs(lumQ - lastBgLRef.current) > 0.0005) {
+      lastBgLRef.current = lumQ;
+      mainEl.style.setProperty('--bg-l', lumQ.toFixed(4));
+    }
 
     const token = `${bg}|${surface}`;
     if (token === lastAppliedRef.current) return;
@@ -84,9 +91,14 @@ export default function Home() {
     setNavSurface(surface);
   }, []);
 
-  // Drive updates on every Lenis scroll tick — receives the interpolated scrollY directly.
+  // At most one background update per animation frame (Lenis can emit multiple times per frame).
   useLenis(({ scroll }) => {
-    updateMainBg(scroll);
+    pendingScrollRef.current = scroll;
+    if (scrollRafRef.current != null) return;
+    scrollRafRef.current = requestAnimationFrame(() => {
+      scrollRafRef.current = null;
+      updateMainBg(pendingScrollRef.current);
+    });
   });
 
   // Resize: re-run with current scroll so offsets are recalculated
@@ -97,6 +109,7 @@ export default function Home() {
       resizeRaf = requestAnimationFrame(() => {
         resizeRaf = 0;
         lastAppliedRef.current = '';
+        lastBgLRef.current = null;
         // Read scrollY from documentElement since Lenis scrolls it
         updateMainBg(document.documentElement.scrollTop || window.scrollY);
       });
@@ -105,6 +118,7 @@ export default function Home() {
     if (window.visualViewport) window.visualViewport.addEventListener('resize', onResize);
     // Initial paint
     lastAppliedRef.current = '';
+    lastBgLRef.current = null;
     updateMainBg(document.documentElement.scrollTop || window.scrollY);
     return () => {
       window.removeEventListener('resize', onResize);

@@ -31,15 +31,12 @@ export default function GlobalDitherCursor() {
     resize();
     window.addEventListener('resize', resize);
 
-    const onMove = (e: MouseEvent) => {
-      trail.push({ x: e.clientX, y: e.clientY, t: performance.now() });
-    };
-
     let raf = 0;
     const loop = () => {
+      raf = 0;
       const now = performance.now();
-      ctx.clearRect(0, 0, w, h);
       while (trail.length && now - trail[0].t > maxAge) trail.shift();
+      ctx.clearRect(0, 0, w, h);
       for (const p of trail) {
         const age = now - p.t;
         const a = 1 - age / maxAge;
@@ -49,9 +46,17 @@ export default function GlobalDitherCursor() {
         const gy = Math.floor(p.y / size) * size;
         ctx.fillRect(gx, gy, size - 1, size - 1);
       }
-      raf = requestAnimationFrame(loop);
+      if (trail.length > 0) {
+        raf = requestAnimationFrame(loop);
+      }
     };
-    raf = requestAnimationFrame(loop);
+    const schedule = () => {
+      if (raf === 0) raf = requestAnimationFrame(loop);
+    };
+    const onMove = (e: MouseEvent) => {
+      trail.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+      schedule();
+    };
     window.addEventListener('mousemove', onMove, { passive: true });
 
     return () => {
