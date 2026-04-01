@@ -1,19 +1,25 @@
 /** Inline “living” AI pill — CSS-only; `tone` matches scroll-driven page luminance */
-export default function InlineAiBlob({ tone = 'dark' }: { tone?: 'dark' | 'light' }) {
+export default function InlineAiBlob({
+  tone = 'dark',
+  interactive = true,
+}: {
+  tone?: 'dark' | 'light';
+  interactive?: boolean;
+}) {
   const isLight = tone === 'light';
   return (
     <span
+      title="AI Studio — products & tooling"
       className={`relative inline-flex h-10 w-20 md:h-14 md:w-28 items-center justify-center rounded-full align-middle overflow-hidden ${
         isLight ? 'ring-1 ring-neutral-900/12' : 'ring-1 ring-white/15'
-      }`}
+      } ${interactive ? 'transition-transform duration-300 ease-out hover:scale-[1.06] active:scale-[0.98] motion-reduce:hover:scale-100' : ''}`}
     >
       <span
-        className="absolute inset-0 opacity-90"
+        className={`absolute inset-0 opacity-90 ${interactive ? 'ai-blob-conic' : ''}`}
         style={{
           background: isLight
             ? 'conic-gradient(from 180deg at 50% 50%, #e4e4e7 0deg, #fafafa 120deg, #a1a1aa 240deg, #d4d4d8 360deg)'
             : 'conic-gradient(from 180deg at 50% 50%, #27272a 0deg, #fafafa 120deg, #52525b 240deg, #18181b 360deg)',
-          animation: 'spin 8s linear infinite',
         }}
       />
       <span
@@ -31,9 +37,6 @@ export default function InlineAiBlob({ tone = 'dark' }: { tone?: 'dark' | 'light
       >
         AI
       </span>
-      <style>{`
-        @keyframes spin { to { transform: rotate(360deg); } }
-      `}</style>
     </span>
   );
 }

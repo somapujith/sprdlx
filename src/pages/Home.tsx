@@ -44,11 +44,24 @@ export default function Home() {
     const introBlend = vp * 0.55;
     const teamBlendEnd = vp * 0.38;
 
+    /** Until viewport center passes mid-manifesto, keep full black (defer Portfolio entry transition). */
+    const gate = document.getElementById('manifesto-blend-gate');
+    let manifestoMidPassed = true;
+    if (gate) {
+      const gateDocY = gate.getBoundingClientRect().top + scrollY;
+      const viewportCenterY = scrollY + vp * 0.5;
+      manifestoMidPassed = viewportCenterY >= gateDocY;
+    }
+
     let bg: string;
     let surface: 'light' | 'dark';
     let luminance: number;
 
-    if (ptTop > portfolioLine + introBlend) {
+    if (!manifestoMidPassed) {
+      bg = '#000000';
+      surface = 'dark';
+      luminance = 0;
+    } else if (ptTop > portfolioLine + introBlend) {
       // Still in Intro / Hero — full black
       bg = '#000000';
       surface = 'dark';

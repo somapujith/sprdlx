@@ -1,22 +1,18 @@
-import React, { useEffect, useRef, useSyncExternalStore } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import DitherTorusKnot from './DitherTorusKnot';
-import InlineAiBlob from './effects/InlineAiBlob';
-import SynapticThreadsBg from './effects/SynapticThreadsBg';
-import { getNavSurface, subscribeNavSurface } from '../navSurface';
+import { useTranslation } from 'react-i18next';
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Copy + decor track `--bg-l` on `<main>` (0 = black … 1 = white) so contrast stays
- * correct through the Intro → Portfolio scroll blend.
+ * Intro — editorial manifesto: no watermarks, balanced grid, clear type hierarchy.
  */
 export default function Intro() {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLHeadingElement>(null);
   const sublineRef = useRef<HTMLParagraphElement>(null);
-  const surface = useSyncExternalStore(subscribeNavSurface, getNavSurface, getNavSurface);
 
   useEffect(() => {
     if (!textRef.current || !containerRef.current) return;
@@ -27,8 +23,8 @@ export default function Intro() {
 
       if (!words?.length) return;
 
-      gsap.set(words, { opacity: 0.08, y: '0.55em' });
-      if (sub) gsap.set(sub, { opacity: 0.06, y: 18 });
+      gsap.set(words, { opacity: 0.08, y: '0.5em' });
+      if (sub) gsap.set(sub, { opacity: 0.06, y: 14 });
 
       const st = {
         trigger: containerRef.current,
@@ -42,7 +38,7 @@ export default function Intro() {
         scrollTrigger: st,
         opacity: 1,
         y: 0,
-        stagger: 0.028,
+        stagger: 0.022,
         ease: 'none',
       });
 
@@ -72,66 +68,87 @@ export default function Intro() {
   };
 
   const sublineColor = 'hsl(0 0% calc(62% - var(--bg-l, 0) * 22%))';
+  const highlightColor = 'hsl(72 100% calc(46% - var(--bg-l, 0) * 18%))';
+  const eyebrowMuted = 'hsl(72 85% calc(58% - var(--bg-l, 0) * 32%))';
 
   return (
     <section
       ref={containerRef}
-      className="py-28 md:py-36 lg:py-44 px-6 sm:px-8 min-h-[min(100vh,56rem)] flex items-center relative z-10 overflow-hidden transition-[color] duration-150 ease-out"
+      className="relative z-10 overflow-hidden py-28 md:py-36 lg:py-44 transition-[color] duration-150 ease-out"
       style={{
         color: 'hsl(0 0% calc((1 - var(--bg-l, 0)) * 100%))',
       }}
     >
-      {/* Soft edge vignette — visible mainly on dark backgrounds */}
+      {/*
+        Home.tsx: background stays black until viewport center passes this line (~mid manifesto),
+        so the black→white transition toward Portfolio begins after scroll-driven copy is underway.
+      */}
       <div
-        className="pointer-events-none absolute inset-0 z-2"
-        style={{
-          background:
-            'radial-gradient(ellipse 115% 95% at 14% 48%, transparent 38%, rgb(0 0 0 / calc((1 - var(--bg-l, 0)) * 0.16)) 100%)',
-        }}
+        id="manifesto-blend-gate"
+        className="pointer-events-none absolute left-0 right-0 top-[52%] h-px w-full opacity-0"
         aria-hidden
       />
 
-      <SynapticThreadsBg />
+      <div className="mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-10">
+        <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-12 lg:items-end">
+          {/* Main column — readable measure (7/12) */}
+          <div className="lg:col-span-7">
+            {/* Eyebrow: rule + label (no vertical rail) */}
+            <div className="mb-8 flex flex-wrap items-center gap-4 md:gap-5">
+              <span
+                className="h-px w-10 shrink-0 bg-current opacity-20 md:w-14"
+                aria-hidden
+              />
+              <p
+                className="font-mono text-[0.62rem] uppercase tracking-[0.32em] sm:text-[0.65rem]"
+                style={{ color: eyebrowMuted }}
+              >
+                {t('introEyebrow')}
+              </p>
+              <span className="hidden h-px min-w-8 flex-1 bg-current opacity-15 sm:block" aria-hidden />
+            </div>
 
-      <div
-        className="pointer-events-none absolute right-[-8%] top-1/2 h-[58vh] w-[54vw] max-h-[760px] max-w-[820px] -translate-y-1/2 z-1"
-        style={{ opacity: 'calc(0.48 - var(--bg-l, 0) * 0.24)' }}
-        aria-hidden
-      >
-        <DitherTorusKnot
-          className="w-full h-full"
-          color1="#ffffff"
-          color2="#000000"
-          pixelSize={3}
-          lightDir={[1, 0.8, 0.6]}
-          cameraZ={5.2}
-          knotScale={0.8}
-          variant="torusKnot"
-        />
-      </div>
+            <h2
+              ref={textRef}
+              className="font-serif text-[1.65rem] leading-[1.22] tracking-[-0.025em] text-balance sm:text-[1.85rem] md:text-[2.15rem] lg:text-[2.45rem] xl:text-[2.65rem]"
+            >
+              <span className="block">
+                {wrapWords(t('introBeforeAi'))}
+                <span className="word-reveal mx-1.5 inline-block align-baseline font-mono text-[0.52em] font-medium tracking-[0.18em] text-[#ccff00] sm:mx-2 md:text-[0.5em]">
+                  [AI]
+                </span>
+              </span>
+              <span className="mt-3 block text-[0.96em] leading-[1.28] text-current/90 md:mt-4">
+                {wrapWords(t('introAfterLine1'))}
+              </span>
+              <span className="mt-2 block md:mt-3">
+                {wrapWords(t('introAfterLine2'))}{' '}
+                <span
+                  className="word-reveal inline-block font-medium will-change-transform"
+                  style={{ color: highlightColor }}
+                >
+                  {t('introHighlight')}
+                </span>
+              </span>
+            </h2>
 
-      <div className="max-w-7xl mx-auto w-full relative z-10">
-        <div className="max-w-[46rem] lg:max-w-[52rem]">
-          <h2
-            ref={textRef}
-            className="text-[2rem] sm:text-[2.35rem] md:text-5xl lg:text-6xl xl:text-[3.35rem] font-serif leading-[1.14] tracking-[-0.028em] text-balance"
-          >
-            {wrapWords('We build')}
-            <span className="word-reveal inline-block mx-2 md:mx-2.5 align-middle will-change-transform">
-              <InlineAiBlob tone={surface === 'light' ? 'light' : 'dark'} />
-            </span>
-            {wrapWords(
-              "standout brands, digital experiences, and AI tools — and invest in teams building what's next."
-            )}
-          </h2>
+            <p
+              ref={sublineRef}
+              className="mt-10 max-w-md font-serif text-[1.05rem] italic leading-relaxed sm:text-lg md:mt-12 md:text-xl"
+              style={{ color: sublineColor }}
+            >
+              {t('introSubline')}
+            </p>
+          </div>
 
-          <p
-            ref={sublineRef}
-            className="mt-9 md:mt-11 text-lg sm:text-xl md:text-2xl font-serif leading-snug tracking-[-0.02em] max-w-xl"
-            style={{ color: sublineColor }}
-          >
-            We&apos;re based in Hyderabad.
-          </p>
+          {/* Right column — typographic balance (5/12), no images */}
+          <aside className="hidden lg:col-span-5 lg:flex lg:flex-col lg:justify-end lg:pb-1">
+            <ul className="space-y-5 border-l border-[#ccff00]/35 pl-6 font-serif text-2xl tracking-[-0.02em] text-current/88 xl:text-[1.65rem]">
+              <li>{t('introPillar1')}</li>
+              <li>{t('introPillar2')}</li>
+              <li>{t('introPillar3')}</li>
+            </ul>
+          </aside>
         </div>
       </div>
     </section>

@@ -87,6 +87,22 @@
   color: rgb(255 255 255 / 0.62);
 }
 
+.ai-blob-conic {
+  animation: ai-blob-spin 10s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-blob-conic {
+    animation: none;
+  }
+}
+
+@keyframes ai-blob-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Cinematic hero: inner wordmark is centered by parent flex; GSAP animates this node only */
 .hero-wordmark-stage {
   width: min(92vw, 820px);
