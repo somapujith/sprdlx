@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLenis } from 'lenis/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -12,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
  */
 export default function GsapLenisSync() {
   const lenis = useLenis();
+  const scrollUpdateRafRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!lenis) return;
@@ -38,7 +39,11 @@ export default function GsapLenisSync() {
     });
 
     const onScroll = () => {
-      ScrollTrigger.update();
+      if (scrollUpdateRafRef.current != null) return;
+      scrollUpdateRafRef.current = requestAnimationFrame(() => {
+        scrollUpdateRafRef.current = null;
+        ScrollTrigger.update();
+      });
     };
     lenis.on('scroll', onScroll);
 
@@ -50,12 +55,17 @@ export default function GsapLenisSync() {
     // Prevents GSAP from “catching up” after frame gaps — important for scroll-linked motion to feel liquid.
     gsap.ticker.lagSmoothing(0);
 
-    requestAnimationFrame(() => ScrollTrigger.refresh());
+    const refreshRaf = requestAnimationFrame(() => ScrollTrigger.refresh());
 
     return () => {
       lenis.off('scroll', onScroll);
       gsap.ticker.remove(onTick);
       gsap.ticker.lagSmoothing(500, 33);
+      cancelAnimationFrame(refreshRaf);
+      if (scrollUpdateRafRef.current != null) {
+        cancelAnimationFrame(scrollUpdateRafRef.current);
+        scrollUpdateRafRef.current = null;
+      }
       ScrollTrigger.scrollerProxy(scroller, null);
     };
   }, [lenis]);

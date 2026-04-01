@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useLenis } from 'lenis/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { setNavSurface } from '../navSurface';
 import Hero from '../components/Hero';
 import Intro from '../components/Intro';
@@ -19,6 +20,16 @@ function quantizeChannel(v: number, step = 7) {
   return Math.min(255, Math.max(0, Math.round(v / step) * step));
 }
 
+function getCurrentScrollY() {
+  return document.documentElement.scrollTop || window.scrollY;
+}
+
+type SectionOffsets = {
+  portfolioTop: number;
+  teamTop: number;
+  gateTop: number | null;
+};
+
 /**
  * Scroll-driven background using lenis.scroll (virtual scroll position) so
  * getBoundingClientRect() values are always in sync with Lenis's interpolated position.
@@ -29,30 +40,41 @@ export default function Home() {
   const lastBgLRef = useRef<number | null>(null);
   const scrollRafRef = useRef<number | null>(null);
   const pendingScrollRef = useRef(0);
-  /** Cached document Y of manifesto gate — avoid getBoundingClientRect every scroll frame (layout thrash). */
-  const gateDocYRef = useRef<number | null>(null);
-  const sectionElsRef = useRef<{
-    portfolio: HTMLElement | null;
-    team: HTMLElement | null;
-    gate: HTMLElement | null;
-  } | null>(null);
+  const sectionOffsetsRef = useRef<SectionOffsets | null>(null);
+
+  const refreshSectionOffsets = useCallback(() => {
+    const portfolio = document.getElementById('portfolio-trigger');
+    const team = document.getElementById('team');
+    const gate = document.getElementById('manifesto-blend-gate');
+
+    if (!portfolio || !team) {
+      sectionOffsetsRef.current = null;
+      return;
+    }
+
+    const scrollY = getCurrentScrollY();
+    const toDocumentTop = (el: HTMLElement) => el.getBoundingClientRect().top + scrollY;
+
+    sectionOffsetsRef.current = {
+      portfolioTop: toDocumentTop(portfolio),
+      teamTop: toDocumentTop(team),
+      gateTop: gate ? toDocumentTop(gate) : null,
+    };
+  }, []);
 
   const updateMainBg = useCallback((scrollY: number) => {
     const mainEl = mainRef.current;
-    let portfolio = sectionElsRef.current?.portfolio;
-    let team = sectionElsRef.current?.team;
-    let gate = sectionElsRef.current?.gate;
-    if (!portfolio || !team) {
-      portfolio = document.getElementById('portfolio-trigger');
-      team = document.getElementById('team');
-      gate = document.getElementById('manifesto-blend-gate');
-      sectionElsRef.current = { portfolio, team, gate };
-    }
-    if (!mainEl || !portfolio || !team) return;
+    if (!mainEl) return;
 
-    // offsetTop gives the true document position — no getBoundingClientRect needed.
-    const ptOffset = portfolio.offsetTop;
-    const teamOffset = team.offsetTop;
+    if (!sectionOffsetsRef.current) {
+      refreshSectionOffsets();
+    }
+
+    const offsets = sectionOffsetsRef.current;
+    if (!offsets) return;
+
+    const { portfolioTop: ptOffset, teamTop: teamOffset, gateTop } = offsets;
+
 
     const vp = window.innerHeight;
 
@@ -66,12 +88,9 @@ export default function Home() {
 
     /** Until viewport center passes mid-manifesto, keep full black (defer Portfolio entry transition). */
     let manifestoMidPassed = true;
-    if (gate) {
-      if (gateDocYRef.current == null) {
-        gateDocYRef.current = gate.getBoundingClientRect().top + scrollY;
-      }
+    if (gateTop != null) {
       const viewportCenterY = scrollY + vp * 0.5;
-      manifestoMidPassed = viewportCenterY >= gateDocYRef.current;
+      manifestoMidPassed = viewportCenterY >= gateTop;
     }
 
     let bg: string;
@@ -123,7 +142,7 @@ export default function Home() {
     mainEl.style.backgroundColor = bg;
     mainEl.setAttribute('data-surface', surface);
     setNavSurface(surface);
-  }, []);
+  }, [refreshSectionOffsets]);
 
   // At most one background update per animation frame (Lenis can emit multiple times per frame).
   useLenis(({ scroll }) => {
@@ -144,10 +163,9 @@ export default function Home() {
         resizeRaf = 0;
         lastAppliedRef.current = '';
         lastBgLRef.current = null;
-        gateDocYRef.current = null;
-        sectionElsRef.current = null;
+        refreshSectionOffsets();
         // Read scrollY from documentElement since Lenis scrolls it
-        updateMainBg(document.documentElement.scrollTop || window.scrollY);
+        updateMainBg(getCurrentScrollY());
       });
     };
     window.addEventListener('resize', onResize);
@@ -155,12 +173,38 @@ export default function Home() {
     // Initial paint
     lastAppliedRef.current = '';
     lastBgLRef.current = null;
-    updateMainBg(document.documentElement.scrollTop || window.scrollY);
+    refreshSectionOffsets();
+    updateMainBg(getCurrentScrollY());
     return () => {
       window.removeEventListener('resize', onResize);
       if (window.visualViewport) window.visualViewport.removeEventListener('resize', onResize);
     };
-  }, [updateMainBg]);
+  }, [refreshSectionOffsets, updateMainBg]);
+
+  // ScrollTrigger refresh can shift section geometry (font/image load, pinning) — recache offsets afterwards.
+  useEffect(() => {
+    const onScrollTriggerRefresh = () => {
+      refreshSectionOffsets();
+      updateMainBg(getCurrentScrollY());
+    };
+
+    ScrollTrigger.addEventListener('refreshInit', onScrollTriggerRefresh);
+    ScrollTrigger.addEventListener('refresh', onScrollTriggerRefresh);
+
+    return () => {
+      ScrollTrigger.removeEventListener('refreshInit', onScrollTriggerRefresh);
+      ScrollTrigger.removeEventListener('refresh', onScrollTriggerRefresh);
+    };
+  }, [refreshSectionOffsets, updateMainBg]);
+
+  useEffect(() => {
+    return () => {
+      if (scrollRafRef.current != null) {
+        cancelAnimationFrame(scrollRafRef.current);
+        scrollRafRef.current = null;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     return () => setNavSurface('dark');
