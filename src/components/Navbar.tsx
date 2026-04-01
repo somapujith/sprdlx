@@ -1,4 +1,4 @@
-import { useSyncExternalStore, useLayoutEffect } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Sunrise, Sun, Moon } from 'lucide-react';
 import VTLink from './VTLink';
@@ -7,23 +7,105 @@ import { getNavSurface, setNavSurface, subscribeNavSurface } from '../navSurface
 import { useDesignTheme } from '../design/theme-context';
 import { DesignThemeId } from '../design/themes';
 
+type DayPhase = 'morning' | 'afternoon' | 'night';
+
+const HYDERABAD_TIMEZONE = 'Asia/Kolkata';
+
+const DAY_THEME_ORDER: DesignThemeId[] = ['editorial', 'atelier', 'analog'];
+
 const THEME_ICONS: Record<DesignThemeId, React.FC<{ className?: string }>> = {
   editorial: Sunrise,
   atelier: Sun,
   analog: Moon,
 };
 
+const THEME_LABELS: Record<DesignThemeId, string> = {
+  editorial: 'Morning',
+  atelier: 'Afternoon',
+  analog: 'Night',
+};
+
+const PHASE_ICONS: Record<DayPhase, React.FC<{ className?: string }>> = {
+  morning: Sunrise,
+  afternoon: Sun,
+  night: Moon,
+};
+
+const PHASE_THEME: Record<DayPhase, DesignThemeId> = {
+  morning: 'editorial',
+  afternoon: 'atelier',
+  night: 'analog',
+};
+
+const PHASE_LABELS: Record<DayPhase, string> = {
+  morning: 'Morning',
+  afternoon: 'Afternoon',
+  night: 'Night',
+};
+
+function getHyderabadHour(now: Date = new Date()): number {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: HYDERABAD_TIMEZONE,
+    hour: 'numeric',
+    hour12: false,
+  }).formatToParts(now);
+
+  const hourPart = parts.find((part) => part.type === 'hour')?.value;
+  const hour = hourPart ? Number(hourPart) : 0;
+  return Number.isFinite(hour) ? hour : 0;
+}
+
+function resolveDayPhaseFromHour(hour: number): DayPhase {
+  if (hour >= 5 && hour < 12) return 'morning';
+  if (hour >= 12 && hour < 18) return 'afternoon';
+  return 'night';
+}
+
 export default function Navbar() {
   const { pathname } = useLocation();
   const surface = useSyncExternalStore(subscribeNavSurface, getNavSurface, getNavSurface);
-  const { themeId, setThemeId, themes } = useDesignTheme();
-  const activeThemeIndex = themes.findIndex((theme) => theme.id === themeId);
+  const { themeId, setThemeId } = useDesignTheme();
+  const [hyderabadPhase, setHyderabadPhase] = useState<DayPhase>(() => resolveDayPhaseFromHour(getHyderabadHour()));
+  const [manualOverride, setManualOverride] = useState(false);
+  const lastPhaseRef = useRef<DayPhase>(hyderabadPhase);
   const ActiveThemeIcon = THEME_ICONS[themeId];
+  const currentThemeLabel = THEME_LABELS[themeId];
+  const currentThemeIndex = DAY_THEME_ORDER.indexOf(themeId);
+  const nextThemeId = currentThemeIndex === -1 ? DAY_THEME_ORDER[0] : DAY_THEME_ORDER[(currentThemeIndex + 1) % DAY_THEME_ORDER.length];
   const isLight = surface === 'light';
 
   useLayoutEffect(() => {
     if (pathname !== '/') setNavSurface('dark');
   }, [pathname]);
+
+  const syncThemeToHyderabadTime = useCallback(() => {
+    if (pathname === '/portfolio') return;
+
+    const nextPhase = resolveDayPhaseFromHour(getHyderabadHour());
+    const nextThemeId = PHASE_THEME[nextPhase];
+    const phaseChanged = nextPhase !== lastPhaseRef.current;
+
+    setHyderabadPhase(nextPhase);
+
+    if (phaseChanged) {
+      lastPhaseRef.current = nextPhase;
+      setManualOverride(false);
+      if (themeId !== nextThemeId) {
+        setThemeId(nextThemeId);
+      }
+      return;
+    }
+
+    if (!manualOverride && themeId !== nextThemeId) {
+      setThemeId(nextThemeId);
+    }
+  }, [manualOverride, pathname, setThemeId, themeId]);
+
+  useEffect(() => {
+    syncThemeToHyderabadTime();
+    const timerId = window.setInterval(syncThemeToHyderabadTime, 60_000);
+    return () => window.clearInterval(timerId);
+  }, [syncThemeToHyderabadTime]);
 
   const linkClass = isLight
     ? 'text-[color:var(--theme-nav-light)] hover:opacity-70'
@@ -36,9 +118,8 @@ export default function Navbar() {
     : 'border-[color:var(--theme-nav-dark-border)]';
 
   const cycleTheme = () => {
-    if (themes.length <= 1 || activeThemeIndex === -1) return;
-    const nextTheme = themes[(activeThemeIndex + 1) % themes.length];
-    setThemeId(nextTheme.id);
+    setManualOverride(true);
+    setThemeId(nextThemeId);
   };
 
   return (
@@ -54,7 +135,7 @@ export default function Navbar() {
         <SprdlxLogoMark className="h-8 w-auto md:h-9" />
       </VTLink>
 
-            <div className="flex items-center gap-4 md:gap-8 text-sm font-medium">    
+      <div className="flex items-center gap-4 md:gap-8 text-sm font-medium">
         {pathname !== '/portfolio' && (
           <div className="flex items-center rounded-full border border-[color:var(--theme-border-soft)] bg-[color:var(--theme-chip-bg)] p-1">
             <button
@@ -62,8 +143,8 @@ export default function Navbar() {
               className="theme-chip theme-chip--active"
               style={{ paddingLeft: '0.6rem', paddingRight: '0.6rem' }}
               onClick={cycleTheme}
-              aria-label="Switch theme"
-              title="Switch theme"
+              aria-label={`Switch theme manually. Current: ${currentThemeLabel}. Hyderabad time: ${PHASE_LABELS[hyderabadPhase]}.`}
+              title={`Current: ${currentThemeLabel} • Hyderabad auto: ${PHASE_LABELS[hyderabadPhase]} • Click to switch`}
             >
               <ActiveThemeIcon className="w-4 h-4" strokeWidth={2.5} />
             </button>
@@ -82,7 +163,7 @@ export default function Navbar() {
           data-cursor="accent"
           className={`group flex items-center gap-2 transition-colors duration-300 ${contactClass}`}
         >
-          <span
+          <div
             className={`relative flex items-center justify-center w-6 h-6 border rounded-sm overflow-hidden transition-colors duration-300 ${iconBorderClass}`}
           >
             <svg
@@ -111,7 +192,7 @@ export default function Navbar() {
             >
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </span>
+          </div>
           <span className="italic font-serif text-lg">Contact</span>
         </VTLink>
       </div>
