@@ -6,7 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Official Lenis + GSAP ScrollTrigger wiring so scrub/timeline positions match smooth scroll.
+ * Lenis + GSAP ScrollTrigger — same wiring as Lenis docs / typical Webflow+GSAP builds
+ * (e.g. ashleybrookecs.com): raf on gsap.ticker, ScrollTrigger on lenis scroll, lag smoothing off.
  * @see https://github.com/darkroomengineering/lenis#gsap-scrolltrigger
  */
 export default function GsapLenisSync() {
@@ -41,18 +42,20 @@ export default function GsapLenisSync() {
     };
     lenis.on('scroll', onScroll);
 
-    const raf = (time: number) => {
+    const onTick = (time: number) => {
       lenis.raf(time * 1000);
     };
-    gsap.ticker.add(raf);
+    gsap.ticker.add(onTick);
+
+    // Prevents GSAP from “catching up” after frame gaps — important for scroll-linked motion to feel liquid.
     gsap.ticker.lagSmoothing(0);
 
-    // Defer refresh so it runs after layout settles, not during mount
     requestAnimationFrame(() => ScrollTrigger.refresh());
 
     return () => {
       lenis.off('scroll', onScroll);
-      gsap.ticker.remove(raf);
+      gsap.ticker.remove(onTick);
+      gsap.ticker.lagSmoothing(500, 33);
       ScrollTrigger.scrollerProxy(scroller, null);
     };
   }, [lenis]);

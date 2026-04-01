@@ -7,14 +7,15 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       root
       autoRaf={false}
       options={{
-        /** Lower lerp = smoother glide (less snappy catch-up). `duration` is ignored when lerp is set. */
-        lerp: 0.075,
+        /**
+         * Lenis defaults (~lerp 0.1, multipliers 1) match “agency” smooth scroll (Lenis + GSAP sites).
+         * Avoid extremely low lerp — it reads as stutter, not extra smoothness.
+         */
+        lerp: 0.1,
         smoothWheel: true,
         wheelMultiplier: 1,
         touchMultiplier: 1,
-        /** Smoother trackpad / touch inertia on supported devices */
-        syncTouch: true,
-        syncTouchLerp: 0.08,
+        syncTouch: false,
       }}
     >
       {children}

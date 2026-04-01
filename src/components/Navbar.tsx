@@ -1,5 +1,4 @@
 import { useSyncExternalStore, useLayoutEffect } from 'react';
-import { motion } from 'motion/react';
 import { useLocation } from 'react-router-dom';
 import VTLink from './VTLink';
 import SprdlxLogoMark from './SprdlxLogoMark';
@@ -21,11 +20,8 @@ export default function Navbar() {
   const iconBorderClass = isLight ? 'border-black/25' : 'border-white/30';
 
   return (
-    <motion.nav
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 1, delay: 2.2, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 bg-transparent transition-colors duration-300"
+    <nav
+      className="nav-entrance fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 bg-transparent transition-colors duration-300"
     >
       <VTLink
         to="/"
@@ -81,6 +77,6 @@ export default function Navbar() {
           <span className="italic font-serif text-lg">Contact</span>
         </VTLink>
       </div>
-    </motion.nav>
+    </nav>
   );
 }

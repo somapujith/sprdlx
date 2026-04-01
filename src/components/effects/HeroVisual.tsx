@@ -49,6 +49,8 @@ export default function HeroVisual({ intensityRef }: Props) {
     let mouseX = -9999,
       mouseY = -9999;
     let visible = true;
+    /** Avoid IO kicking the loop before deferred start (hurts LCP). */
+    let everStarted = false;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -74,7 +76,7 @@ export default function HeroVisual({ intensityRef }: Props) {
     const io = new IntersectionObserver(
       ([e]) => {
         visible = e.isIntersecting;
-        if (visible && raf === 0) {
+        if (visible && raf === 0 && everStarted) {
           raf = requestAnimationFrame(frame);
         }
       },
@@ -160,7 +162,13 @@ export default function HeroVisual({ intensityRef }: Props) {
       raf = requestAnimationFrame(frame);
     }
 
-    raf = requestAnimationFrame(frame);
+    /** Defer first frame until after paint so headline/text can win LCP. */
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        everStarted = true;
+        if (visible && raf === 0) raf = requestAnimationFrame(frame);
+      });
+    });
 
     return () => {
       if (raf) cancelAnimationFrame(raf);

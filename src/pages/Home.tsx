@@ -14,6 +14,11 @@ function smoothstep01(t: number) {
   return x * x * (3 - 2 * x);
 }
 
+/** Fewer grey steps while scrolling = far fewer style/nav updates (was hammering every frame in ramps). */
+function quantizeChannel(v: number, step = 7) {
+  return Math.min(255, Math.max(0, Math.round(v / step) * step));
+}
+
 /**
  * Scroll-driven background using lenis.scroll (virtual scroll position) so
  * getBoundingClientRect() values are always in sync with Lenis's interpolated position.
@@ -26,16 +31,28 @@ export default function Home() {
   const pendingScrollRef = useRef(0);
   /** Cached document Y of manifesto gate — avoid getBoundingClientRect every scroll frame (layout thrash). */
   const gateDocYRef = useRef<number | null>(null);
+  const sectionElsRef = useRef<{
+    portfolio: HTMLElement | null;
+    team: HTMLElement | null;
+    gate: HTMLElement | null;
+  } | null>(null);
 
   const updateMainBg = useCallback((scrollY: number) => {
     const mainEl = mainRef.current;
-    const portfolio = document.getElementById('portfolio-trigger');
-    const team = document.getElementById('team');
+    let portfolio = sectionElsRef.current?.portfolio;
+    let team = sectionElsRef.current?.team;
+    let gate = sectionElsRef.current?.gate;
+    if (!portfolio || !team) {
+      portfolio = document.getElementById('portfolio-trigger');
+      team = document.getElementById('team');
+      gate = document.getElementById('manifesto-blend-gate');
+      sectionElsRef.current = { portfolio, team, gate };
+    }
     if (!mainEl || !portfolio || !team) return;
 
     // offsetTop gives the true document position — no getBoundingClientRect needed.
-    const ptOffset = (portfolio as HTMLElement).offsetTop;
-    const teamOffset = (team as HTMLElement).offsetTop;
+    const ptOffset = portfolio.offsetTop;
+    const teamOffset = team.offsetTop;
 
     const vp = window.innerHeight;
 
@@ -48,7 +65,6 @@ export default function Home() {
     const teamBlendEnd = vp * 0.38;
 
     /** Until viewport center passes mid-manifesto, keep full black (defer Portfolio entry transition). */
-    const gate = document.getElementById('manifesto-blend-gate');
     let manifestoMidPassed = true;
     if (gate) {
       if (gateDocYRef.current == null) {
@@ -74,7 +90,7 @@ export default function Home() {
     } else if (ptTop > portfolioLine) {
       // Smoothly ramp black → white as portfolio approaches
       const u = (portfolioLine + introBlend - ptTop) / introBlend;
-      const v = Math.round(255 * smoothstep01(u));
+      const v = quantizeChannel(255 * smoothstep01(u));
       bg = `rgb(${v},${v},${v})`;
       luminance = v / 255;
       surface = v > 165 ? 'light' : 'dark';
@@ -88,7 +104,7 @@ export default function Home() {
       const span = vp - teamBlendEnd;
       const raw = span > 0 ? (teamTop - teamBlendEnd) / span : 0;
       const t = Math.max(0, Math.min(1, raw));
-      const v = Math.round(255 * smoothstep01(t));
+      const v = quantizeChannel(255 * smoothstep01(t));
       bg = `rgb(${v},${v},${v})`;
       luminance = v / 255;
       surface = v > 165 ? 'light' : 'dark';
@@ -129,6 +145,7 @@ export default function Home() {
         lastAppliedRef.current = '';
         lastBgLRef.current = null;
         gateDocYRef.current = null;
+        sectionElsRef.current = null;
         // Read scrollY from documentElement since Lenis scrolls it
         updateMainBg(document.documentElement.scrollTop || window.scrollY);
       });

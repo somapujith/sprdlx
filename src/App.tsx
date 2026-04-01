@@ -12,9 +12,10 @@ import Navbar from './components/Navbar';
 import GradualBlur from './components/GradualBlur';
 import GlobalDitherCursor from './components/GlobalDitherCursor';
 import FilmGrain from './components/effects/FilmGrain';
+import DeferredChrome from './components/DeferredChrome';
+import Home from './pages/Home';
 import './i18n';
 
-const Home = lazy(() => import('./pages/Home'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
@@ -52,8 +53,10 @@ export default function App() {
         <GsapLenisSync />
         <ScrollToTop />
         <div className="relative min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
-          <GlobalDitherCursor />
-          <FilmGrain />
+          <DeferredChrome>
+            <GlobalDitherCursor />
+            <FilmGrain />
+          </DeferredChrome>
           <Navbar />
           <Suspense fallback={<Loading />}>
             <Routes>

@@ -11,7 +11,6 @@ declare global {
 /** Warm the same chunks as App route lazy() so Suspense rarely flashes mid–view-transition. */
 function prefetchPath(path: string) {
   if (path === '/' || path.startsWith('/#')) {
-    void import('../pages/Home');
     return;
   }
   if (path === '/portfolio') {
