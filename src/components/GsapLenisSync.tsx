@@ -47,7 +47,8 @@ export default function GsapLenisSync() {
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
-    ScrollTrigger.refresh();
+    // Defer refresh so it runs after layout settles, not during mount
+    requestAnimationFrame(() => ScrollTrigger.refresh());
 
     return () => {
       lenis.off('scroll', onScroll);

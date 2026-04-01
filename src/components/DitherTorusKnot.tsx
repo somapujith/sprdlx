@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -157,23 +157,40 @@ export default function DitherTorusKnot({
   knotScale = 0.84,
   variant = 'torusKnot',
 }: DitherTorusKnotProps) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { rootMargin: '120px' }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <div className={className}>
-      <Canvas
-        camera={{ position: [0, 0, cameraZ], fov: 44 }}
-        gl={{ antialias: false, alpha: true }}
-        style={{ background: 'transparent' }}
-      >
-        <ambientLight intensity={0.15} />
-        <DitherKnotMesh
-          color1={color1}
-          color2={color2}
-          pixelSize={pixelSize}
-          lightDir={lightDir}
-          knotScale={knotScale}
-          variant={variant}
-        />
-      </Canvas>
+    <div ref={wrapperRef} className={className}>
+      {visible && (
+        <Canvas
+          camera={{ position: [0, 0, cameraZ], fov: 44 }}
+          gl={{ antialias: false, alpha: true, powerPreference: 'low-power' }}
+          style={{ background: 'transparent' }}
+          frameloop="always"
+        >
+          <ambientLight intensity={0.15} />
+          <DitherKnotMesh
+            color1={color1}
+            color2={color2}
+            pixelSize={pixelSize}
+            lightDir={lightDir}
+            knotScale={knotScale}
+            variant={variant}
+          />
+        </Canvas>
+      )}
     </div>
   );
 }

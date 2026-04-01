@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
-import gsap from 'gsap';
+import { useCallback, useEffect, useRef } from 'react';
+import { useLenis } from 'lenis/react';
 import Hero from '../components/Hero';
 import Intro from '../components/Intro';
 import Portfolio from '../components/Portfolio';
@@ -13,43 +13,52 @@ function smoothstep01(t: number) {
 }
 
 /**
- * Scroll-driven `main` background. Lenis is advanced via `gsap.ticker` in GsapLenisSync; relying on
- * `window` scroll or Lenis `scroll` alone often leaves this stuck on black. We hook the same ticker
- * so `getBoundingClientRect()` updates every frame with smooth scroll.
+ * Scroll-driven background using lenis.scroll (virtual scroll position) so
+ * getBoundingClientRect() values are always in sync with Lenis's interpolated position.
  */
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
+  const lastAppliedRef = useRef('');
 
-  const updateMainBg = useCallback(() => {
+  const updateMainBg = useCallback((scrollY: number) => {
     const mainEl = mainRef.current;
     const portfolio = document.getElementById('portfolio-trigger');
     const team = document.getElementById('team');
     if (!mainEl || !portfolio || !team) return;
 
+    // offsetTop gives the true document position — no getBoundingClientRect needed.
+    const ptOffset = (portfolio as HTMLElement).offsetTop;
+    const teamOffset = (team as HTMLElement).offsetTop;
+
     const vp = window.innerHeight;
-    const ptTop = portfolio.getBoundingClientRect().top;
-    const teamTop = team.getBoundingClientRect().top;
+
+    // How far each section's top is from the current viewport top
+    const ptTop = ptOffset - scrollY;
+    const teamTop = teamOffset - scrollY;
 
     const portfolioLine = vp * 0.44;
-    const introBlend = vp * 0.14;
+    const introBlend = vp * 0.55;
     const teamBlendEnd = vp * 0.38;
 
     let bg: string;
     let surface: 'light' | 'dark';
 
     if (ptTop > portfolioLine + introBlend) {
+      // Still in Intro / Hero — full black
       bg = '#000000';
       surface = 'dark';
     } else if (ptTop > portfolioLine) {
-      const span = introBlend;
-      const u = span > 0 ? (portfolioLine + introBlend - ptTop) / span : 1;
+      // Smoothly ramp black → white as portfolio approaches
+      const u = (portfolioLine + introBlend - ptTop) / introBlend;
       const v = Math.round(255 * smoothstep01(u));
       bg = `rgb(${v},${v},${v})`;
       surface = v > 165 ? 'light' : 'dark';
     } else if (teamTop > vp) {
+      // Portfolio / Services — full white
       bg = '#ffffff';
       surface = 'light';
     } else {
+      // Team entering — smoothly ramp white → black
       const span = vp - teamBlendEnd;
       const raw = span > 0 ? (teamTop - teamBlendEnd) / span : 0;
       const t = Math.max(0, Math.min(1, raw));
@@ -58,35 +67,38 @@ export default function Home() {
       surface = v > 165 ? 'light' : 'dark';
     }
 
+    const token = `${bg}|${surface}`;
+    if (token === lastAppliedRef.current) return;
+    lastAppliedRef.current = token;
     mainEl.style.backgroundColor = bg;
     mainEl.setAttribute('data-surface', surface);
   }, []);
 
-  useLayoutEffect(() => {
-    updateMainBg();
-  }, [updateMainBg]);
+  // Drive updates on every Lenis scroll tick — receives the interpolated scrollY directly.
+  useLenis(({ scroll }) => {
+    updateMainBg(scroll);
+  });
 
-  /** Same ticker Lenis uses — background stays in sync with smooth scroll (fixes “stuck black”). */
+  // Resize: re-run with current scroll so offsets are recalculated
   useEffect(() => {
-    const tick = () => updateMainBg();
-    gsap.ticker.add(tick);
-    return () => {
-      gsap.ticker.remove(tick);
+    let resizeRaf = 0;
+    const onResize = () => {
+      if (resizeRaf) return;
+      resizeRaf = requestAnimationFrame(() => {
+        resizeRaf = 0;
+        lastAppliedRef.current = '';
+        // Read scrollY from documentElement since Lenis scrolls it
+        updateMainBg(document.documentElement.scrollTop || window.scrollY);
+      });
     };
-  }, [updateMainBg]);
-
-  useEffect(() => {
-    const onResize = () => updateMainBg();
     window.addEventListener('resize', onResize);
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', onResize);
-    }
-    updateMainBg();
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', onResize);
+    // Initial paint
+    lastAppliedRef.current = '';
+    updateMainBg(document.documentElement.scrollTop || window.scrollY);
     return () => {
       window.removeEventListener('resize', onResize);
-      if (window.visualViewport) {
-        window.visualViewport.removeEventListener('resize', onResize);
-      }
+      if (window.visualViewport) window.visualViewport.removeEventListener('resize', onResize);
     };
   }, [updateMainBg]);
 

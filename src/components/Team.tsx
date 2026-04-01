@@ -100,7 +100,8 @@ export default function Team() {
           <div 
             key={i} 
             className="relative group flex-shrink-0"
-            ref={el => wrappersRef.current[i] = el}
+            style={{ willChange: 'transform' }}
+            ref={el => { wrappersRef.current[i] = el; }}
           >
             {/* Hover Text */}
             <div className="absolute bottom-full left-0 mb-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none flex flex-col items-start z-20">
@@ -111,7 +112,8 @@ export default function Team() {
             {/* Image Container */}
             <div 
               className="w-[240px] h-[320px] rounded-xl overflow-hidden bg-zinc-900 relative z-10"
-              ref={el => innersRef.current[i] = el}
+              style={{ willChange: 'transform' }}
+              ref={el => { innersRef.current[i] = el; }}
             >
               <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
               <img 
