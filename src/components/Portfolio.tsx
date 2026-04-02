@@ -3,6 +3,8 @@ import VTLink from './VTLink';
 import AnimatedText from './AnimatedText';
 import HalftoneDotField from './effects/HalftoneDotField';
 
+const ANTHILL_VENTURES_LOGO = '/projects/anthill/Anthill%20Ventures%20Logo.svg';
+
 const projects = [
   { id: 1, slug: 'anthill', title: 'Anthill', desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, and LP reporting.', img: '/projects/anthill/hero.png', logo: 'Anthill', logoIcon: '✦' },
   { id: 2, slug: 'pulp', title: 'Pulp', desc: 'A creative storytelling platform for the next generation of writers.', img: '/projects/pulp/hero.png', logo: 'Pulp', logoIcon: '✶' },
@@ -84,9 +86,9 @@ export default function Portfolio() {
                 ) : project.slug === 'anthill' ? (
                   <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/25 p-6 md:p-10">
                     <img
-                      src="/projects/anthill/Anthill%20Ventures%20Logo.svg"
-                      alt="Anthill"
-                      className="h-auto w-[min(92%,min(520px,92vw))] max-h-[36%] object-contain drop-shadow-[0_4px_32px_rgba(0,0,0,0.5)]"
+                      src={ANTHILL_VENTURES_LOGO}
+                      alt="Anthill Ventures"
+                      className="h-auto w-[min(92%,min(520px,92vw))] max-h-[36%] object-contain brightness-0 invert drop-shadow-[0_4px_32px_rgba(0,0,0,0.5)]"
                       loading="lazy"
                       decoding="async"
                     />
@@ -110,7 +112,11 @@ export default function Portfolio() {
               </div>
               <div className="w-full md:w-1/2 p-10 md:p-20 flex flex-col justify-between">
                 <div>
-                  <AnimatedText as="h3" text={project.title} className="text-3xl font-serif mb-6" />
+                  {project.slug === 'anthill' ? (
+                    <h3 className="sr-only">{project.title}</h3>
+                  ) : (
+                    <AnimatedText as="h3" text={project.title} className="text-3xl font-serif mb-6" />
+                  )}
                   <AnimatedText as="p" text={project.desc} className="portfolio-description text-lg leading-relaxed max-w-sm" />
                 </div>
                 <VTLink

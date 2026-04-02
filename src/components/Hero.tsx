@@ -26,7 +26,7 @@ const MARQUEE_ENTRIES: MarqueeEntry[] = [
   {
     name: 'Anthill',
     fontClass: 'font-serif tracking-tight',
-    logoSrc: '/projects/anthill/Anthill%20Ventures%20Logo.svg',
+    logoSrc: '/projects/anthill/anthill-mark.svg',
     wordmarkOnly: true,
   },
   {
@@ -123,8 +123,9 @@ export default function Hero() {
         scrollTrigger: {
           trigger: outerRef.current,
           start: 'top top',
-          end: '+=100vh',
-          scrub: 0.85,
+          /** Longer scrub distance = SPR DLX → editorial frame stays tied to scroll (less “snap”). */
+          end: '+=175vh',
+          scrub: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             setIntensityFromProgress(intensityRef, self.progress);
@@ -138,23 +139,23 @@ export default function Hero() {
           autoAlpha: 0,
           scale: 0.26,
           y: '-11vh',
-          duration: 0.42,
+          duration: 0.62,
           ease: 'power2.inOut',
         },
-        0.1
+        0
       );
 
       tl.to(
         logoRef.current,
-        { autoAlpha: 1, y: 0, duration: 0.34, ease: 'power2.out' },
-        0.16
+        { autoAlpha: 1, y: 0, duration: 0.38, ease: 'power2.out' },
+        0.34
       );
 
       if (eyebrowRef.current) {
         tl.to(
           eyebrowRef.current,
-          { autoAlpha: 1, y: 0, duration: 0.26, ease: 'power2.out' },
-          0.48
+          { autoAlpha: 1, y: 0, duration: 0.3, ease: 'power2.out' },
+          0.58
         );
       }
 
@@ -164,17 +165,17 @@ export default function Hero() {
           y: '0%',
           rotation: 0,
           opacity: 1,
-          duration: 0.3,
-          stagger: 0.042,
+          duration: 0.34,
+          stagger: 0.045,
           ease: 'expo.out',
         },
-        0.5
+        0.64
       );
 
       tl.to(
         tickerRef.current,
-        { autoAlpha: 1, duration: 0.32, ease: 'power2.out' },
-        0.58
+        { autoAlpha: 1, duration: 0.36, ease: 'power2.out' },
+        0.78
       );
     }, outerRef);
 
@@ -189,7 +190,7 @@ export default function Hero() {
   }, [heroText]);
 
   return (
-    <div id="section-hero" ref={outerRef} className="relative min-h-[200vh] w-full">
+    <div id="section-hero" ref={outerRef} className="relative min-h-[230vh] w-full">
       <section className="sticky top-0 z-10 flex min-h-screen w-full flex-col justify-end overflow-hidden isolate px-8 pt-28 pb-24 md:pt-32 md:pb-32">
         <div
           className="hero-floor-shadow pointer-events-none absolute inset-x-0 bottom-0 z-4 h-[min(62vh,32rem)]"

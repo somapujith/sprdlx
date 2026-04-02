@@ -5,6 +5,8 @@ import Footer from '../components/Footer';
 import DarkVeil from '../components/DarkVeil';
 import { useDesignTheme } from '../design/theme-context';
 
+const ANTHILL_VENTURES_LOGO = '/projects/anthill/Anthill%20Ventures%20Logo.svg';
+
 const projects = [
   { id: 1, slug: 'anthill', title: 'Anthill', desc: 'The AI Operating System for Venture Capital — pitch intelligence, diligence, and LP reporting.', img: '/projects/anthill/hero.png', logo: 'Anthill', logoIcon: '✦', iconBg: '#1a1a1a' },
   { id: 2, slug: 'pulp', title: 'Pulp', desc: 'A creative storytelling platform for the next generation of writers.', img: '/projects/pulp/hero.png', logo: 'Pulp', logoIcon: '✶', iconBg: '#ccff00' },
@@ -102,9 +104,9 @@ export default function PortfolioPage() {
                       />
                     ) : project.slug === 'anthill' ? (
                       <img
-                        src="/projects/anthill/Anthill%20Ventures%20Logo.svg"
-                        alt="Anthill"
-                        className="h-16 w-auto max-w-[min(92%,300px)] md:h-20 md:max-w-[min(92%,360px)] drop-shadow-[0_4px_24px_rgba(0,0,0,0.45)]"
+                        src={ANTHILL_VENTURES_LOGO}
+                        alt="Anthill Ventures"
+                        className="h-auto w-[min(92%,min(360px,90vw))] max-h-[38%] object-contain brightness-0 invert drop-shadow-[0_4px_24px_rgba(0,0,0,0.45)]"
                         loading="lazy"
                         decoding="async"
                       />
@@ -144,9 +146,9 @@ export default function PortfolioPage() {
                     />
                   ) : project.slug === 'anthill' ? (
                     <img
-                      src="/projects/anthill/Anthill%20Ventures%20Logo.svg"
+                      src={ANTHILL_VENTURES_LOGO}
                       alt=""
-                      className="h-full w-full min-w-0 object-contain object-center scale-[0.85]"
+                      className="h-full w-full min-w-0 object-contain object-center scale-[0.72]"
                       loading="lazy"
                       decoding="async"
                       aria-hidden
@@ -167,8 +169,14 @@ export default function PortfolioPage() {
                   )}
                 </div>
                 <div className="flex-1">
-                  <h4 className="font-bold text-lg mb-1 tracking-tight">{project.title}</h4>
-                  <p className="text-[color:var(--theme-muted)] text-sm leading-relaxed line-clamp-2 font-medium">{project.desc}</p>
+                  {project.slug === 'anthill' ? (
+                    <h4 className="sr-only">{project.title}</h4>
+                  ) : (
+                    <h4 className="font-bold text-lg mb-1 tracking-tight">{project.title}</h4>
+                  )}
+                  <p className="text-[color:var(--theme-muted)] text-sm leading-relaxed line-clamp-2 font-medium">
+                    {project.desc}
+                  </p>
                 </div>
               </div>
             </VTLink>

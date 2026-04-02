@@ -18,6 +18,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Lenis: native CSS smooth scroll stacks badly with the virtual scroller (notchier / double-eased). */
+html.lenis,
+html.lenis body {
+  scroll-behavior: auto !important;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

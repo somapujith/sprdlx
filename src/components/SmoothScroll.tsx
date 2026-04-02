@@ -8,14 +8,16 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       autoRaf={false}
       options={{
         /**
-         * Lenis defaults (~lerp 0.1, multipliers 1) match “agency” smooth scroll (Lenis + GSAP sites).
-         * Avoid extremely low lerp — it reads as stutter, not extra smoothness.
+         * Liquid smooth scroll: lower lerp = more inertia / less “steppy” wheel quantization.
+         * Slightly lower wheel/touch multipliers = smaller deltas per event → smoother blending.
+         * (Below ~0.03 lerp can feel laggy on fast flicks; ~0.04–0.06 is a common “silk” band.)
          */
-        lerp: 0.1,
+        lerp: 0.045,
         smoothWheel: true,
-        wheelMultiplier: 1,
-        touchMultiplier: 1,
+        wheelMultiplier: 0.78,
+        touchMultiplier: 0.82,
         syncTouch: false,
+        overscroll: true,
       }}
     >
       {children}

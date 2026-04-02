@@ -5,6 +5,8 @@ import VTLink from '../components/VTLink';
 
 const ESTHETIC_LOGO_SRC = '/projects/esthetic-insights/esthetic-insights-logo.svg';
 const PULP_LOGO_SRC = '/projects/pulp/logo.png';
+/** Full Anthill Ventures wordmark (SVG). */
+const ANTHILL_VENTURES_LOGO = '/projects/anthill/Anthill%20Ventures%20Logo.svg';
 
 const projectsData = {
   anthill: {
@@ -133,6 +135,7 @@ export default function ProjectDetail() {
   const project = id ? projectsData[id as keyof typeof projectsData] : null;
   const isEsthetic = id === 'esthetic-insights';
   const isPulp = id === 'pulp';
+  const isAnthill = id === 'anthill';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -143,7 +146,7 @@ export default function ProjectDetail() {
   }
 
   return (
-    <main className="theme-shell min-h-screen text-[color:var(--theme-ink)]">
+    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
       {/* Hero */}
       <section className="w-full px-4 md:px-8 pt-24 pb-8" aria-labelledby="project-hero-title">
         <div className="w-full h-[40vh] md:h-[50vh] relative overflow-hidden rounded-[2rem]">
@@ -189,6 +192,22 @@ export default function ProjectDetail() {
                     </p>
                   </div>
                 </div>
+              </div>
+            ) : isAnthill ? (
+              <div className="flex max-w-[min(96vw,40rem)] items-center justify-center rounded-full border border-white/20 bg-white/10 px-8 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-xl md:px-12 md:py-6">
+                <h1 id="project-hero-title" className="sr-only">
+                  {project.title}
+                </h1>
+                <img
+                  src={ANTHILL_VENTURES_LOGO}
+                  alt=""
+                  className="h-8 w-auto max-w-[min(88vw,20rem)] shrink-0 object-contain object-left brightness-0 invert md:h-10 md:max-w-[min(88vw,24rem)]"
+                  width={360}
+                  height={86}
+                  decoding="async"
+                  draggable={false}
+                  aria-hidden
+                />
               </div>
             ) : (
               <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-10 py-5 rounded-full flex items-center gap-4">
@@ -236,6 +255,20 @@ export default function ProjectDetail() {
                         />
                         <h2 className="text-4xl font-bold tracking-tight font-serif">{project.title}</h2>
                       </>
+                    ) : isAnthill ? (
+                      <>
+                        <h2 className="sr-only">{project.title}</h2>
+                        <img
+                          src={ANTHILL_VENTURES_LOGO}
+                          alt=""
+                          width={360}
+                          height={86}
+                          className="h-10 w-auto max-w-[min(92vw,20rem)] shrink-0 object-contain object-left brightness-0 invert md:h-12 md:max-w-[min(92vw,24rem)]"
+                          decoding="async"
+                          draggable={false}
+                          aria-hidden
+                        />
+                      </>
                     ) : isPulp ? (
                       <>
                         <img
@@ -255,11 +288,15 @@ export default function ProjectDetail() {
                         <div className="w-12 h-12 rounded-xl bg-zinc-900 flex items-center justify-center border border-white/10">
                           <span className="text-xl font-bold">{project.logoIcon || project.title[0]}</span>
                         </div>
-                        <h2 className="text-4xl font-bold tracking-tight font-serif">{project.title}</h2>
+                        <h2 className="text-4xl font-bold tracking-tight text-white">{project.title}</h2>
                       </>
                     )}
                   </div>
-                  <p className="text-zinc-400 text-lg max-w-md leading-snug font-medium">{project.desc}</p>
+                  {isAnthill ? (
+                    <p className="sr-only">{project.desc}</p>
+                  ) : (
+                    <p className="text-zinc-400 text-lg max-w-md leading-snug font-medium">{project.desc}</p>
+                  )}
                 </div>
 
                 <div className="mt-16">
