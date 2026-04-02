@@ -100,7 +100,7 @@ export default function Intro() {
     <section
       id="section-manifesto"
       ref={containerRef}
-      className="intro-section relative z-10 overflow-hidden py-24 md:py-36 lg:py-44 transition-[color] duration-150 ease-out"
+      className="intro-section relative z-10 overflow-hidden pt-4 pb-20 md:pt-12 md:pb-28 lg:pt-16 lg:pb-36 xl:pt-20 xl:pb-44 transition-[color] duration-150 ease-out"
       style={{
         color: 'hsl(0 0% calc((1 - var(--bg-l, 0)) * 100%))',
       }}

@@ -124,10 +124,13 @@ export default function Hero() {
         scrollTrigger: {
           trigger: outerRef.current,
           start: 'top top',
-          /** Longer scrub distance = SPR DLX → editorial frame stays tied to scroll (less “snap”). */
-          end: '+=175vh',
+          /** Pin = one viewport of content; scroll distance only for scrub — avoids empty space before manifesto. */
+          end: '+=115vh',
+          pin: true,
+          pinSpacing: true,
           scrub: 1,
           invalidateOnRefresh: true,
+          anticipatePin: 1,
           onUpdate: (self) => {
             setIntensityFromProgress(intensityRef, self.progress);
           },
@@ -191,8 +194,8 @@ export default function Hero() {
   }, [heroText]);
 
   return (
-    <div id="section-hero" ref={outerRef} className="relative min-h-[230vh] w-full">
-      <section className="sticky top-0 z-10 flex min-h-[100dvh] w-full flex-col justify-end overflow-hidden isolate px-4 pt-[max(6.5rem,env(safe-area-inset-top))] pb-20 sm:px-6 sm:pt-28 sm:pb-24 md:px-8 md:pt-32 md:pb-32">
+    <div id="section-hero" ref={outerRef} className="relative min-h-[100dvh] w-full">
+      <section className="relative z-10 flex min-h-[100dvh] w-full flex-col justify-end overflow-hidden isolate px-4 pt-[max(6.5rem,env(safe-area-inset-top))] pb-20 sm:px-6 sm:pt-28 sm:pb-24 md:px-8 md:pt-32 md:pb-32">
         <div
           className="hero-floor-shadow pointer-events-none absolute inset-x-0 bottom-0 z-4 h-[min(62vh,32rem)]"
           aria-hidden
