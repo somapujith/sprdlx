@@ -146,10 +146,13 @@ export default function ProjectDetail() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
+    <main className="min-h-screen overflow-x-hidden bg-black text-white selection:bg-white selection:text-black">
       {/* Hero */}
-      <section className="w-full px-4 md:px-8 pt-24 pb-8" aria-labelledby="project-hero-title">
-        <div className="w-full h-[40vh] md:h-[50vh] relative overflow-hidden rounded-[2rem]">
+      <section
+        className="w-full px-3 pb-6 pt-[max(5.5rem,env(safe-area-inset-top))] sm:px-6 sm:pb-8 md:px-8"
+        aria-labelledby="project-hero-title"
+      >
+        <div className="relative h-[min(42vh,22rem)] w-full overflow-hidden rounded-2xl sm:h-[40vh] sm:rounded-[2rem] md:h-[50vh]">
           <BlurUpImg
             src={project.heroImg}
             alt={`${project.title} — hero`}
@@ -226,7 +229,7 @@ export default function ProjectDetail() {
 
       {/* 01 — Overview */}
       <section className="border-t border-white/10" aria-labelledby="chapter-overview">
-        <div className="max-w-7xl mx-auto px-8 py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-28">
           <div className="flex flex-col gap-12 lg:flex-row lg:gap-20">
             <div className="lg:w-[min(100%,18rem)] lg:shrink-0 lg:sticky lg:top-28 lg:self-start">
               <p id="chapter-overview" className="font-mono text-[0.65rem] uppercase tracking-[0.32em] text-[#ccff00]/55">
@@ -336,12 +339,12 @@ export default function ProjectDetail() {
               </div>
 
               <div className="w-full lg:w-1/2">
-                <div className="flex flex-col text-sm border-t border-white/10">
-                  <div className="flex justify-between gap-8 py-5 border-b border-white/10">
-                    <span className="text-zinc-500 font-medium shrink-0 font-mono text-[0.7rem] uppercase tracking-wider">
+                <div className="flex flex-col border-t border-white/10 text-sm">
+                  <div className="flex flex-col gap-1 border-b border-white/10 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                    <span className="shrink-0 font-mono text-[0.7rem] font-medium uppercase tracking-wider text-zinc-500">
                       Industry
                     </span>
-                    <div className="flex flex-wrap justify-end items-center gap-x-3 gap-y-1 font-bold text-right text-base">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-left font-bold text-base sm:justify-end sm:text-right">
                       <span>{project.industry}</span>
                       {project.subIndustry ? (
                         <>
@@ -353,40 +356,40 @@ export default function ProjectDetail() {
                       ) : null}
                     </div>
                   </div>
-                  <div className="flex justify-between gap-8 py-5 border-b border-white/10">
-                    <span className="text-zinc-500 font-medium shrink-0 font-mono text-[0.7rem] uppercase tracking-wider">
+                  <div className="flex flex-col gap-1 border-b border-white/10 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                    <span className="shrink-0 font-mono text-[0.7rem] font-medium uppercase tracking-wider text-zinc-500">
                       Deliverables
                     </span>
-                    <div className="flex flex-wrap justify-end gap-x-3 gap-y-1 font-bold text-right text-base">
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 text-left font-bold text-base sm:justify-end sm:text-right">
                       {project.deliverables.map((d, i) => (
                         <span key={i}>{d.replaceAll('-', ' ')}</span>
                       ))}
                     </div>
                   </div>
                   {'status' in project && project.status ? (
-                    <div className="flex justify-between gap-8 py-5 border-b border-white/10">
-                      <span className="text-zinc-500 font-medium shrink-0 font-mono text-[0.7rem] uppercase tracking-wider">
+                    <div className="flex flex-col gap-1 border-b border-white/10 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                      <span className="shrink-0 font-mono text-[0.7rem] font-medium uppercase tracking-wider text-zinc-500">
                         Status
                       </span>
-                      <span className="font-bold text-right text-base">{project.status}</span>
+                      <span className="text-left font-bold text-base sm:text-right">{project.status}</span>
                     </div>
                   ) : (
                     'completed' in project &&
                     project.completed && (
-                      <div className="flex justify-between gap-8 py-5 border-b border-white/10">
-                        <span className="text-zinc-500 font-medium shrink-0 font-mono text-[0.7rem] uppercase tracking-wider">
+                      <div className="flex flex-col gap-1 border-b border-white/10 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                        <span className="shrink-0 font-mono text-[0.7rem] font-medium uppercase tracking-wider text-zinc-500">
                           Completed
                         </span>
-                        <span className="font-bold text-right text-base">{project.completed}</span>
+                        <span className="text-left font-bold text-base sm:text-right">{project.completed}</span>
                       </div>
                     )
                   )}
                   {'fundingStage' in project && project.fundingStage ? (
-                    <div className="flex justify-between gap-8 py-5 border-b border-white/10">
-                      <span className="text-zinc-500 font-medium shrink-0 font-mono text-[0.7rem] uppercase tracking-wider">
+                    <div className="flex flex-col gap-1 border-b border-white/10 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+                      <span className="shrink-0 font-mono text-[0.7rem] font-medium uppercase tracking-wider text-zinc-500">
                         Funding Stage
                       </span>
-                      <span className="font-bold flex items-center justify-end gap-1.5 text-right text-base">
+                      <span className="flex items-center gap-1.5 text-left font-bold text-base sm:justify-end sm:text-right">
                         {project.fundingStage}
                         <span className="text-white" aria-hidden>
                           ♥
@@ -394,11 +397,11 @@ export default function ProjectDetail() {
                       </span>
                     </div>
                   ) : null}
-                  <div className="flex justify-between gap-8 py-5 border-b border-white/10">
-                    <span className="text-zinc-500 font-medium shrink-0 font-mono text-[0.7rem] uppercase tracking-wider">
+                  <div className="flex flex-col gap-1 border-b border-white/10 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+                    <span className="shrink-0 font-mono text-[0.7rem] font-medium uppercase tracking-wider text-zinc-500">
                       Backed by
                     </span>
-                    <span className="font-bold flex items-center justify-end gap-2 text-right text-base">
+                    <span className="flex flex-wrap items-center gap-2 text-left font-bold text-base sm:justify-end sm:text-right">
                       {project.backedByLogo === 'Y' ? (
                         <span className="bg-white text-black px-1.5 py-0.5 rounded-sm text-[10px] font-black leading-none">
                           Y
@@ -420,15 +423,15 @@ export default function ProjectDetail() {
 
       {/* 02 — Narrative */}
       <section className="border-t border-white/10" aria-labelledby="chapter-narrative">
-        <div className="max-w-7xl mx-auto px-8 py-20 md:py-28 flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+        <div className="mx-auto flex max-w-7xl flex-col items-start gap-12 px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-28 lg:flex-row lg:gap-20">
           <div className="lg:w-[min(100%,18rem)] lg:shrink-0 lg:sticky lg:top-28">
             <p id="chapter-narrative" className="font-mono text-[0.65rem] uppercase tracking-[0.32em] text-[#ccff00]/55">
               02 — Narrative
             </p>
           </div>
           <div className="flex flex-1 flex-col lg:flex-row gap-12 lg:gap-16 items-center">
-            <div className="w-full lg:w-1/2 flex flex-col justify-center">
-              <p className="text-left text-xl md:text-2xl font-serif italic leading-[1.55] md:leading-[1.6] max-w-2xl text-zinc-100 tracking-[-0.01em]">
+            <div className="flex w-full flex-col justify-center lg:w-1/2">
+              <p className="max-w-2xl text-left text-lg font-serif italic leading-[1.55] tracking-[-0.01em] text-zinc-100 sm:text-xl md:text-2xl md:leading-[1.6]">
                 {project.about}
               </p>
             </div>
@@ -466,8 +469,8 @@ export default function ProjectDetail() {
       ) : null}
 
       {/* Prev / Next */}
-      <div className="w-full border-t border-white/10 py-20 px-8">
-        <div className="max-w-7xl mx-auto flex flex-col gap-8 sm:flex-row sm:justify-between sm:items-center text-lg font-serif italic text-zinc-400">
+      <div className="w-full border-t border-white/10 px-4 py-16 sm:px-8 sm:py-20">
+        <div className="mx-auto flex max-w-7xl flex-col gap-8 text-base font-serif italic text-zinc-400 sm:flex-row sm:items-center sm:justify-between sm:text-lg">
           <VTLink
             to={`/project/${project.prev}`}
             data-cursor="view"

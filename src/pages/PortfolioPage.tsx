@@ -35,7 +35,7 @@ export default function PortfolioPage() {
   }, [themeId]);
 
   return (
-    <main className="theme-shell min-h-screen text-[color:var(--theme-ink)]" style={{ '--dynamic-bg': 'var(--theme-canvas)' } as React.CSSProperties}>
+    <main className="theme-shell min-h-screen overflow-x-hidden text-[color:var(--theme-ink)]" style={{ '--dynamic-bg': 'var(--theme-canvas)' } as React.CSSProperties}>
       {/* DarkVeil Hero */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-screen w-full overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -55,20 +55,22 @@ export default function PortfolioPage() {
         <div className="hero-floor-shadow pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[min(62vh,32rem)]" aria-hidden />
       </div>
 
-      <div className="relative z-10 flex min-h-screen w-full flex-col justify-center px-8 md:px-20 pb-12">
-        <div className="w-full mt-24">
-          <h1 className="text-[20vw] md:text-[16vw] font-serif italic leading-none tracking-tighter opacity-90">
+      <div className="relative z-10 flex min-h-screen w-full flex-col justify-center px-4 pb-10 pt-20 sm:px-8 sm:pb-12 md:px-16 md:px-20">
+        <div className="mt-16 w-full sm:mt-24">
+          <h1 className="text-[min(18vw,8rem)] font-serif italic leading-none tracking-tighter opacity-90 sm:text-[20vw] md:text-[16vw]">
             Portfolio
           </h1>
-          <div className="mt-12 max-w-xl">
-            <h2 className="text-3xl md:text-5xl font-serif italic mb-4 tracking-tight">Some of our favourite projects.</h2>
+          <div className="mt-8 max-w-xl sm:mt-12">
+            <h2 className="mb-3 text-2xl font-serif italic tracking-tight sm:mb-4 sm:text-3xl md:text-5xl">
+              Some of our favourite projects.
+            </h2>
               <p className="text-[color:var(--theme-muted)] text-sm font-medium uppercase tracking-widest">Build with our team</p>
           </div>
         </div>
       </div>
 
       {/* Project Grid */}
-      <div className="max-w-[1400px] mx-auto px-8 pb-32 mt-20">
+      <div className="mx-auto mt-12 max-w-[1400px] px-4 pb-24 sm:mt-20 sm:px-8 sm:pb-32">
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20">
           {projects.map((project) => (

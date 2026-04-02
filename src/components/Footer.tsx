@@ -24,7 +24,7 @@ export default function Footer() {
             maxPoints={5}
           />
         </div>
-        <h2 className="text-6xl md:text-7xl lg:text-8xl font-serif mb-12 relative z-10 px-4 text-center leading-[1.05]">
+        <h2 className="text-[clamp(2.25rem,10vw,6rem)] sm:text-6xl md:text-7xl lg:text-8xl font-serif mb-10 sm:mb-12 relative z-10 px-4 text-center leading-[1.05]">
           Build with us.
         </h2>
         <VTLink
@@ -65,13 +65,13 @@ export default function Footer() {
       </div>
 
       <div className="footer-strip w-full pt-12 pb-8 md:pt-14 md:pb-10 flex flex-col relative overflow-x-visible">
-        <div className="w-full relative z-10 px-0">
-          <h1 className="footer-wordmark whitespace-nowrap text-[26vw] font-sans font-black tracking-tighter leading-none italic -mb-[1vw] select-none text-right pr-4 sm:pr-6 lg:pr-8 -translate-x-[50px]">
+        <div className="relative z-10 w-full max-w-[100vw] overflow-x-hidden px-0">
+          <h1 className="footer-wordmark whitespace-nowrap text-[min(26vw,9rem)] font-sans font-black tracking-tighter leading-none italic -mb-[1vw] select-none text-right pr-3 sm:text-[22vw] sm:pr-6 md:text-[26vw] lg:pr-8 -translate-x-3 sm:-translate-x-[50px]">
             SPRDLX
           </h1>
         </div>
 
-        <div className="w-full max-w-7xl mx-auto px-8 lg:px-12 relative z-10 mt-6 md:mt-8">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10 mt-6 md:mt-8">
           <div className="border-t border-[color:var(--theme-border-soft)] pt-5 flex flex-col md:flex-row md:items-start justify-between gap-6 text-sm text-[color:var(--theme-ink-soft)]">
             <div className="flex flex-col gap-1.5">
               <a href="mailto:hello@sprdlx.co" className="hover:text-[color:var(--theme-accent)] transition-colors">

@@ -124,7 +124,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className="theme-nav nav-entrance fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-8 py-5 transition-colors duration-300"
+      className="theme-nav nav-entrance fixed left-0 right-0 top-0 z-50 flex items-center justify-between gap-3 px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-5 sm:px-6 md:px-8 transition-colors duration-300"
     >
       <VTLink
         to="/"
@@ -135,7 +135,7 @@ export default function Navbar() {
         <SprdlxLogoMark className="h-8 w-auto md:h-9" />
       </VTLink>
 
-      <div className="flex items-center gap-4 md:gap-8 text-sm font-medium">
+      <div className="flex min-w-0 shrink items-center gap-2 sm:gap-4 md:gap-8 text-xs font-medium sm:text-sm">
         {pathname !== '/portfolio' && (
           <div className="flex items-center rounded-full border border-[color:var(--theme-border-soft)] bg-[color:var(--theme-chip-bg)] p-1">
             <button
@@ -193,7 +193,7 @@ export default function Navbar() {
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </div>
-          <span className="italic font-serif text-lg">Contact</span>
+          <span className="italic font-serif text-sm sm:text-lg">Contact</span>
         </VTLink>
       </div>
     </nav>

@@ -23,14 +23,18 @@ const projects = [
 
 export default function Portfolio() {
   return (
-    <section id="work" className="portfolio-section py-32 px-8 relative z-10 min-h-[1px]">
+    <section id="work" className="portfolio-section relative z-10 min-h-px px-4 py-24 sm:px-6 sm:py-28 md:px-8 md:py-32">
       <div className="pointer-events-none absolute inset-0 z-0">
         <HalftoneDotField opacity={0.045} grid={34} dotMax={1.5} />
       </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
-        <div className="flex justify-between items-end mb-20">
-          <AnimatedText as="h2" text="We've done a lot. Here are some highlights" className="portfolio-title text-3xl md:text-5xl font-serif max-w-md" />
+        <div className="mb-12 flex flex-col gap-6 sm:mb-16 md:mb-20 sm:flex-row sm:items-end sm:justify-between">
+          <AnimatedText
+            as="h2"
+            text="We've done a lot. Here are some highlights"
+            className="portfolio-title max-w-xl text-2xl sm:max-w-md sm:text-3xl md:text-5xl font-serif"
+          />
           <span className="portfolio-kicker text-xs font-medium uppercase tracking-widest hidden md:block">Portfolio</span>
         </div>
 
@@ -38,8 +42,8 @@ export default function Portfolio() {
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className="portfolio-card sticky flex flex-col md:flex-row rounded-[2rem] overflow-hidden border"
-              style={{ top: `${120 + index * 20}px` }}
+              className="portfolio-card sticky top-[calc(4.25rem+var(--card-i)*0.8rem)] flex flex-col overflow-hidden rounded-[2rem] border md:top-[calc(7rem+var(--card-i)*1.2rem)] md:flex-row"
+              style={{ ['--card-i' as string]: index } as React.CSSProperties}
             >
               <div className="w-full md:w-1/2 aspect-square md:aspect-auto md:h-[600px] relative overflow-hidden bg-[color:var(--theme-canvas-strong)]">
                 {'placeholder' in project && project.placeholder ? (
@@ -110,7 +114,7 @@ export default function Portfolio() {
                   </div>
                 )}
               </div>
-              <div className="w-full md:w-1/2 p-10 md:p-20 flex flex-col justify-between">
+              <div className="flex w-full flex-col justify-between p-6 sm:p-10 md:w-1/2 md:p-16 lg:p-20">
                 <div>
                   {project.slug === 'anthill' ? (
                     <h3 className="sr-only">{project.title}</h3>

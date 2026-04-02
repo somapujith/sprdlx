@@ -54,7 +54,7 @@ export default function App() {
         <Router>
           <GsapLenisSync />
           <ScrollToTop />
-          <div className="theme-shell relative min-h-screen font-sans">
+          <div className="theme-shell relative min-h-screen w-full max-w-[100vw] overflow-x-hidden font-sans">
             <DeferredChrome>
               <GlobalDitherCursor />
               <FilmGrain />

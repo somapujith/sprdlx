@@ -4,9 +4,9 @@ import Footer from '../components/Footer';
 
 export default function ContactPage() {
   return (
-    <main className="theme-shell min-h-screen pt-24 text-[color:var(--theme-ink)]">
-      <div className="max-w-[1600px] mx-auto px-8 md:px-12 lg:px-20 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+    <main className="theme-shell min-h-screen overflow-x-hidden pt-[max(5.5rem,env(safe-area-inset-top))] text-[color:var(--theme-ink)] sm:pt-24">
+      <div className="mx-auto max-w-[1600px] px-4 py-12 sm:px-8 sm:py-16 md:px-12 md:py-20 lg:px-20">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
           
           {/* Left Side: Form */}
           <div className="flex flex-col">
@@ -14,17 +14,17 @@ export default function ContactPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-6xl md:text-7xl font-serif italic mb-20 tracking-tighter"
+              className="mb-12 text-[clamp(2.5rem,12vw,4.5rem)] font-serif italic tracking-tighter sm:mb-16 sm:text-6xl md:mb-20 md:text-7xl"
             >
               what's up hello
             </motion.h1>
 
-            <form className="flex flex-col gap-12 max-w-xl">
+            <form className="flex max-w-xl flex-col gap-8 sm:gap-12">
               <div className="relative group">
                 <input 
                   type="text" 
                   placeholder="Name" 
-                  className="w-full bg-transparent border-b border-[color:var(--theme-border)] py-4 outline-none focus:border-[color:var(--theme-accent)] transition-colors text-xl font-serif italic"
+                  className="w-full border-b border-[color:var(--theme-border)] bg-transparent py-3 text-lg font-serif italic outline-none transition-colors focus:border-[color:var(--theme-accent)] sm:py-4 sm:text-xl"
                 />
               </div>
               
@@ -32,7 +32,7 @@ export default function ContactPage() {
                 <input 
                   type="email" 
                   placeholder="name@example.com" 
-                  className="w-full bg-transparent border-b border-[color:var(--theme-border)] py-4 outline-none focus:border-[color:var(--theme-accent)] transition-colors text-xl font-serif italic"
+                  className="w-full border-b border-[color:var(--theme-border)] bg-transparent py-3 text-lg font-serif italic outline-none transition-colors focus:border-[color:var(--theme-accent)] sm:py-4 sm:text-xl"
                 />
               </div>
 
@@ -40,9 +40,9 @@ export default function ContactPage() {
                 <input 
                   type="text" 
                   placeholder="Tell us about your project..." 
-                  className="w-full bg-transparent border-b border-[color:var(--theme-border)] py-4 outline-none focus:border-[color:var(--theme-accent)] transition-colors text-xl font-serif italic pr-10"
+                  className="w-full border-b border-[color:var(--theme-border)] bg-transparent py-3 pr-10 text-lg font-serif italic outline-none transition-colors focus:border-[color:var(--theme-accent)] sm:py-4 sm:text-xl"
                 />
-                <span className="absolute right-0 bottom-5 text-[color:var(--theme-muted)]">
+                <span className="absolute bottom-4 right-0 text-[color:var(--theme-muted)] sm:bottom-5">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                   </svg>
@@ -62,7 +62,7 @@ export default function ContactPage() {
                   Book a call with us
                 </a>
 
-                <div className="flex gap-12 text-sm font-medium text-[color:var(--theme-muted)] uppercase tracking-widest mt-4">
+                <div className="mt-4 flex flex-wrap gap-6 text-sm font-medium uppercase tracking-widest text-[color:var(--theme-muted)] sm:gap-12">
                   <a
                     href="https://www.linkedin.com/company/super-deluxe-studios/"
                     target="_blank"
@@ -79,7 +79,7 @@ export default function ContactPage() {
 
           {/* Right Side: Placeholder image + Addresses */}
           <div
-            className="relative h-[70vh] lg:h-[85vh] rounded-3xl overflow-hidden border border-[color:var(--theme-border-soft)]"
+            className="relative min-h-[min(22rem,50vh)] h-[42vh] overflow-hidden rounded-2xl border border-[color:var(--theme-border-soft)] sm:min-h-0 sm:h-[56vh] sm:rounded-3xl lg:h-[85vh]"
             style={{ backgroundColor: 'color-mix(in srgb, var(--theme-canvas-strong) 40%, transparent)' }}
           >
             <img
@@ -92,7 +92,7 @@ export default function ContactPage() {
               draggable={false}
             />
             
-            <div className="absolute bottom-12 left-12 right-12 flex flex-col md:flex-row justify-between gap-8 text-[color:var(--theme-ink)] z-10">
+            <div className="absolute bottom-6 left-4 right-4 z-10 flex flex-col gap-6 text-[color:var(--theme-ink)] sm:bottom-10 sm:left-8 sm:right-8 md:bottom-12 md:left-12 md:right-12 md:flex-row md:justify-between md:gap-8">
               <div className="flex flex-col gap-1">
                 <span className="text-sm font-bold tracking-tight">Strandgade 26</span>
                 <span className="text-sm font-bold tracking-tight">København K 1401</span>
