@@ -81,6 +81,12 @@ export default function Services() {
         <HalftoneDotField opacity={0.07} grid={30} dotMax={1.8} />
       </div>
 
+      {/* Fade halftone into scroll-driven page background so Team doesn’t read as a hard cut. */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-44 sm:h-52 bg-gradient-to-t from-[var(--dynamic-bg)] via-[color-mix(in_srgb,var(--dynamic-bg)_35%,transparent)] to-transparent"
+        aria-hidden
+      />
+
       <div className="relative z-10 max-w-6xl mx-auto w-full">
         <header className="text-center blur-reveal mb-16 md:mb-20 lg:mb-24">
           <p className="services-meta text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.28em] mb-5 md:mb-6">
@@ -107,11 +113,11 @@ export default function Services() {
                 </p>
               </div>
 
-              <figure className="relative mb-6 md:mb-7 overflow-hidden rounded-xl bg-[color:var(--theme-card-quiet)] aspect-16/10 ring-1 ring-[color:var(--theme-border)]">
+              <figure className="relative isolate mb-6 md:mb-7 overflow-hidden rounded-xl bg-[color:var(--theme-card-quiet)] aspect-16/10 ring-1 ring-[color:var(--theme-border)] [contain:paint]">
                 <img
                   src={col.img}
                   alt=""
-                  className="h-full w-full object-cover object-center transition-[transform,filter] duration-700 ease-out group-hover:scale-[1.03] saturate-[0.92] contrast-[1.02]"
+                  className="h-full w-full object-cover object-center transition-[transform,filter] duration-700 ease-out [transform:translateZ(0)] group-hover:scale-[1.03] saturate-[0.92] contrast-[1.02]"
                   loading="lazy"
                   decoding="async"
                 />

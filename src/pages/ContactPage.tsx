@@ -63,7 +63,14 @@ export default function ContactPage() {
                 </a>
 
                 <div className="flex gap-12 text-sm font-medium text-[color:var(--theme-muted)] uppercase tracking-widest mt-4">
-                  <a href="#" className="hover:text-[color:var(--theme-ink)] transition-colors">LinkedIn</a>
+                  <a
+                    href="https://www.linkedin.com/company/super-deluxe-studios/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[color:var(--theme-ink)] transition-colors"
+                  >
+                    LinkedIn
+                  </a>
                   <a href="#" className="hover:text-[color:var(--theme-ink)] transition-colors">X</a>
                 </div>
               </div>

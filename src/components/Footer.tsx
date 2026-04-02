@@ -16,12 +16,12 @@ export default function Footer() {
         <div className="absolute inset-0 z-[2] pointer-events-none" aria-hidden>
           <TextCursor
             text="Lets Work!"
-            spacing={80}
+            spacing={150}
             followMouseDirection
-            randomFloat
-            exitDuration={0.3}
-            removalInterval={20}
-            maxPoints={10}
+            randomFloat={false}
+            exitDuration={0.45}
+            removalInterval={28}
+            maxPoints={5}
           />
         </div>
         <h2 className="text-6xl md:text-7xl lg:text-8xl font-serif mb-12 relative z-10 px-4 text-center leading-[1.05]">
@@ -80,8 +80,14 @@ export default function Footer() {
               <a href="#" className="hover:text-[color:var(--theme-accent)] transition-colors" aria-label="Twitter (placeholder)">
                 [twitter]
               </a>
-              <a href="#" className="hover:text-[color:var(--theme-accent)] transition-colors" aria-label="LinkedIn (placeholder)">
-                [linkedin]
+              <a
+                href="https://www.linkedin.com/company/super-deluxe-studios/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[color:var(--theme-accent)] transition-colors"
+                aria-label="SPR DLX on LinkedIn"
+              >
+                LinkedIn
               </a>
             </div>
             <div className="flex flex-col text-left md:text-right md:shrink-0">
