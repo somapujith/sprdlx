@@ -55,12 +55,12 @@ export default function PortfolioPage() {
         <div className="hero-floor-shadow pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[min(62vh,32rem)]" aria-hidden />
       </div>
 
-      <div className="relative z-10 flex min-h-screen w-full flex-col justify-center px-4 pb-10 pt-20 sm:px-8 sm:pb-12 md:px-16 md:px-20">
-        <div className="mt-16 w-full sm:mt-24">
+      <div className="relative z-10 flex min-h-screen w-full flex-col justify-center px-5 pb-12 pt-20 sm:px-8 sm:pb-14 sm:pt-24 md:px-16 md:px-20">
+        <div className="mt-12 w-full sm:mt-20 md:mt-24">
           <h1 className="text-[min(18vw,8rem)] font-serif italic leading-none tracking-tighter opacity-90 sm:text-[20vw] md:text-[16vw]">
             Portfolio
           </h1>
-          <div className="mt-8 max-w-xl sm:mt-12">
+          <div className="mt-6 max-w-xl sm:mt-10 md:mt-12">
             <h2 className="mb-3 text-2xl font-serif italic tracking-tight sm:mb-4 sm:text-3xl md:text-5xl">
               Some of our favourite projects.
             </h2>
@@ -70,9 +70,9 @@ export default function PortfolioPage() {
       </div>
 
       {/* Project Grid */}
-      <div className="mx-auto mt-12 max-w-[1400px] px-4 pb-24 sm:mt-20 sm:px-8 sm:pb-32">
+      <div className="mx-auto mt-10 max-w-[1400px] px-5 pb-20 sm:mt-16 sm:px-8 sm:pb-28 md:mt-20 md:pb-32">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 md:gap-x-10 md:gap-y-20 lg:grid-cols-3">
           {projects.map((project) => (
             <VTLink
               key={project.id}
@@ -94,7 +94,7 @@ export default function PortfolioPage() {
                 {project.slug === 'esthetic-insights' || project.slug === 'anthill' || project.slug === 'pulp' ? (
                   <div className="pointer-events-none absolute inset-0 bg-black/20" aria-hidden />
                 ) : null}
-                <div className="absolute inset-0 flex items-center justify-center p-12">
+                <div className="absolute inset-0 flex items-center justify-center p-6 sm:p-10 md:p-12">
                   <div className="text-white text-center transform transition-transform duration-700 group-hover:scale-110">
                     {project.slug === 'esthetic-insights' ? (
                       <img
@@ -132,7 +132,7 @@ export default function PortfolioPage() {
                 </div>
               </div>
               
-              <div className="mt-8 flex items-start gap-5">
+              <div className="mt-6 flex items-start gap-4 sm:mt-8 sm:gap-5">
                 <div 
                   className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-xl border border-[color:var(--theme-border-soft)] overflow-hidden p-1"
                   style={{ backgroundColor: project.iconBg }}

@@ -23,13 +23,13 @@ const projects = [
 
 export default function Portfolio() {
   return (
-    <section id="work" className="portfolio-section relative z-10 min-h-px px-4 py-24 sm:px-6 sm:py-28 md:px-8 md:py-32">
+    <section id="work" className="portfolio-section relative z-10 min-h-px px-5 py-20 sm:px-6 sm:py-28 md:px-8 md:py-32">
       <div className="pointer-events-none absolute inset-0 z-0">
         <HalftoneDotField opacity={0.045} grid={34} dotMax={1.5} />
       </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
-        <div className="mb-12 flex flex-col gap-6 sm:mb-16 md:mb-20 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mb-10 flex flex-col gap-5 sm:mb-16 sm:gap-6 md:mb-20 sm:flex-row sm:items-end sm:justify-between">
           <AnimatedText
             as="h2"
             text="We've done a lot. Here are some highlights"
@@ -38,7 +38,7 @@ export default function Portfolio() {
           <span className="portfolio-kicker text-xs font-medium uppercase tracking-widest hidden md:block">Portfolio</span>
         </div>
 
-        <div className="relative flex flex-col gap-12 pb-32">
+        <div className="relative flex flex-col gap-10 pb-24 sm:gap-12 sm:pb-32">
           {projects.map((project, index) => (
             <div
               key={project.id}
@@ -108,13 +108,13 @@ export default function Portfolio() {
                     />
                   </div>
                 ) : project.slug === 'volery' || project.slug === 'jay' ? null : (
-                  <div className="absolute top-8 left-8 text-white font-bold text-3xl drop-shadow-md flex items-center gap-2">
+                  <div className="absolute left-5 top-5 flex items-center gap-2 text-2xl font-bold text-white drop-shadow-md sm:left-8 sm:top-8 sm:text-3xl">
                     {project.logoIcon && <span className="text-4xl">{project.logoIcon}</span>}
                     {project.logo}
                   </div>
                 )}
               </div>
-              <div className="flex w-full flex-col justify-between p-6 sm:p-10 md:w-1/2 md:p-16 lg:p-20">
+              <div className="flex w-full flex-col justify-between p-5 sm:p-10 md:w-1/2 md:p-16 lg:p-20">
                 <div>
                   {project.slug === 'anthill' ? (
                     <h3 className="sr-only">{project.title}</h3>
@@ -126,7 +126,7 @@ export default function Portfolio() {
                 <VTLink
                   to={`/project/${project.slug}`}
                   data-cursor="view"
-                  className="group flex items-center gap-3 text-sm font-medium transition-opacity mt-12 w-fit"
+                  className="group mt-8 flex w-fit items-center gap-3 text-sm font-medium transition-opacity sm:mt-12"
                 >
                   <span className="relative flex items-center justify-center w-10 h-10 border border-[color:var(--theme-border)] rounded-sm overflow-hidden">
                     <svg className="transition-transform duration-300 ease-in-out group-hover:translate-x-8" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

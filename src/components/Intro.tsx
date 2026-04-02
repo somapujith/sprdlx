@@ -100,7 +100,7 @@ export default function Intro() {
     <section
       id="section-manifesto"
       ref={containerRef}
-      className="intro-section relative z-10 overflow-hidden pt-4 pb-20 md:pt-12 md:pb-28 lg:pt-16 lg:pb-36 xl:pt-20 xl:pb-44 transition-[color] duration-150 ease-out"
+      className="intro-section relative z-10 overflow-hidden pt-12 pb-24 sm:pt-16 sm:pb-28 md:pt-20 md:pb-32 lg:pb-36 xl:pt-24 xl:pb-44 transition-[color] duration-150 ease-out"
       style={{
         color: 'hsl(0 0% calc((1 - var(--bg-l, 0)) * 100%))',
       }}
@@ -113,11 +113,11 @@ export default function Intro() {
         aria-hidden
       />
 
-      <div className="mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-10">
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-12 lg:items-start">
+      <div className="mx-auto w-full max-w-6xl px-5 sm:px-8 lg:px-10">
+        <div className="grid grid-cols-1 gap-12 sm:gap-14 lg:grid-cols-12 lg:gap-12 lg:items-start">
           {/* Main column — statement */}
           <div className="lg:col-span-7 xl:col-span-8">
-            <p className="mb-10 font-mono text-[0.62rem] uppercase tracking-[0.4em] text-[color:var(--theme-muted)] md:mb-12 md:text-[0.65rem]">
+            <p className="mb-8 font-mono text-[0.62rem] uppercase tracking-[0.4em] text-[color:var(--theme-muted)] sm:mb-10 md:mb-12 md:text-[0.65rem]">
               {t('introEyebrow')}
             </p>
 
@@ -130,11 +130,11 @@ export default function Intro() {
                 <ManifestoHighlight>{t('introBeforeAi')}</ManifestoHighlight>
               </p>
 
-              <p className="manifesto-block mt-10 max-w-[40ch] text-[clamp(1.15rem,2.4vw,1.5rem)] leading-[1.42] text-current/92 md:mt-12">
+              <p className="manifesto-block mt-8 max-w-[40ch] text-[clamp(1.15rem,2.4vw,1.5rem)] leading-[1.42] text-current/92 sm:mt-10 md:mt-12">
                 <ManifestoHighlight>{t('introAfterLine1')}</ManifestoHighlight>
               </p>
 
-              <p className="manifesto-block mt-8 max-w-[42ch] text-[clamp(1.05rem,2.1vw,1.35rem)] leading-[1.48] text-current/85 md:mt-10">
+              <p className="manifesto-block mt-6 max-w-[42ch] text-[clamp(1.05rem,2.1vw,1.35rem)] leading-[1.48] text-current/85 sm:mt-8 md:mt-10">
                 {t('introAfterLine2')}{' '}
                 <ManifestoHighlight>{t('introHighlight')}</ManifestoHighlight>
               </p>
@@ -142,7 +142,7 @@ export default function Intro() {
           </div>
 
           {/* Aside — pillars + studio line */}
-          <aside className="flex flex-col justify-between gap-12 border-t border-[color:var(--theme-border-soft)] pt-10 lg:col-span-5 xl:col-span-4 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-2 xl:pl-12">
+          <aside className="flex flex-col justify-between gap-10 border-t border-[color:var(--theme-border-soft)] pt-8 sm:gap-12 sm:pt-10 lg:col-span-5 xl:col-span-4 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-2 xl:pl-12">
             <ul
               className="manifesto-pillars flex flex-col gap-6 font-mono text-[0.68rem] uppercase tracking-[0.28em] text-current/70 md:gap-7 md:text-[0.72rem]"
               role="list"

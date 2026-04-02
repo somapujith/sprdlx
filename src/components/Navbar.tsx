@@ -124,29 +124,28 @@ export default function Navbar() {
 
   return (
     <nav
-      className="theme-nav nav-entrance fixed left-0 right-0 top-0 z-50 flex items-center justify-between gap-3 px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-5 sm:px-6 md:px-8 transition-colors duration-300"
+      className="theme-nav nav-entrance fixed left-0 right-0 top-0 z-50 flex items-center justify-between gap-2 px-3 pt-[max(1rem,env(safe-area-inset-top))] pb-4 sm:gap-3 sm:px-6 sm:pb-5 md:px-8 transition-colors duration-300"
     >
       <VTLink
         to="/"
         data-cursor="view"
         aria-label="SPRDLX — Home"
-        className="block shrink-0 text-[color:var(--theme-accent)] transition-opacity hover:opacity-90"
+        className="block min-w-0 shrink text-[color:var(--theme-accent)] transition-opacity hover:opacity-90"
       >
-        <SprdlxLogoMark className="h-8 w-auto md:h-9" />
+        <SprdlxLogoMark className="h-7 w-auto sm:h-8 md:h-9" />
       </VTLink>
 
-      <div className="flex min-w-0 shrink items-center gap-2 sm:gap-4 md:gap-8 text-xs font-medium sm:text-sm">
+      <div className="flex max-w-[min(100%,calc(100vw-7.5rem))] shrink items-center justify-end gap-1.5 text-[11px] font-medium sm:max-w-none sm:gap-4 sm:text-sm md:gap-8">
         {pathname !== '/portfolio' && (
-          <div className="flex items-center rounded-full border border-[color:var(--theme-border-soft)] bg-[color:var(--theme-chip-bg)] p-1">
+          <div className="flex shrink-0 items-center rounded-full border border-[color:var(--theme-border-soft)] bg-[color:var(--theme-chip-bg)] p-0.5 sm:p-1">
             <button
               type="button"
-              className="theme-chip theme-chip--active"
-              style={{ paddingLeft: '0.6rem', paddingRight: '0.6rem' }}
+              className="theme-chip theme-chip--active px-2 py-1 sm:px-[0.6rem]"
               onClick={cycleTheme}
               aria-label={`Switch theme manually. Current: ${currentThemeLabel}. Hyderabad time: ${PHASE_LABELS[hyderabadPhase]}.`}
               title={`Current: ${currentThemeLabel} • Hyderabad auto: ${PHASE_LABELS[hyderabadPhase]} • Click to switch`}
             >
-              <ActiveThemeIcon className="w-4 h-4" strokeWidth={2.5} />
+              <ActiveThemeIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={2.5} />
             </button>
           </div>
         )}
@@ -154,22 +153,29 @@ export default function Navbar() {
         <VTLink
           to="/portfolio"
           data-cursor="view"
-          className={`italic transition-colors duration-300 ${linkClass}`}
+          aria-label="Portfolio"
+          className={`shrink-0 whitespace-nowrap italic transition-colors duration-300 ${linkClass}`}
         >
-          Portfolio
+          <span aria-hidden className="sm:hidden">
+            Work
+          </span>
+          <span aria-hidden className="hidden sm:inline">
+            Portfolio
+          </span>
         </VTLink>
         <VTLink
           to="/contact"
           data-cursor="accent"
-          className={`group flex items-center gap-2 transition-colors duration-300 ${contactClass}`}
+          aria-label="Contact"
+          className={`group flex shrink-0 items-center gap-1.5 transition-colors duration-300 sm:gap-2 ${contactClass}`}
         >
           <div
-            className={`relative flex items-center justify-center w-6 h-6 border rounded-sm overflow-hidden transition-colors duration-300 ${iconBorderClass}`}
+            className={`relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-sm border transition-colors duration-300 sm:h-6 sm:w-6 ${iconBorderClass}`}
           >
             <svg
               className="transition-transform duration-300 ease-in-out group-hover:translate-x-6"
-              width="10"
-              height="10"
+              width="11"
+              height="11"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -181,8 +187,8 @@ export default function Navbar() {
             </svg>
             <svg
               className="absolute -translate-x-6 transition-transform duration-300 ease-in-out group-hover:translate-x-0"
-              width="10"
-              height="10"
+              width="11"
+              height="11"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -193,7 +199,9 @@ export default function Navbar() {
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </div>
-          <span className="italic font-serif text-sm sm:text-lg">Contact</span>
+          <span className="hidden font-serif italic sm:inline sm:text-lg" aria-hidden>
+            Contact
+          </span>
         </VTLink>
       </div>
     </nav>

@@ -196,7 +196,7 @@ export default function Team() {
   return (
     <section
       id="team"
-      className="team-section relative z-10 overflow-hidden px-6 py-32 sm:px-8 md:py-40"
+      className="team-section relative z-10 overflow-hidden px-5 py-24 sm:px-8 sm:py-32 md:py-40"
     >
       {/* Grid + accent wash: mask fades in so we don’t get a hard seam under Services (matches scroll-driven main bg). */}
       <div
@@ -226,7 +226,7 @@ export default function Team() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-6 text-center text-[0.65rem] font-medium uppercase tracking-[0.28em] text-[color:var(--theme-muted)] sm:text-xs"
+          className="mb-5 text-center text-[0.65rem] font-medium uppercase tracking-[0.28em] text-[color:var(--theme-muted)] sm:mb-6 sm:text-xs"
         >
           The team
         </motion.p>
@@ -236,7 +236,7 @@ export default function Team() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto mb-10 max-w-4xl text-center md:mb-12"
+          className="mx-auto mb-8 max-w-4xl text-center sm:mb-10 md:mb-12"
         >
           <GlitchHeadline
             text="From engineers, to designers — our team knows how to ship AI products."
@@ -249,7 +249,7 @@ export default function Team() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.05, duration: 0.5 }}
-          className="mb-24 flex justify-center md:mb-32"
+          className="mb-16 flex justify-center sm:mb-20 md:mb-32"
         >
           <VTLink
             to="/contact"
@@ -289,7 +289,7 @@ export default function Team() {
         </motion.div>
 
         <motion.div
-          className="mx-auto grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-7 lg:grid-cols-4 lg:gap-6"
+          className="mx-auto grid max-w-5xl grid-cols-1 gap-9 sm:grid-cols-2 sm:gap-7 lg:grid-cols-4 lg:gap-6"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-12% 0px' }}

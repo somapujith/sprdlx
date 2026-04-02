@@ -5,8 +5,8 @@ import Footer from '../components/Footer';
 export default function ContactPage() {
   return (
     <main className="theme-shell min-h-screen overflow-x-hidden pt-[max(5.5rem,env(safe-area-inset-top))] text-[color:var(--theme-ink)] sm:pt-24">
-      <div className="mx-auto max-w-[1600px] px-4 py-12 sm:px-8 sm:py-16 md:px-12 md:py-20 lg:px-20">
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
+      <div className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-16 md:px-12 md:py-20 lg:px-20">
+        <div className="grid grid-cols-1 items-start gap-10 sm:gap-12 lg:grid-cols-2 lg:gap-20">
           
           {/* Left Side: Form */}
           <div className="flex flex-col">

@@ -195,7 +195,7 @@ export default function Hero() {
 
   return (
     <div id="section-hero" ref={outerRef} className="relative min-h-[100dvh] w-full">
-      <section className="relative z-10 flex min-h-[100dvh] w-full flex-col justify-end overflow-hidden isolate px-4 pt-[max(6.5rem,env(safe-area-inset-top))] pb-20 sm:px-6 sm:pt-28 sm:pb-24 md:px-8 md:pt-32 md:pb-32">
+      <section className="relative z-10 flex min-h-[100dvh] w-full flex-col justify-end overflow-hidden isolate px-5 pt-[max(6.5rem,env(safe-area-inset-top))] pb-16 sm:px-6 sm:pb-24 sm:pt-28 md:px-8 md:pb-32 md:pt-32">
         <div
           className="hero-floor-shadow pointer-events-none absolute inset-x-0 bottom-0 z-4 h-[min(62vh,32rem)]"
           aria-hidden
@@ -215,7 +215,8 @@ export default function Hero() {
         </div>
 
         <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-start text-left pointer-events-none">
-          <div ref={logoRef} className="mb-5 md:mb-6 opacity-0 pointer-events-auto">
+          {/* Navbar already shows mark on mobile — hide duplicate to save vertical space */}
+          <div ref={logoRef} className="mb-5 hidden opacity-0 pointer-events-auto sm:mb-6 sm:block">
             <SprdlxLogoMark className="h-7 w-auto md:h-8 text-[color:var(--theme-accent)]" />
           </div>
 
@@ -235,27 +236,21 @@ export default function Hero() {
 
         <div
           ref={tickerRef}
-          className="hero-ticker-fade absolute bottom-0 left-0 right-0 z-10 w-full opacity-0 pt-14 md:pt-20 pointer-events-none"
+          className="hero-ticker-fade pointer-events-none absolute bottom-0 left-0 right-0 z-10 w-full opacity-0 pt-8 sm:pt-14 md:pt-20"
         >
           <div
-            className="w-full overflow-hidden px-4 sm:px-6 md:px-8"
+            className="hero-marquee-strip w-full overflow-hidden px-0 sm:px-4 md:px-6 lg:px-8"
             aria-label="Featured brands: Anthill, Esthetic Insights, Pulp, Volery, Jay"
-            style={{
-              maskImage:
-                'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
-              WebkitMaskImage:
-                'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
-            }}
           >
             <div
-              className="flex w-max shrink-0 whitespace-nowrap animate-marquee items-center min-h-16 md:min-h-20 h-auto py-5 md:py-7 will-change-transform motion-reduce:animate-none"
+              className="flex h-auto min-h-14 w-max shrink-0 animate-marquee items-center whitespace-nowrap py-4 motion-reduce:animate-none sm:min-h-16 sm:py-5 md:min-h-20 md:py-7"
               style={{ animationDuration: '150s' }}
               aria-hidden
             >
               {[0, 1].map((strip) => (
                 <div
                   key={strip}
-                  className="flex shrink-0 items-center gap-[72px] md:gap-[88px] lg:gap-28 pr-[72px] md:pr-[88px] lg:pr-28"
+                  className="flex shrink-0 items-center gap-10 pr-10 sm:gap-14 sm:pr-14 md:gap-[72px] md:pr-[72px] lg:gap-28 lg:pr-28"
                 >
                   {MARQUEE_SEGMENT.map((entry, idx) => (
                     <span

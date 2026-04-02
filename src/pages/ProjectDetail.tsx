@@ -149,7 +149,7 @@ export default function ProjectDetail() {
     <main className="min-h-screen overflow-x-hidden bg-black text-white selection:bg-white selection:text-black">
       {/* Hero */}
       <section
-        className="w-full px-3 pb-6 pt-[max(5.5rem,env(safe-area-inset-top))] sm:px-6 sm:pb-8 md:px-8"
+        className="w-full px-5 pb-8 pt-[max(5.5rem,env(safe-area-inset-top))] sm:px-6 sm:pb-8 md:px-8"
         aria-labelledby="project-hero-title"
       >
         <div className="relative h-[min(42vh,22rem)] w-full overflow-hidden rounded-2xl sm:h-[40vh] sm:rounded-[2rem] md:h-[50vh]">
@@ -159,7 +159,7 @@ export default function ProjectDetail() {
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 flex items-center justify-center px-4">
+          <div className="absolute inset-0 flex items-center justify-center px-3 sm:px-4">
             {isEsthetic ? (
               <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-8 py-6 md:px-12 md:py-8 rounded-2xl flex items-center justify-center max-w-[min(96vw,36rem)] text-center">
                 <h1
@@ -229,7 +229,7 @@ export default function ProjectDetail() {
 
       {/* 01 — Overview */}
       <section className="border-t border-white/10" aria-labelledby="chapter-overview">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-28">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-20 md:px-8 md:py-28">
           <div className="flex flex-col gap-12 lg:flex-row lg:gap-20">
             <div className="lg:w-[min(100%,18rem)] lg:shrink-0 lg:sticky lg:top-28 lg:self-start">
               <p id="chapter-overview" className="font-mono text-[0.65rem] uppercase tracking-[0.32em] text-[#ccff00]/55">
@@ -423,7 +423,7 @@ export default function ProjectDetail() {
 
       {/* 02 — Narrative */}
       <section className="border-t border-white/10" aria-labelledby="chapter-narrative">
-        <div className="mx-auto flex max-w-7xl flex-col items-start gap-12 px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-28 lg:flex-row lg:gap-20">
+        <div className="mx-auto flex max-w-7xl flex-col items-start gap-10 px-5 py-16 sm:gap-12 sm:px-6 sm:py-20 md:px-8 md:py-28 lg:flex-row lg:gap-20">
           <div className="lg:w-[min(100%,18rem)] lg:shrink-0 lg:sticky lg:top-28">
             <p id="chapter-narrative" className="font-mono text-[0.65rem] uppercase tracking-[0.32em] text-[#ccff00]/55">
               02 — Narrative
@@ -450,7 +450,7 @@ export default function ProjectDetail() {
       {/* 03 — Gallery */}
       {project.images[1] ? (
         <section className="border-t border-white/10" aria-labelledby="chapter-gallery">
-          <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-20 md:pb-32">
+          <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-20 md:pb-32">
             <p id="chapter-gallery" className="font-mono text-[0.65rem] uppercase tracking-[0.32em] text-[#ccff00]/55 mb-10 md:mb-14">
               03 — Gallery
             </p>
@@ -469,7 +469,7 @@ export default function ProjectDetail() {
       ) : null}
 
       {/* Prev / Next */}
-      <div className="w-full border-t border-white/10 px-4 py-16 sm:px-8 sm:py-20">
+      <div className="w-full border-t border-white/10 px-5 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 text-base font-serif italic text-zinc-400 sm:flex-row sm:items-center sm:justify-between sm:text-lg">
           <VTLink
             to={`/project/${project.prev}`}

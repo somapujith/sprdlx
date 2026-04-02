@@ -75,7 +75,7 @@ export default function Services() {
   return (
     <section
       ref={containerRef}
-      className="services-section relative z-10 min-h-[1px] bg-transparent px-6 sm:px-8 py-24 md:py-32 overflow-hidden"
+      className="services-section relative z-10 min-h-[1px] overflow-hidden bg-transparent px-5 py-20 sm:px-8 sm:py-28 md:py-32"
     >
       <div className="pointer-events-none absolute inset-0 z-0">
         <HalftoneDotField opacity={0.07} grid={30} dotMax={1.8} />
@@ -88,8 +88,8 @@ export default function Services() {
       />
 
       <div className="relative z-10 max-w-6xl mx-auto w-full">
-        <header className="text-center blur-reveal mb-16 md:mb-20 lg:mb-24">
-          <p className="services-meta text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.28em] mb-5 md:mb-6">
+        <header className="blur-reveal mb-12 text-center sm:mb-16 md:mb-20 lg:mb-24">
+          <p className="services-meta mb-4 text-[0.65rem] font-medium uppercase tracking-[0.28em] sm:mb-5 sm:text-xs md:mb-6">
             Who we work with
           </p>
           <h2 className="services-copy font-serif text-[1.75rem] sm:text-[2rem] md:text-[2.35rem] lg:text-[2.65rem] leading-[1.18] tracking-[-0.02em] max-w-[22ch] sm:max-w-2xl lg:max-w-3xl mx-auto">
@@ -98,11 +98,11 @@ export default function Services() {
           </h2>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 lg:gap-10 items-stretch">
+        <div className="grid grid-cols-1 items-stretch gap-10 md:grid-cols-3 md:gap-8 lg:gap-10">
           {COLUMNS.map((col) => (
             <article
               key={col.id}
-              className="service-card blur-reveal group flex flex-col rounded-2xl border p-6 sm:p-7 md:p-6 lg:p-7 transition-shadow duration-300"
+              className="service-card blur-reveal group flex flex-col rounded-2xl border p-5 sm:p-7 md:p-6 lg:p-7 transition-shadow duration-300"
             >
               <div className="mb-6 md:mb-7">
                 <h3 className="services-meta text-[0.65rem] font-semibold uppercase tracking-[0.22em] mb-3">
