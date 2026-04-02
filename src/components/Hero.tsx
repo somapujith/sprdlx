@@ -26,7 +26,8 @@ const MARQUEE_ENTRIES: MarqueeEntry[] = [
   {
     name: 'Anthill',
     fontClass: 'font-serif tracking-tight',
-    logoSrc: '/projects/anthill/anthill-mark.svg',
+    logoSrc: '/projects/anthill/Anthill%20Ventures%20Logo.svg',
+    logoClass: 'brightness-0 invert',
     wordmarkOnly: true,
   },
   {
